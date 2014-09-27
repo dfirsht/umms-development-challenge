@@ -1,0 +1,1 @@
+This folder is to be exclusively used for the destop mobile app.
