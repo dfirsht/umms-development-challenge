@@ -55,6 +55,10 @@ namespace Actual_windows_phone_controller
         {
             App.ViewModel.addItem("New Controller!");
         }
+        private void ConnectionPageClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ConnectionPage.xaml", UriKind.Relative));
+        }
         //void ControllersCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         //{
 
