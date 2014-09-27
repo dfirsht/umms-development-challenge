@@ -48,7 +48,10 @@ namespace Actual_windows_phone_controller
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
         }
-        
+        private void ConnectionPageClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/ConnectionPage.xaml", UriKind.Relative));
+        }
         private void add_button_pressed(object sender, RoutedEventArgs e)
         {
             App.ViewModel.addItem("New Controller!");
@@ -65,7 +68,6 @@ namespace Actual_windows_phone_controller
             // MessageBox.Show(item_held_selected.ToString());
             item_held_down = true;
         }
-
         private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (item_held_down)
