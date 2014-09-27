@@ -24,8 +24,6 @@ namespace Actual_windows_phone_controller
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
-
-           // ControllersCanvas.MouseMove += new MouseEventHandler(ControllersCanvas_MouseMove);
         }
 
         // Load data for the ViewModel Items
@@ -55,40 +53,40 @@ namespace Actual_windows_phone_controller
         {
             App.ViewModel.addItem("New Controller!");
         }
-        //void ControllersCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
+        private bool item_held_down = false;
+        private int item_held_selected;
+        private UIElementCollection UIElement_selected;
+        private int item_hovered_over;
+        private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
+            item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
+            UIElement_selected = (sender as StackPanel).Children;
+            // MessageBox.Show(item_held_selected.ToString());
+            item_held_down = true;
+        }
 
-        //}
-        //private bool item_held_down = false;
-        //private int item_held_selected;
-        //private int item_hovered_over;
-        //private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
-        //{
-        //    ItemViewModel itemViewModel = (sender as Canvas).DataContext as ItemViewModel;
-        //    item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-        //   // MessageBox.Show(item_held_selected.ToString());
-        //    item_held_down = true;
-        //}
+        private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (item_held_down)
+            {
+                item_held_down = false;
+                MessageBox.Show("done");
+            }
+        }
 
-        //private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //   if (item_held_down)
-        //    {
-        //        App.ViewModel.Items.Move(item_held_selected, item_hovered_over);
-        //        item_held_down = false;
-        //        MessageBox.Show("done");
-        //    }
-        //}
-
-        //private void item_moved(object sender, System.Windows.Input.MouseEventArgs e)
-        //{
-        //    if (item_held_down)
-        //    {
-        //        ItemViewModel itemViewModel = (sender as Canvas).DataContext as ItemViewModel;
-             
-        //        item_hovered_over = App.ViewModel.Items.IndexOf(itemViewModel);
-        //    }
-        //}
+        private void item_moved(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (item_held_down)
+            {
+                ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
+                item_hovered_over = App.ViewModel.Items.IndexOf(itemViewModel);
+                if (item_hovered_over != item_held_selected)
+                {
+                    App.ViewModel.moveItem(item_held_selected, item_hovered_over);
+                }
+            }
+        }
 
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()

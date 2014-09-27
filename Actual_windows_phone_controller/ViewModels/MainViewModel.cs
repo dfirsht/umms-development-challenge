@@ -17,6 +17,7 @@ namespace Actual_windows_phone_controller.ViewModels
         /// </summary>
         public ObservableCollection<ItemViewModel> Items { get; private set; }
 
+
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding
@@ -94,6 +95,11 @@ namespace Actual_windows_phone_controller.ViewModels
         public void addItem(String title)
         {
             this.Items.Add(new ItemViewModel() { ID =  Items.Count.ToString(), LineOne = title });
+        }
+        public void moveItem(int oldIndex, int newIndex)
+        {
+            Items.Move(oldIndex, newIndex);
+            NotifyPropertyChanged("Items");
         }
     }
 }
