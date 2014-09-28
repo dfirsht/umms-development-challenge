@@ -96,10 +96,5 @@ namespace Actual_windows_phone_controller.ViewModels
         {
             this.Items.Add(new ItemViewModel() { ID =  Items.Count.ToString(), LineOne = title });
         }
-        public void moveItem(int oldIndex, int newIndex)
-        {
-            Items.Move(oldIndex, newIndex);
-            NotifyPropertyChanged("Items");
-        }
     }
 }

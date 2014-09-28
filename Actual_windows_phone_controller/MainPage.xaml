@@ -48,16 +48,16 @@
 
         <!--ContentPanel contains LongListSelector and LongListSelector ItemTemplate. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:LongListSelector x:Name="MainLongListSelector" Margin="0,0,-12,78" ItemsSource="{Binding Items}" SelectionChanged="MainLongListSelector_SelectionChanged">
-                <phone:LongListSelector.ItemTemplate>
+            <ListBox x:Name="MainLongListSelector" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,-12,78" ItemsSource="{Binding Items}" SelectionChanged="MainLongListSelector_SelectionChanged">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="0,0,0,20" Hold="item_held" MouseMove="item_moved" MouseLeftButtonUp="item_released">
+                        <StackPanel x:Name="MainStackPanel"  Margin="0,0,0,20" MouseMove="item_moved" Hold="item_held">
                           <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
                           <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,10,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
                       </StackPanel>
                     </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <HyperlinkButton x:Name="ConnectionPage" Content="Connection" HorizontalAlignment="Left" Margin="281,-141,-12,0" VerticalAlignment="Top" Click="ConnectionPageClick"/>
         </Grid>
 

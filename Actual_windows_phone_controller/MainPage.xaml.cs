@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Actual_windows_phone_controller.Resources;
@@ -12,8 +13,28 @@ using Actual_windows_phone_controller.ViewModels;
 
 namespace Actual_windows_phone_controller
 {
+
     public partial class MainPage : PhoneApplicationPage
     {
+         public T GetVisualChild<T>(UIElement parent) where T : UIElement
+        {
+            T child = null; // default(T);
+
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                UIElement element = (UIElement)VisualTreeHelper.GetChild(parent, i);
+                child = element as T;
+                if (child == null)
+                    child = GetVisualChild<T>(element);
+                if (child != null)
+                    break;
+            }
+
+            return child;
+        }
+    
+
         // Constructor
         public MainPage()
         {
@@ -24,6 +45,8 @@ namespace Actual_windows_phone_controller
 
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
+
+            //MouseLeftButtonUp += item_released;
         }
 
         // Load data for the ViewModel Items
@@ -58,15 +81,16 @@ namespace Actual_windows_phone_controller
         }
         private bool item_held_down = false;
         private int item_held_selected;
-        private UIElementCollection UIElement_selected;
         private int item_hovered_over;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
         {
             ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
+            //itemViewModel.LineOne = "cat";
             item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-            UIElement_selected = (sender as StackPanel).Children;
             // MessageBox.Show(item_held_selected.ToString());
             item_held_down = true;
+            ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
+            ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Disabled);
         }
         private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -74,18 +98,32 @@ namespace Actual_windows_phone_controller
             {
                 item_held_down = false;
                 MessageBox.Show("done");
+                ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
+                ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Auto);
             }
         }
-
         private void item_moved(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (item_held_down)
             {
                 ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
                 item_hovered_over = App.ViewModel.Items.IndexOf(itemViewModel);
+                ItemViewModel originalViewModel = App.ViewModel.Items.ElementAt<ItemViewModel>(item_held_selected);
+                MainLongListSelector.ScrollIntoView(originalViewModel);
                 if (item_hovered_over != item_held_selected)
                 {
-                    App.ViewModel.moveItem(item_held_selected, item_hovered_over);
+                    //string temp = itemViewModel.ID;
+                    //itemViewModel.ID = originalViewModel.ID;
+                    //originalViewModel.ID = temp;
+                    string temp = itemViewModel.LineOne;
+                    itemViewModel.LineOne = originalViewModel.LineOne;
+                    originalViewModel.LineOne = temp;
+
+                    item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
+
+                    (sender as UIElement).CaptureMouse();
+            
+                    //App.ViewModel.moveItem(item_held_selected, item_hovered_over);
                 }
             }
         }
