@@ -79,31 +79,42 @@ namespace Actual_windows_phone_controller
         {
             App.ViewModel.addItem("New Controller!");
         }
-        private bool item_held_down = false;
-        private int item_held_selected;
-        private int item_hovered_over;
+        private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            foreach(UIElement element in (sender as StackPanel).Children) {
+                if (element.GetType().Name == "Canvas")
+                {
+                    element.Visibility = Visibility.Visible;
+                }
+            }
+            (sender as StackPanel).Margin =  new Thickness(0,0,0,80);
             ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
+            item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
+
+            /*ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
             //itemViewModel.LineOne = "cat";
             item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
             // MessageBox.Show(item_held_selected.ToString());
             item_held_down = true;
             ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
             ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Disabled);
+             */
         }
         private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (item_held_down)
+            /* if (item_held_down)
             {
                 item_held_down = false;
                 MessageBox.Show("done");
                 ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
                 ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Auto);
             }
+             */
         }
         private void item_moved(object sender, System.Windows.Input.MouseEventArgs e)
         {
+            /*
             if (item_held_down)
             {
                 ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
@@ -125,6 +136,87 @@ namespace Actual_windows_phone_controller
             
                     //App.ViewModel.moveItem(item_held_selected, item_hovered_over);
                 }
+            }
+             */
+        }
+
+        private void moveElementUp(object sender, RoutedEventArgs e)
+        {
+            if (item_selected != 0)
+            {
+                ItemViewModel southernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected);
+                ItemViewModel NorthernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected - 1);
+                string temp = southernItem.LineOne;
+                southernItem.LineOne = NorthernItem.LineOne;
+                NorthernItem.LineOne = temp;
+                ListBoxItem currentListBoxItem =
+    (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
+
+                StackPanel currentStackPanel = (StackPanel)GetVisualChild<StackPanel>(currentListBoxItem);
+
+                foreach (UIElement element in currentStackPanel.Children)
+                {
+                    if (element.GetType().Name == "Canvas")
+                    {
+                        element.Visibility = Visibility.Collapsed;
+                    }
+                }
+                currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
+
+                ListBoxItem newListBoxItem =
+      (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected - 1));
+
+                StackPanel newStackPanel = (StackPanel)GetVisualChild<StackPanel>(newListBoxItem);
+
+                foreach (UIElement element in newStackPanel.Children)
+                {
+                    if (element.GetType().Name == "Canvas")
+                    {
+                        element.Visibility = Visibility.Visible;
+                    }
+                }
+                newStackPanel.Margin = new Thickness(0, 0, 0, 80);
+                item_selected--;
+            }
+        }
+
+        private void moveElementDown(object sender, RoutedEventArgs e)
+        {
+            if (item_selected != App.ViewModel.Items.Count - 1)
+            {
+                ItemViewModel southernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected + 1);
+                ItemViewModel NorthernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected);
+                string temp = southernItem.LineOne;
+                southernItem.LineOne = NorthernItem.LineOne;
+                NorthernItem.LineOne = temp;
+                ListBoxItem currentListBoxItem =
+    (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
+
+                StackPanel currentStackPanel = (StackPanel)GetVisualChild<StackPanel>(currentListBoxItem);
+
+                foreach (UIElement element in currentStackPanel.Children)
+                {
+                    if (element.GetType().Name == "Canvas")
+                    {
+                        element.Visibility = Visibility.Collapsed;
+                    }
+                }
+                currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
+
+                ListBoxItem newListBoxItem =
+      (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected + 1));
+
+                StackPanel newStackPanel = (StackPanel)GetVisualChild<StackPanel>(newListBoxItem);
+
+                foreach (UIElement element in newStackPanel.Children)
+                {
+                    if (element.GetType().Name == "Canvas")
+                    {
+                        element.Visibility = Visibility.Visible;
+                    }
+                }
+                newStackPanel.Margin = new Thickness(0, 0, 0, 80);
+                item_selected++;
             }
         }
 
