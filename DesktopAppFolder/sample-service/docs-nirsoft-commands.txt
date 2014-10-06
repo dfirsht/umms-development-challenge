@@ -1,0 +1,18 @@
+Nircmd Documentation
+	http://www.nirsoft.net/utils/nircmd2.html#using
+
+
+Useful Commands (see documentation for details)
+	sendkeypress
+	sendkey
+	sendmouse		
+	savescreenshot
+	speak				(reads text-file outloud)
+	mediaplay			(plays audio file)
+	killprocess
+	changebrightness
+	setprimarydisplay	(switch monitors)
+	moverecylcebin		(delete file)
+	emptybin			(empty recycle bin)
+	exec
+	urlshortcut
