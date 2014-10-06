@@ -13,19 +13,19 @@ namespace Actual_windows_phone_controller
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel = null;
+        private static ControllerCollectionViewModel viewModel = null;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
         /// </summary>
         /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel ViewModel
+        public static ControllerCollectionViewModel ViewModel
         {
             get
             {
                 // Delay creation of the view model until necessary
                 if (viewModel == null)
-                    viewModel = new MainViewModel();
+                    viewModel = new ControllerCollectionViewModel();
 
                 return viewModel;
             }

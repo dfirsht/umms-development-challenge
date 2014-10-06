@@ -66,7 +66,7 @@ namespace Actual_windows_phone_controller
                 return;
 
             // Navigate to the new page
-            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + (MainLongListSelector.SelectedItem as ItemViewModel).ID, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/ControllerPage.xaml?selectedItem=" + (MainLongListSelector.SelectedItem as ControllerViewModel).ID, UriKind.Relative));
 
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
@@ -89,11 +89,11 @@ namespace Actual_windows_phone_controller
                 }
             }
             (sender as StackPanel).Margin =  new Thickness(0,0,0,80);
-            ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
+            ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
             item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
 
             /*ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
-            //itemViewModel.LineOne = "cat";
+            //itemViewModel.Title = "cat";
             item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
             // MessageBox.Show(item_held_selected.ToString());
             item_held_down = true;
@@ -126,9 +126,9 @@ namespace Actual_windows_phone_controller
                     //string temp = itemViewModel.ID;
                     //itemViewModel.ID = originalViewModel.ID;
                     //originalViewModel.ID = temp;
-                    string temp = itemViewModel.LineOne;
-                    itemViewModel.LineOne = originalViewModel.LineOne;
-                    originalViewModel.LineOne = temp;
+                    string temp = itemViewModel.Title;
+                    itemViewModel.Title = originalViewModel.Title;
+                    originalViewModel.Title = temp;
 
                     item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
 
@@ -144,11 +144,11 @@ namespace Actual_windows_phone_controller
         {
             if (item_selected != 0)
             {
-                ItemViewModel southernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected);
-                ItemViewModel NorthernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected - 1);
-                string temp = southernItem.LineOne;
-                southernItem.LineOne = NorthernItem.LineOne;
-                NorthernItem.LineOne = temp;
+                ControllerViewModel southernItem = App.ViewModel.Items.ElementAt<ControllerViewModel>(item_selected);
+                ControllerViewModel NorthernItem = App.ViewModel.Items.ElementAt<ControllerViewModel>(item_selected - 1);
+                string temp = southernItem.Title;
+                southernItem.Title = NorthernItem.Title;
+                NorthernItem.Title = temp;
                 ListBoxItem currentListBoxItem =
     (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
 
@@ -184,11 +184,11 @@ namespace Actual_windows_phone_controller
         {
             if (item_selected != App.ViewModel.Items.Count - 1)
             {
-                ItemViewModel southernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected + 1);
-                ItemViewModel NorthernItem = App.ViewModel.Items.ElementAt<ItemViewModel>(item_selected);
-                string temp = southernItem.LineOne;
-                southernItem.LineOne = NorthernItem.LineOne;
-                NorthernItem.LineOne = temp;
+                ControllerViewModel southernItem = App.ViewModel.Items.ElementAt<ControllerViewModel>(item_selected + 1);
+                ControllerViewModel NorthernItem = App.ViewModel.Items.ElementAt<ControllerViewModel>(item_selected);
+                string temp = southernItem.Title;
+                southernItem.Title = NorthernItem.Title;
+                NorthernItem.Title = temp;
                 ListBoxItem currentListBoxItem =
     (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
 
