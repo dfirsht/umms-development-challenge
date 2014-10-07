@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace ConsoleApplication3
 {
     class Program
     {
 
-        static void Main(string[] args)
+       /* static void Main(string[] args)
         {
             //creating a new process
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -37,5 +39,10 @@ namespace ConsoleApplication3
 
             cmd_writer.WriteLine(cmd_output);
         }
+
+
+        void StartServer()
+        { 
+        }*/
     }
 }
