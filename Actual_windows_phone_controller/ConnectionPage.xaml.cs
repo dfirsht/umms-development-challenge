@@ -86,7 +86,7 @@ namespace Actual_windows_phone_controller
 
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
-            string stringToSend = "Hello World";
+            string stringToSend = "nircmd.exe mutesysvolume 1<EOF>";
 
             writer.WriteUInt32(writer.MeasureString(stringToSend));
             writer.WriteString(stringToSend);

@@ -155,16 +155,20 @@ public class AsynchronousSocketListener
             // Check for end-of-file tag. If it is not there, read 
             // more data.
             content = state.sb.ToString();
-            Console.WriteLine(content);
+           // Console.WriteLine(content);
             if (content.IndexOf("<EOF>") > -1)
             {
-                Console.WriteLine("everything is done?");
+                //Console.WriteLine("everything is done?");
                 // All the data has been read from the 
                 // client. Display it on the console.
+                int cut = 4;
+                content = content.Substring(cut,content.Length-(5+cut));
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     content.Length, content);
+
+                CMD.Program.ConsoleCall(content);
                 // Echo the data back to the client.
-                Send(handler, content);
+               // Send(handler, content);
             }
             else
             {
@@ -207,9 +211,9 @@ public class AsynchronousSocketListener
     }
 
 
-    public static int Main(String[] args)
+    /*public static int Main(String[] args)
     {
         StartListening();
         return 0;
-    }
+    }*/
 }
