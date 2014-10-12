@@ -27,7 +27,7 @@ public class AsynchronousSocketListener
     {
     }
 
-    public static void StartListening()
+    public void StartListening()
     {
         // Data buffer for incoming data.
         byte[] bytes = new Byte[1024];
@@ -166,7 +166,23 @@ public class AsynchronousSocketListener
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     content.Length, content);
 
-                CMD.Program.ConsoleCall(content);
+
+                // this is the inverse lock of my main thread
+                lock (CMD.Program.cmdLock)
+                {
+                    // this sets the string so if last command is taking a
+                    // bit this will halt, ensures that last command is finshed before new
+                    // one is started (however there are draw backs to this method)
+                    while (CMD.Program.cmdString != "")
+                    {
+                        // to reduce buisy waiting
+                        Monitor.Wait(CMD.Program.cmdLock);
+                    }
+                    CMD.Program.cmdString = content;
+                    Monitor.Pulse(CMD.Program.cmdLock);
+                }
+               
+
                 // Echo the data back to the client.
                // Send(handler, content);
             }
