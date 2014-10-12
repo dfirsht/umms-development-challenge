@@ -6,19 +6,59 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace CMD
 {
+    public class Alpha
+    {
+
+        // This method that will be called when the thread is started
+        public void Beta()
+        {
+            while (true)
+            {
+                Console.WriteLine("Alpha.Beta is running in its own thread.");
+            }
+        }
+    };
+
     public class Program
     {
         public static StreamWriter cmd_writer;
+        public static readonly object cmdLock = new object();
+        public static string cmdString = "";
 
          static void Main(string[] args)
          {
+             // creating a seprate thread to run the network
+             AsynchronousSocketListener network = new AsynchronousSocketListener();
 
-             CreateCmdWindow();
+             Thread networkThread = new Thread(new ThreadStart(network.StartListening));
 
-             AsynchronousSocketListener.StartListening();
+             // Start the thread may need to spin for a bit: while (!networkThread.IsAlive) ;
+             networkThread.Start();
+
+             lock (cmdLock)
+             {
+                 CreateCmdWindow();
+                 Monitor.PulseAll(cmdLock);
+             }
+
+             // this is my event loop
+             while(true)
+             {
+                 lock (cmdLock)
+                 {
+                     while (cmdString == "")
+                     {
+                         // to reduce buisy waiting
+                         Monitor.Wait(cmdLock);
+                     }
+                     ConsoleCall(cmdString);
+                     Monitor.PulseAll(cmdLock);
+                 }
+             }
              
          }
 
@@ -47,6 +87,7 @@ namespace CMD
          public static void ConsoleCall(string cmd_output)
          {
              cmd_writer.WriteLine(cmd_output);
+             cmdString = "";
          }
-    }
+    };
 }
