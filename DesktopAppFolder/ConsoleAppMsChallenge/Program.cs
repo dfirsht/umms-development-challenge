@@ -26,7 +26,6 @@ namespace CMD
     public class Program
     {
         public static StreamWriter cmd_writer;
-        public static Mutex cmdMutex = new Mutex();
         public static readonly object cmdLock = new object();
         public static string cmdString = "";
 
