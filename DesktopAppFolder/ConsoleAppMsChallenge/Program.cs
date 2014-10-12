@@ -4,13 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
-namespace ConsoleApplication3
+namespace CMD
 {
-    class Program
+    public class Program
     {
+        public static StreamWriter cmd_writer;
 
-        static void Main(string[] args)
+         static void Main(string[] args)
+         {
+
+             CreateCmdWindow();
+
+             AsynchronousSocketListener.StartListening();
+             
+         }
+
+        private static void CreateCmdWindow()
         {
             //creating a new process
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -29,13 +41,12 @@ namespace ConsoleApplication3
             process.StartInfo = startInfo;
             process.Start();
 
-            StreamWriter cmd_writer = process.StandardInput;
+            cmd_writer = process.StandardInput;
+         }
 
-            // command to mute the volume
-            string cmd_output = "nircmd.exe mutesysvolume 1";
-
-
-            cmd_writer.WriteLine(cmd_output);
-        }
+         public static void ConsoleCall(string cmd_output)
+         {
+             cmd_writer.WriteLine(cmd_output);
+         }
     }
 }
