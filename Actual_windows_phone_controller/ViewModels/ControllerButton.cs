@@ -4,11 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO.IsolatedStorage;
+using System.IO;
+using System.Text;
 
 namespace Actual_windows_phone_controller.ViewModels
 {
     public class ControllerButton : INotifyPropertyChanged
     {
+        public ControllerButton()
+        {
+        }
+        public ControllerButton(StreamReader reader)
+        {
+            DisplayTitle = reader.ReadLine();
+            x = Convert.ToDouble(reader.ReadLine());
+            y = Convert.ToDouble(reader.ReadLine());
+        }
         private string _displayTitle;
         public string DisplayTitle
         {
@@ -50,6 +62,12 @@ namespace Actual_windows_phone_controller.ViewModels
                     NotifyPropertyChanged("y");
                 }
             }
+        }
+        public void Save(StreamWriter writer)
+        {
+            writer.WriteLine(DisplayTitle);
+            writer.WriteLine(x);
+            writer.WriteLine(y);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

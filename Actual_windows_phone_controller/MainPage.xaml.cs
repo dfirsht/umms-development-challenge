@@ -220,6 +220,7 @@ namespace Actual_windows_phone_controller
             }
         }
 
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

@@ -7,7 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.IO.IsolatedStorage;
+using System.Text;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Actual_windows_phone_controller.ViewModels
 {
@@ -26,6 +29,19 @@ namespace Actual_windows_phone_controller.ViewModels
             sampleButton2.x = 50;
             sampleButton2.y = 400;
             this.Buttons.Add(sampleButton2);
+        }
+        public ControllerViewModel(IsolatedStorageFileStream file)
+        {
+            StreamReader reader = new StreamReader(file);
+            Title = reader.ReadLine();
+            Subtitle = reader.ReadLine();
+
+            this.Buttons = new ObservableCollection<ControllerButton>();
+            int numButtons = Convert.ToInt16(reader.ReadLine());
+            for (int i = 0; i < numButtons; ++i)
+            {
+                Buttons.Add(new ControllerButton(reader));
+            }
         }
         private Canvas _UICanvas;
         public Canvas UICanvas
@@ -116,6 +132,26 @@ namespace Actual_windows_phone_controller.ViewModels
                     _subtitle = value;
                     NotifyPropertyChanged("Subtitle");
                 }
+            }
+        }
+        public void Save()
+        {
+            IsolatedStorageFile localFileSystem = IsolatedStorageFile.GetUserStoreForApplication();
+            if (localFileSystem.FileExists("Controller" + ID + ".txt"))
+            {
+                localFileSystem.DeleteFile("Controller" + ID + ".txt");
+            }
+            IsolatedStorageFileStream controllerFile = new IsolatedStorageFileStream("Controller" + ID + ".txt", FileMode.Create, localFileSystem);
+            using (StreamWriter writer = new StreamWriter(controllerFile))
+            {
+                writer.WriteLine(Title);
+                writer.WriteLine(Subtitle);
+                writer.WriteLine(Buttons.Count);
+                foreach (ControllerButton button in Buttons)
+                {
+                    button.Save(writer);
+                }
+                writer.Close();
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
