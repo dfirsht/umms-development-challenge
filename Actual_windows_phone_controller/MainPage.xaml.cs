@@ -75,6 +75,11 @@ namespace Actual_windows_phone_controller
         {
             NavigationService.Navigate(new Uri("/ConnectionPage.xaml", UriKind.Relative));
         }
+        private void CreatePage_Click(object sender, RoutedEventArgs e) 
+        { 
+            NavigationService.Navigate(new Uri("/CreationPage.xaml", UriKind.RelativeOrAbsolute)); 
+        } 
+
         private void add_button_pressed(object sender, RoutedEventArgs e)
         {
             App.ViewModel.addItem("New Controller!");
