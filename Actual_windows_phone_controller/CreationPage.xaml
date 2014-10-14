@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="Actual_windows_phone_controller.Page1"
+    x:Class="Actual_windows_phone_controller.CreationPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -21,23 +21,25 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0" Margin="12,17,0,28" HorizontalAlignment="Left">
             <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}">
-            	<Run Text="Connection"/>
-            	<LineBreak/>
-            	<Run/>
-            </TextBlock>
+            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Margin="10,191,14,66" Grid.RowSpan="2">
-            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="216.106.158.245" VerticalAlignment="Top" Width="456"/>
-            <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
-            <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
-            <Button x:Name="HelloButton" Content="Mute" HorizontalAlignment="Left" Margin="142,304,0,0" VerticalAlignment="Top" Click="SendMessage" Visibility="Collapsed"/>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+
+            <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+            </Canvas>-->
+            <Canvas>
+                <Rectangle Fill="#FF00FFE8" x:Name="rectangle"
+                 Width="100" Height="100" Canvas.Left="356"/>
+            </Canvas>
 
         </Grid>
     </Grid>
+
+
 
 </phone:PhoneApplicationPage>

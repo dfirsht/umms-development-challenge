@@ -11,6 +11,7 @@ using Windows.Networking;
 using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+using System.Threading;
 
 namespace Actual_windows_phone_controller
 {
@@ -86,7 +87,7 @@ namespace Actual_windows_phone_controller
 
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
-            string stringToSend = "Hello World";
+            string stringToSend = "nircmd.exe mutesysvolume 1<EOF>";
 
             writer.WriteUInt32(writer.MeasureString(stringToSend));
             writer.WriteString(stringToSend);

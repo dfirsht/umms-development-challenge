@@ -1,16 +1,16 @@
-﻿<vm:MainViewModel
+﻿<vm:ControllerCollectionViewModel
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:Actual_windows_phone_controller.ViewModels"
     SampleProperty="Sample Text Property Value">
 
-    <vm:MainViewModel.Items>
-        <vm:ItemViewModel ID="0" LineOne="design one" LineTwo="Maecenas praesent accumsan bibendum" LineThree="Maecenas praesent accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur"/>
-        <vm:ItemViewModel ID="1" LineOne="design two" LineTwo="Dictumst eleifend facilisi faucibus" LineThree="Pharetra placerat pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent"/>
-        <vm:ItemViewModel ID="2" LineOne="design three" LineTwo="Habitant inceptos interdum lobortis" LineThree="Accumsan bibendum dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat"/>
-        <vm:ItemViewModel ID="3" LineOne="design four" LineTwo="Nascetur pharetra placerat pulvinar" LineThree="Pulvinar sagittis senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum"/>
-        <vm:ItemViewModel ID="4" LineOne="design five" LineTwo="Sagittis senectus sociosqu suscipit" LineThree="Dictumst eleifend facilisi faucibus habitant inceptos interdum lobortis nascetur pharetra placerat pulvinar sagittis"/>
-        <vm:ItemViewModel ID="5" LineOne="design six" LineTwo="Torquent ultrices vehicula volutpat" LineThree="Senectus sociosqu suscipit torquent ultrices vehicula volutpat maecenas praesent accumsan bibendum dictumst eleifend"/>
-    </vm:MainViewModel.Items>
+    <vm:ControllerCollectionViewModel.Items>
+        <vm:ControllerViewModel ID="0" Title="design one" Subtitle="Maecenas praesent accumsan bibendum" />
+        <vm:ControllerViewModel ID="1" Title="design two" Subtitle="Dictumst eleifend facilisi faucibus" />
+        <vm:ControllerViewModel ID="2" Title="design three" Subtitle="Habitant inceptos interdum lobortis" />
+        <vm:ControllerViewModel ID="3" Title="design four" Subtitle="Nascetur pharetra placerat pulvinar" />
+        <vm:ControllerViewModel ID="4" Title="design five" Subtitle="Sagittis senectus sociosqu suscipit" />
+        <vm:ControllerViewModel ID="5" Title="design six" Subtitle="Torquent ultrices vehicula volutpat" />
+    </vm:ControllerCollectionViewModel.Items>
 
-</vm:MainViewModel>
+</vm:ControllerCollectionViewModel>
