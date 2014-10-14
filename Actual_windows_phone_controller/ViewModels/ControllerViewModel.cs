@@ -33,6 +33,7 @@ namespace Actual_windows_phone_controller.ViewModels
         public ControllerViewModel(IsolatedStorageFileStream file)
         {
             StreamReader reader = new StreamReader(file);
+            ID = reader.ReadLine();
             Title = reader.ReadLine();
             Subtitle = reader.ReadLine();
 
@@ -144,6 +145,7 @@ namespace Actual_windows_phone_controller.ViewModels
             IsolatedStorageFileStream controllerFile = new IsolatedStorageFileStream("Controller" + ID + ".txt", FileMode.Create, localFileSystem);
             using (StreamWriter writer = new StreamWriter(controllerFile))
             {
+                writer.WriteLine(ID);
                 writer.WriteLine(Title);
                 writer.WriteLine(Subtitle);
                 writer.WriteLine(Buttons.Count);

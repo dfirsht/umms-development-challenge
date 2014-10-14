@@ -61,7 +61,7 @@ namespace Actual_windows_phone_controller.ViewModels
         /// </summary>
         public void LoadData()
         {
-            //IsolatedStorageSettings.ApplicationSettings.Clear();
+            // IsolatedStorageSettings.ApplicationSettings.Clear();
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("ControllerCollectionCount"))
             {
                 //// Sample data; replace with real data
@@ -91,7 +91,6 @@ namespace Actual_windows_phone_controller.ViewModels
                 {
                     IsolatedStorageFileStream controllerData = localFileSystem.OpenFile("Controller" + i.ToString() + ".txt",System.IO.FileMode.Open,System.IO.FileAccess.Read);
                     ControllerViewModel newController = new ControllerViewModel(controllerData);
-                    newController.ID = i.ToString();
 
                     this.Items.Add(newController);
                 }
