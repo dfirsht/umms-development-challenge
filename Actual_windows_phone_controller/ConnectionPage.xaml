@@ -32,10 +32,12 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Margin="10,191,14,66" Grid.RowSpan="2">
-            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="216.106.158.245" VerticalAlignment="Top" Width="456"/>
+            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="216.106.156" VerticalAlignment="Top" Width="456"/>
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
             <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
             <Button x:Name="HelloButton" Content="Mute" HorizontalAlignment="Left" Margin="142,304,0,0" VerticalAlignment="Top" Click="SendMessage" Visibility="Collapsed"/>
+            <TextBox x:Name="SendKeyBox" HorizontalAlignment="Left" Height="72" Margin="0,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" 
+                      KeyDown="OnKeyDownHandler" GotFocus="textBox_GotFocus" Visibility="Collapsed" />
 
         </Grid>
     </Grid>

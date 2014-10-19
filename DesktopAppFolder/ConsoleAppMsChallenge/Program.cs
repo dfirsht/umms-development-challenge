@@ -10,24 +10,15 @@ using System.Threading;
 
 namespace CMD
 {
-    public class Alpha
-    {
-
-        // This method that will be called when the thread is started
-        public void Beta()
-        {
-            while (true)
-            {
-                Console.WriteLine("Alpha.Beta is running in its own thread.");
-            }
-        }
-    };
-
     public class Program
     {
         public static StreamWriter cmd_writer;
         public static readonly object cmdLock = new object();
+        public static readonly object keyLock = new object();
+
         public static string cmdString = "";
+        public static string keyString = "";
+
 
          static void Main(string[] args)
          {
@@ -44,10 +35,14 @@ namespace CMD
                  CreateCmdWindow();
                  Monitor.PulseAll(cmdLock);
              }
+             
+             Console.WriteLine(MouseControl.getMouseX());
 
-             // this is my event loop
-             while(true)
+
+             SendKeyStrokes();
+             /*while(true)
              {
+                 
                  lock (cmdLock)
                  {
                      while (cmdString == "")
@@ -58,7 +53,7 @@ namespace CMD
                      ConsoleCall(cmdString);
                      Monitor.PulseAll(cmdLock);
                  }
-             }
+             }*/
              
          }
 
@@ -89,5 +84,36 @@ namespace CMD
              cmd_writer.WriteLine(cmd_output);
              cmdString = "";
          }
+
+        private static void SendKeyStrokes()
+        {
+            while (true)
+            {
+
+                lock (keyLock)
+                {
+                    while (keyString == "")
+                    {
+                        // to reduce buisy waiting
+                        Monitor.Wait(keyLock);
+                    }
+                    if (keyString == "Space")
+                    {
+                        keyString = " ";
+                    }
+                    else
+                    {
+                        if(keyString == "Back")
+                        {
+                            keyString = "BS";
+                        }
+                        keyString = '{' + keyString + '}';
+                    }
+                    KeyControl.sendWait(keyString);
+                    keyString = "";
+                    Monitor.PulseAll(keyLock);
+                }
+            }
+        }
     };
 }
