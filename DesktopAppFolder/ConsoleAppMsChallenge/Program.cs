@@ -16,8 +16,13 @@ namespace CMD
         public static readonly object cmdLock = new object();
         public static readonly object keyLock = new object();
 
-        public static string cmdString = "";
-        public static string keyString = "";
+        private  const string cmdString = "";
+        private  const string keyString = "";
+
+        // these variables corrispond with how many functions we can call
+        // each string is filled by the network loop
+        public static Action<int> [] functions = {SendKeyStrokes, ConsoleCall};
+        public static string[] callStrings = {keyString, cmdString}; 
 
 
          static void Main(string[] args)
@@ -38,23 +43,7 @@ namespace CMD
              
              Console.WriteLine(MouseControl.getMouseX());
 
-
-             SendKeyStrokes();
-             /*while(true)
-             {
-                 
-                 lock (cmdLock)
-                 {
-                     while (cmdString == "")
-                     {
-                         // to reduce buisy waiting
-                         Monitor.Wait(cmdLock);
-                     }
-                     ConsoleCall(cmdString);
-                     Monitor.PulseAll(cmdLock);
-                 }
-             }*/
-             
+             ReadInput();
          }
 
         private static void CreateCmdWindow()
@@ -79,30 +68,57 @@ namespace CMD
             cmd_writer = process.StandardInput;
          }
 
-         public static void ConsoleCall(string cmd_output)
-         {
-             cmd_writer.WriteLine(cmd_output);
-             cmdString = "";
-         }
-
-        private static void SendKeyStrokes()
+        private static void ReadInput()
         {
             while (true)
             {
 
                 lock (keyLock)
                 {
-                    while (keyString == "")
+                    while (CheckCallStrings(false))
                     {
                         // to reduce buisy waiting
                         Monitor.Wait(keyLock);
                     }
-                    KeyControl.sendWait(keyString);
-                    keyString = "";
+                    for (int i = 0; i < callStrings.Length; i++)
+                    {
+                        if (callStrings[i] != "")
+                        {
+                            functions[i](i);
+                        }
+                    }
                     Monitor.PulseAll(keyLock);
                 }
             }
         }
 
+        public static bool CheckCallStrings(bool ret)
+        {
+            for(int i =0; i < callStrings.Length ;i++)
+            {
+                if (callStrings[i] != "")
+                {
+                    return ret;
+                }
+            }
+            return !ret;
+        }
+
+
+        // ******these are the functions we call to do stuff****
+        
+        // keystroke call
+        private static void SendKeyStrokes(int i)
+        {
+            KeyControl.sendWait(callStrings[i]);
+            callStrings[i] = "";
+        }
+
+        // windows terminal call
+        public static void ConsoleCall(int i)
+        {
+            cmd_writer.WriteLine(callStrings[i]);
+            callStrings[i] = "";
+        }
     };
 }

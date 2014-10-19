@@ -161,16 +161,16 @@ public class AsynchronousSocketListener
             // Check for end-of-file tag. If it is not there, read 
             // more data.
             content = state.sb.ToString();
-           // Console.WriteLine(content);
+
             // find first instance of eof
             int i = 0;
             bool eof = false;
             for (i = 0; i < content.Length; i++)
             {
-                if(content[i] == '<')
+                if (content[i] == '<' && content[i + 4] == '>')
                 {
-                    eof = true;
-                    break;
+                     eof = true;
+                     break;
                 }
             }
             if (eof)
@@ -184,40 +184,36 @@ public class AsynchronousSocketListener
                 Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
                     content.Length, msg);
 
-
-
                 lock (CMD.Program.keyLock)
                 {
                     // this sets the string so if last command is taking a
                     // bit this will halt, ensures that last command is finshed before new
                     // one is started (however there are draw backs to this method)
-                    while (CMD.Program.keyString != "")
+
+                    // reverse checkcall 
+                    while (CMD.Program.CheckCallStrings(true))
                     {
                         // to reduce buisy waiting
                         Monitor.Wait(CMD.Program.keyLock);
                     }
-                    CMD.Program.keyString = msg;
+                    string fill = msg.Substring(1, msg.Length-1);
+
+                    if(msg[0] == 'k')
+                    {
+                        CMD.Program.callStrings[0] = fill;
+                    }
+                    else if(msg[0] == 'c')
+                    {
+                        CMD.Program.callStrings[1] = fill;
+                    }
+                    else
+                    {
+                        // this should never happen, it means that the there is no first tag
+                        Exception e = new Exception("invalid network tag");
+                        throw e;
+                    }
                     Monitor.Pulse(CMD.Program.keyLock);
                 }
-
-                // this is the inverse lock of my main thread
-                /* lock (CMD.Program.cmdLock)
-                    {
-                        // this sets the string so if last command is taking a
-                        // bit this will halt, ensures that last command is finshed before new
-                        // one is started (however there are draw backs to this method)
-                        while (CMD.Program.cmdString != "")
-                        {
-                            // to reduce buisy waiting
-                            Monitor.Wait(CMD.Program.cmdLock);
-                        }
-                        CMD.Program.cmdString = content;
-                        Monitor.Pulse(CMD.Program.cmdLock);
-                    }*/
-
-
-                // Echo the data back to the client.
-                // Send(handler, content);
             }
             else
             {
@@ -273,10 +269,4 @@ public class AsynchronousSocketListener
             return true;
         }
     }
-
-    /*public static int Main(String[] args)
-    {
-        StartListening();
-        return 0;
-    }*/
 }

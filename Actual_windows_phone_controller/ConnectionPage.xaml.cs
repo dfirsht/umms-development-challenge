@@ -97,7 +97,7 @@ namespace Actual_windows_phone_controller
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
             string stringToSend = "nircmd.exe mutesysvolume 1";
-
+            stringToSend = 'c' + stringToSend;
             SendString(stringToSend);
         }
 
@@ -155,6 +155,7 @@ namespace Actual_windows_phone_controller
             }
             SendKeyBox.Text = "";
             NotifyUser.Text = "You Entered: " + stringToSend;
+            stringToSend = 'k' + stringToSend;
             SendString(stringToSend);
         }
 
@@ -182,11 +183,11 @@ namespace Actual_windows_phone_controller
             string stringToSend;
             if(e.Key == Key.Enter)
             {
-                stringToSend = "~";
+                stringToSend = "k~";
             }
             else
             {
-                stringToSend = "{BS}";
+                stringToSend = "k{BS}";
             }
 
             NotifyUser.Text = "You Entered: " + stringToSend;
