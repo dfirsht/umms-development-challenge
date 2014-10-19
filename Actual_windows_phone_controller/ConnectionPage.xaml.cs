@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
@@ -12,6 +13,7 @@ using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Threading;
+using Windows.UI;
 
 namespace Actual_windows_phone_controller
 {
@@ -21,9 +23,14 @@ namespace Actual_windows_phone_controller
         //NetworkAdapter adapter = null;
         StreamSocket socket;
         DataWriter writer;
+        bool shift = false;
+        Dictionary<String, String> convertKey = new Dictionary<String,String>();
+        
+        
 
         public Page1()
         {
+            InitDict();
             InitializeComponent();
         }
 
@@ -63,11 +70,13 @@ namespace Actual_windows_phone_controller
                 NotifyUser.Text = "Connecting to port: " + "7777" + " with ip: " + ipString + '.';
                 await socket.ConnectAsync(hostname, portNum);
                 NotifyUser.Text = "Connected";
+                writer = new DataWriter(socket.OutputStream);
                 HelloButton.Visibility = Visibility.Visible;
+                SendKeyBox.Visibility = Visibility.Visible;
 
                 // Mark the socket as connected. Set the value to null, as we care only about the fact that the 
                 // property is set.
-               // CoreApplication.Properties.Add("connected", null);
+                // CoreApplication.Properties.Add("connected", null);
             }
             catch (Exception exception)
             {
@@ -80,15 +89,36 @@ namespace Actual_windows_phone_controller
             }
         }
 
-        private async void SendMessage(object sender, RoutedEventArgs e)
+        private void SendMessage(object sender, RoutedEventArgs e)
         {
-            writer = new DataWriter(socket.OutputStream);
+
             //CoreApplication.Properties.Add("clientDataWriter", writer);
 
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
-            string stringToSend = "nircmd.exe mutesysvolume 1<EOF>";
+            string stringToSend = "nircmd.exe mutesysvolume 1";
 
+            SendString(stringToSend);
+        }
+
+
+        private bool isCaps()
+        {
+            // all this to get the state of caps lock.....
+            //Windows.UI.Core.CoreVirtualKeyStates keyState = Windows.UI.Core.CoreWindow.GetForCurrentThread().GetKeyState((Windows.System.VirtualKey.CapitalLock));
+            
+            Windows.System.VirtualKey x = Windows.System.VirtualKey.CapitalLock;
+            Windows.UI.Core.CoreVirtualKeyStates keyState = Windows.UI.Core.CoreWindow.GetForCurrentThread().GetKeyState(x);
+            if(keyState == Windows.UI.Core.CoreVirtualKeyStates.Locked)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private async void SendString(string stringToSend)
+        {
+            stringToSend += "<EOF>";
             writer.WriteUInt32(writer.MeasureString(stringToSend));
             writer.WriteString(stringToSend);
 
@@ -105,10 +135,63 @@ namespace Actual_windows_phone_controller
                 {
                     throw;
                 }
-
-               NotifyUser.Text = "Send failed with error: " + exception.Message;
+                NotifyUser.Text = "Send failed with error: " + exception.Message;
             }
         }
-        
+
+        private void OnKeyDownHandler(object sender, TextChangedEventArgs e)
+        {
+            if (SendKeyBox.Text == "" || SendKeyBox.Text == "£" || SendKeyBox.Text == "€" ||
+                SendKeyBox.Text == "¥" || SendKeyBox.Text == "•")
+            {
+                return;
+            }
+
+            string stringToSend = SendKeyBox.Text;
+           
+            if (convertKey.ContainsKey(stringToSend))
+            {
+                stringToSend = convertKey[stringToSend];
+            }
+            SendKeyBox.Text = "";
+            NotifyUser.Text = "You Entered: " + stringToSend;
+            SendString(stringToSend);
+        }
+
+        private void InitDict()
+        {
+            convertKey.Add("?", "{?}");
+            convertKey.Add("^", "{^}");
+            convertKey.Add("+", "{+}");
+            convertKey.Add("%", "{%}");
+            convertKey.Add("~", "{~}");
+            convertKey.Add("{", "{{}");
+            convertKey.Add("}", "{}}");
+            convertKey.Add("(", "{(}");
+            convertKey.Add(")", "{)}");
+            convertKey.Add("[", "{[}");
+            convertKey.Add("]", "{]}");
+        }
+
+        private void EnterDel(object sender, KeyEventArgs e)
+        {
+            if(e.Key != Key.Enter && e.Key != Key.Back)
+            {
+                return;
+            }
+            string stringToSend;
+            if(e.Key == Key.Enter)
+            {
+                stringToSend = "~";
+            }
+            else
+            {
+                stringToSend = "{BS}";
+            }
+
+            NotifyUser.Text = "You Entered: " + stringToSend;
+            SendString(stringToSend);
+        }
+
     }
 }
