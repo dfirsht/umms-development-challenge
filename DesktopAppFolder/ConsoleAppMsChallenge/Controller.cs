@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Input;
 
 namespace CMD
 {
@@ -42,6 +43,12 @@ namespace CMD
                 IntPtr lParam
             );
 
+            /*static extern short VkKeyScan(char ch);
+
+            static public System.Windows.Input.Key ResolveKey(char charToResolve)
+            {
+                return System.Windows.Input.KeyInterop.KeyFromVirtualKey(VkKeyScan(charToResolve));
+            }*/
 
             /**
              * Increases the volume (by 2 units).
@@ -174,6 +181,8 @@ namespace CMD
             {
                 SendKeys.SendWait(key);
             }
+
+           
        }
 
 }

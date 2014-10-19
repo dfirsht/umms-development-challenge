@@ -97,23 +97,12 @@ namespace CMD
                         // to reduce buisy waiting
                         Monitor.Wait(keyLock);
                     }
-                    if (keyString == "Space")
-                    {
-                        keyString = " ";
-                    }
-                    else
-                    {
-                        if(keyString == "Back")
-                        {
-                            keyString = "BS";
-                        }
-                        keyString = '{' + keyString + '}';
-                    }
                     KeyControl.sendWait(keyString);
                     keyString = "";
                     Monitor.PulseAll(keyLock);
                 }
             }
         }
+
     };
 }

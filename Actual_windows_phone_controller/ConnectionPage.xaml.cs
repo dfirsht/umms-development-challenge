@@ -13,6 +13,7 @@ using Windows.Networking.Connectivity;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Threading;
+using Windows.UI;
 
 namespace Actual_windows_phone_controller
 {
@@ -23,10 +24,13 @@ namespace Actual_windows_phone_controller
         StreamSocket socket;
         DataWriter writer;
         bool shift = false;
-        bool capsLock = false;
+        Dictionary<String, String> convertKey = new Dictionary<String,String>();
+        
+        
 
         public Page1()
         {
+            InitDict();
             InitializeComponent();
         }
 
@@ -92,41 +96,11 @@ namespace Actual_windows_phone_controller
 
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
-            string stringToSend = "nircmd.exe mutesysvolume 1<EOF>";
+            string stringToSend = "nircmd.exe mutesysvolume 1";
 
             SendString(stringToSend);
         }
 
-        private void OnKeyDownHandler(object sender, KeyEventArgs k)
-        {
-            SendKeyBox.Text = "";
-            if (k.Key == Key.Shift)
-            {
-                shift = !shift;
-            }
-            else
-            {
-                string stringToSend = k.Key + "";
-
-                if (!shift /*!isCaps())*/ && stringToSend.Length == 1)
-                {
-                    
-                    if(Char.IsLetter(stringToSend[0]))
-                    {
-                        char x = char.ToLower(stringToSend[0]);
-                        stringToSend = x + "";
-                    }
-                }
-                else
-                {
-                    stringToSend = k.Key + "<EOF>";
-                }
-
-                shift = false;
-                NotifyUser.Text = "You Entered: " + stringToSend;
-                SendString(stringToSend);
-            }
-        }
 
         private bool isCaps()
         {
@@ -144,6 +118,7 @@ namespace Actual_windows_phone_controller
 
         private async void SendString(string stringToSend)
         {
+            stringToSend += "<EOF>";
             writer.WriteUInt32(writer.MeasureString(stringToSend));
             writer.WriteString(stringToSend);
 
@@ -164,13 +139,58 @@ namespace Actual_windows_phone_controller
             }
         }
 
-        private void textBox_GotFocus(object sender, RoutedEventArgs e)
+        private void OnKeyDownHandler(object sender, TextChangedEventArgs e)
         {
-            var state = Windows.UI.Core.CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.CapitalLock);
-            if (state == Windows.UI.Core.CoreVirtualKeyStates.Locked)
+            if (SendKeyBox.Text == "" || SendKeyBox.Text == "£" || SendKeyBox.Text == "€" ||
+                SendKeyBox.Text == "¥" || SendKeyBox.Text == "•")
             {
-                capsLock = true;
+                return;
             }
+
+            string stringToSend = SendKeyBox.Text;
+           
+            if (convertKey.ContainsKey(stringToSend))
+            {
+                stringToSend = convertKey[stringToSend];
+            }
+            SendKeyBox.Text = "";
+            NotifyUser.Text = "You Entered: " + stringToSend;
+            SendString(stringToSend);
+        }
+
+        private void InitDict()
+        {
+            convertKey.Add("?", "{?}");
+            convertKey.Add("^", "{^}");
+            convertKey.Add("+", "{+}");
+            convertKey.Add("%", "{%}");
+            convertKey.Add("~", "{~}");
+            convertKey.Add("{", "{{}");
+            convertKey.Add("}", "{}}");
+            convertKey.Add("(", "{(}");
+            convertKey.Add(")", "{)}");
+            convertKey.Add("[", "{[}");
+            convertKey.Add("]", "{]}");
+        }
+
+        private void EnterDel(object sender, KeyEventArgs e)
+        {
+            if(e.Key != Key.Enter && e.Key != Key.Back)
+            {
+                return;
+            }
+            string stringToSend;
+            if(e.Key == Key.Enter)
+            {
+                stringToSend = "~";
+            }
+            else
+            {
+                stringToSend = "{BS}";
+            }
+
+            NotifyUser.Text = "You Entered: " + stringToSend;
+            SendString(stringToSend);
         }
 
     }
