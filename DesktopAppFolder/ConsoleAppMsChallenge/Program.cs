@@ -18,11 +18,12 @@ namespace CMD
 
         private  const string cmdString = "";
         private  const string keyString = "";
+        private const string mouseString = "";
 
         // these variables corrispond with how many functions we can call
         // each string is filled by the network loop
-        public static Action<int> [] functions = {SendKeyStrokes, ConsoleCall};
-        public static string[] callStrings = {keyString, cmdString}; 
+        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos};
+        public static string[] callStrings = { keyString, cmdString, mouseString }; 
 
 
          static void Main(string[] args)
@@ -85,6 +86,7 @@ namespace CMD
                         if (callStrings[i] != "")
                         {
                             functions[i](i);
+                            callStrings[i] = "";
                         }
                     }
                     Monitor.PulseAll(keyLock);
@@ -111,14 +113,21 @@ namespace CMD
         private static void SendKeyStrokes(int i)
         {
             KeyControl.sendWait(callStrings[i]);
-            callStrings[i] = "";
         }
 
         // windows terminal call
         public static void ConsoleCall(int i)
         {
-            cmd_writer.WriteLine(callStrings[i]);
-            callStrings[i] = "";
+            cmd_writer.WriteLine(callStrings[i]); 
+        }
+
+        private static void SendMousePos(int i)
+        {
+            int x = Convert.ToInt32(callStrings[i].Substring(0, 4));
+            int y = Convert.ToInt32(callStrings[i].Substring(4, 4));
+
+            Console.WriteLine("x : " + x + ", y : " + y);
+            MouseControl.setMouse(x, y);
         }
     };
 }

@@ -25,7 +25,10 @@ namespace Actual_windows_phone_controller
         DataWriter writer;
         bool shift = false;
         Dictionary<String, String> convertKey = new Dictionary<String,String>();
-        
+        public char keyTag = 'k';
+        public char cmdTag = 'c';
+        public char mouseTag = 'm';
+        public bool mouseOn = false;
         
 
         public Page1()
@@ -97,7 +100,7 @@ namespace Actual_windows_phone_controller
             // Write first the length of the string as UINT32 value followed up by the string. 
             // Writing data to the writer will just store data in memory.
             string stringToSend = "nircmd.exe mutesysvolume 1";
-            stringToSend = 'c' + stringToSend;
+            stringToSend = cmdTag + stringToSend;
             SendString(stringToSend);
         }
 
@@ -155,7 +158,7 @@ namespace Actual_windows_phone_controller
             }
             SendKeyBox.Text = "";
             NotifyUser.Text = "You Entered: " + stringToSend;
-            stringToSend = 'k' + stringToSend;
+            stringToSend = keyTag + stringToSend;
             SendString(stringToSend);
         }
 
@@ -183,16 +186,52 @@ namespace Actual_windows_phone_controller
             string stringToSend;
             if(e.Key == Key.Enter)
             {
-                stringToSend = "k~";
+                stringToSend = keyTag + "~";
             }
             else
             {
-                stringToSend = "k{BS}";
+                stringToSend = keyTag + "{BS}";
             }
 
             NotifyUser.Text = "You Entered: " + stringToSend;
             SendString(stringToSend);
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            mouseOn = !mouseOn;
+        }
+
+        private void SendMouseMove(object sender, MouseEventArgs e)
+        {
+            if(mouseOn)
+            {
+                string x = RoundToSig(e.GetPosition(null).X);
+                string y = RoundToSig(e.GetPosition(null).Y);
+
+                NotifyUser.Text = "x = " + x + " y = " + y;
+                string stringToSend = mouseTag + x + y;
+                SendString(stringToSend);
+            }
+        }
+
+        private string RoundToSig(double x)
+        {
+            // this function is used to make every x+y an exact block size
+            // so that I can more quickly send mouse cordinates
+
+            string ret = Math.Round(x,0).ToString();
+
+            string foreZero = "0000";
+            for (int i = 0; i < ret.Length;  i++)
+            {
+               foreZero = foreZero.Remove(foreZero.Length - 1);
+            }
+
+            ret = foreZero + ret;
+
+
+            return ret;
+        }
     }
 }

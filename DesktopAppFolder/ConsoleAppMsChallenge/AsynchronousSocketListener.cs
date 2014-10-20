@@ -181,8 +181,8 @@ public class AsynchronousSocketListener
                 int cut = 4;
                 string msg = content.Substring(cut, (i-cut));
                 content = content.Substring(i);
-                Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                    content.Length, msg);
+               /* Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                    content.Length, msg);*/
 
                 lock (CMD.Program.keyLock)
                 {
@@ -205,6 +205,10 @@ public class AsynchronousSocketListener
                     else if(msg[0] == 'c')
                     {
                         CMD.Program.callStrings[1] = fill;
+                    }
+                    else if(msg[0] == 'm')
+                    {
+                        CMD.Program.callStrings[2] = fill;
                     }
                     else
                     {
