@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Globalization;
 
 namespace CMD
 {
@@ -123,11 +124,16 @@ namespace CMD
 
         private static void SendMousePos(int i)
         {
-            int x = Convert.ToInt32(callStrings[i].Substring(0, 4));
-            int y = Convert.ToInt32(callStrings[i].Substring(4, 4));
+            int x = int.Parse(callStrings[i].Substring(0, 4),NumberStyles.AllowLeadingSign);
+            int y = int.Parse(callStrings[i].Substring(4, 4), NumberStyles.AllowLeadingSign);
+            
 
+            x = x / 5;
+            y = y / 5;
+            
+            if (y == 0) { y = 1; }
             Console.WriteLine("x : " + x + ", y : " + y);
-            MouseControl.setMouse(x, y);
+            MouseControl.setMouse(MouseControl.getMouseX() + x, MouseControl.getMouseY() + y);
         }
     };
 }

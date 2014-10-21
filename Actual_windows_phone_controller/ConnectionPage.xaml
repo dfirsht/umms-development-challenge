@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" MouseMove="SendMouseMove">
+    <Grid x:Name="LayoutRoot" Background="Transparent" MouseMove="SendMouseMove" MouseEnter="LayoutRoot_MouseEnter">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

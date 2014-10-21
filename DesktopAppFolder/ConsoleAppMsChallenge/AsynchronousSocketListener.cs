@@ -213,8 +213,8 @@ public class AsynchronousSocketListener
                     else
                     {
                         // this should never happen, it means that the there is no first tag
-                        Exception e = new Exception("invalid network tag");
-                        throw e;
+                       // Exception e = new Exception("invalid network tag");
+                       // throw e;
                     }
                     Monitor.Pulse(CMD.Program.keyLock);
                 }

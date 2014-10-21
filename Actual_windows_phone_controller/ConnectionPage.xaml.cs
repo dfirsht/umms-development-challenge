@@ -23,12 +23,14 @@ namespace Actual_windows_phone_controller
         //NetworkAdapter adapter = null;
         StreamSocket socket;
         DataWriter writer;
-        bool shift = false;
+
         Dictionary<String, String> convertKey = new Dictionary<String,String>();
         public char keyTag = 'k';
         public char cmdTag = 'c';
         public char mouseTag = 'm';
         public bool mouseOn = false;
+        public double mouseX = 0;
+        public double mouseY = 0;
         
 
         public Page1()
@@ -129,7 +131,7 @@ namespace Actual_windows_phone_controller
             try
             {
                 await writer.StoreAsync();
-                NotifyUser.Text = "\"" + stringToSend + "\" sent successfully.";
+               // NotifyUser.Text = "\"" + stringToSend + "\" sent successfully.";
             }
             catch (Exception exception)
             {
@@ -193,7 +195,7 @@ namespace Actual_windows_phone_controller
                 stringToSend = keyTag + "{BS}";
             }
 
-            NotifyUser.Text = "You Entered: " + stringToSend;
+            //NotifyUser.Text = "You Entered: " + stringToSend;
             SendString(stringToSend);
         }
 
@@ -206,9 +208,13 @@ namespace Actual_windows_phone_controller
         {
             if(mouseOn)
             {
-                string x = RoundToSig(e.GetPosition(null).X);
-                string y = RoundToSig(e.GetPosition(null).Y);
+                string x;
+                string y;
 
+                x = RoundToSig(e.GetPosition(null).X - mouseX);
+                y = RoundToSig(e.GetPosition(null).Y - mouseY);
+
+               
                 NotifyUser.Text = "x = " + x + " y = " + y;
                 string stringToSend = mouseTag + x + y;
                 SendString(stringToSend);
@@ -219,10 +225,23 @@ namespace Actual_windows_phone_controller
         {
             // this function is used to make every x+y an exact block size
             // so that I can more quickly send mouse cordinates
-
-            string ret = Math.Round(x,0).ToString();
-
-            string foreZero = "0000";
+            
+            string ret = Math.Round(Math.Abs(x),0).ToString();
+            bool neg = false;
+            if (x < 0)
+            {
+                neg = true;
+            }
+            string foreZero;
+            if(neg)
+            {
+                foreZero = "-000";
+            }
+            else
+            {
+                foreZero = "0000";
+            }
+           
             for (int i = 0; i < ret.Length;  i++)
             {
                foreZero = foreZero.Remove(foreZero.Length - 1);
@@ -232,6 +251,15 @@ namespace Actual_windows_phone_controller
 
 
             return ret;
+        }
+
+        private void LayoutRoot_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (mouseOn)
+            {
+                mouseX = e.GetPosition(null).X;
+                mouseY = e.GetPosition(null).Y;
+            }
         }
     }
 }
