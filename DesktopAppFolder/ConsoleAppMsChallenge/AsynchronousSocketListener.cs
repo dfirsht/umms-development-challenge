@@ -127,11 +127,17 @@ public class AsynchronousSocketListener
         Socket listener = (Socket)ar.AsyncState;
         Socket handler = listener.EndAccept(ar);
 
-        // Create the state object.
-        StateObject state = new StateObject();
-        state.workSocket = handler;
-        handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-            new AsyncCallback(ReadCallback), state);
+        // this is my loop to continue accepting messages from the mobile
+        // socket which i connected to.
+        while (pollSocket(listener))
+        {
+            // Create the state object.
+            StateObject state = new StateObject();
+            state.workSocket = handler;
+
+            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
+        }
     }
 
     public static void ReadCallback(IAsyncResult ar)
@@ -155,36 +161,63 @@ public class AsynchronousSocketListener
             // Check for end-of-file tag. If it is not there, read 
             // more data.
             content = state.sb.ToString();
-           // Console.WriteLine(content);
-            if (content.IndexOf("<EOF>") > -1)
+
+            // find first instance of eof
+            int i = 0;
+            bool eof = false;
+            for (i = 0; i < content.Length; i++)
+            {
+                if (content[i] == '<' && content[i + 4] == '>')
+                {
+                     eof = true;
+                     break;
+                }
+            }
+            if (eof)
             {
                 //Console.WriteLine("everything is done?");
                 // All the data has been read from the 
                 // client. Display it on the console.
                 int cut = 4;
-                content = content.Substring(cut,content.Length-(5+cut));
-                Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                    content.Length, content);
+                string msg = content.Substring(cut, (i-cut));
+                content = content.Substring(i);
+               /* Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
+                    content.Length, msg);*/
 
-
-                // this is the inverse lock of my main thread
-                lock (CMD.Program.cmdLock)
+                lock (CMD.Program.keyLock)
                 {
                     // this sets the string so if last command is taking a
                     // bit this will halt, ensures that last command is finshed before new
                     // one is started (however there are draw backs to this method)
-                    while (CMD.Program.cmdString != "")
+
+                    // reverse checkcall 
+                    while (CMD.Program.CheckCallStrings(true))
                     {
                         // to reduce buisy waiting
-                        Monitor.Wait(CMD.Program.cmdLock);
+                        Monitor.Wait(CMD.Program.keyLock);
                     }
-                    CMD.Program.cmdString = content;
-                    Monitor.Pulse(CMD.Program.cmdLock);
-                }
-               
+                    string fill = msg.Substring(1, msg.Length-1);
 
-                // Echo the data back to the client.
-               // Send(handler, content);
+                    if(msg[0] == 'k')
+                    {
+                        CMD.Program.callStrings[0] = fill;
+                    }
+                    else if(msg[0] == 'c')
+                    {
+                        CMD.Program.callStrings[1] = fill;
+                    }
+                    else if(msg[0] == 'm')
+                    {
+                        CMD.Program.callStrings[2] = fill;
+                    }
+                    else
+                    {
+                        // this should never happen, it means that the there is no first tag
+                       // Exception e = new Exception("invalid network tag");
+                       // throw e;
+                    }
+                    Monitor.Pulse(CMD.Program.keyLock);
+                }
             }
             else
             {
@@ -226,10 +259,18 @@ public class AsynchronousSocketListener
         }
     }
 
-
-    /*public static int Main(String[] args)
+    private static bool pollSocket(Socket s)
     {
-        StartListening();
-        return 0;
-    }*/
+        bool part1 = s.Poll(1000, SelectMode.SelectRead);
+        bool part2 = (s.Available == 0);
+        if (part1 && part2)
+        {
+            Console.WriteLine("meow I am a cat, please fear me, or you shall die!!!");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }

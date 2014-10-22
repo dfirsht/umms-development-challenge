@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.IsolatedStorage;
 using System.IO;
-using System.Text;
 
 namespace Actual_windows_phone_controller.ViewModels
 {

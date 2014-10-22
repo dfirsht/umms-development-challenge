@@ -1,6 +1,6 @@
 Create A Service Project
 	http://msdn.microsoft.com/en-us/library/zt39148a(v=vs.110).aspx
-
+	File > New Project > Visual # > Windows > Windows Service
 
 How To Run A Service
 	1)	Build project
