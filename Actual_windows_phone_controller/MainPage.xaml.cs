@@ -46,7 +46,7 @@ namespace Actual_windows_phone_controller
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
 
-            //MouseLeftButtonUp += item_released;
+            item_selected = 0;
         }
 
         // Load data for the ViewModel Items
@@ -87,6 +87,7 @@ namespace Actual_windows_phone_controller
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
         {
+            hideOptions(item_selected);
             foreach(UIElement element in (sender as StackPanel).Children) {
                 if (element.GetType().Name == "Canvas")
                 {
@@ -96,15 +97,6 @@ namespace Actual_windows_phone_controller
             (sender as StackPanel).Margin =  new Thickness(0,0,0,80);
             ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
             item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-
-            /*ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
-            //itemViewModel.Title = "cat";
-            item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-            // MessageBox.Show(item_held_selected.ToString());
-            item_held_down = true;
-            ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
-            ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Disabled);
-             */
         }
         private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -154,33 +146,9 @@ namespace Actual_windows_phone_controller
                 string temp = southernItem.Title;
                 southernItem.Title = NorthernItem.Title;
                 NorthernItem.Title = temp;
-                ListBoxItem currentListBoxItem =
-    (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
+                hideOptions(item_selected);
+                showOptions(item_selected - 1);
 
-                StackPanel currentStackPanel = (StackPanel)GetVisualChild<StackPanel>(currentListBoxItem);
-
-                foreach (UIElement element in currentStackPanel.Children)
-                {
-                    if (element.GetType().Name == "Canvas")
-                    {
-                        element.Visibility = Visibility.Collapsed;
-                    }
-                }
-                currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
-
-                ListBoxItem newListBoxItem =
-      (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected - 1));
-
-                StackPanel newStackPanel = (StackPanel)GetVisualChild<StackPanel>(newListBoxItem);
-
-                foreach (UIElement element in newStackPanel.Children)
-                {
-                    if (element.GetType().Name == "Canvas")
-                    {
-                        element.Visibility = Visibility.Visible;
-                    }
-                }
-                newStackPanel.Margin = new Thickness(0, 0, 0, 80);
                 item_selected--;
             }
         }
@@ -194,38 +162,45 @@ namespace Actual_windows_phone_controller
                 string temp = southernItem.Title;
                 southernItem.Title = NorthernItem.Title;
                 NorthernItem.Title = temp;
-                ListBoxItem currentListBoxItem =
-    (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected));
+                hideOptions(item_selected);
+                showOptions(item_selected + 1);
 
-                StackPanel currentStackPanel = (StackPanel)GetVisualChild<StackPanel>(currentListBoxItem);
-
-                foreach (UIElement element in currentStackPanel.Children)
-                {
-                    if (element.GetType().Name == "Canvas")
-                    {
-                        element.Visibility = Visibility.Collapsed;
-                    }
-                }
-                currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
-
-                ListBoxItem newListBoxItem =
-      (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(item_selected + 1));
-
-                StackPanel newStackPanel = (StackPanel)GetVisualChild<StackPanel>(newListBoxItem);
-
-                foreach (UIElement element in newStackPanel.Children)
-                {
-                    if (element.GetType().Name == "Canvas")
-                    {
-                        element.Visibility = Visibility.Visible;
-                    }
-                }
-                newStackPanel.Margin = new Thickness(0, 0, 0, 80);
                 item_selected++;
             }
         }
 
+        private void showOptions(int indexNumber)
+        {
+            ListBoxItem newListBoxItem =
+      (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(indexNumber));
 
+            StackPanel newStackPanel = (StackPanel)GetVisualChild<StackPanel>(newListBoxItem);
+
+            foreach (UIElement element in newStackPanel.Children)
+            {
+                if (element.GetType().Name == "Canvas")
+                {
+                    element.Visibility = Visibility.Visible;
+                }
+            }
+            newStackPanel.Margin = new Thickness(0, 0, 0, 80);
+        }
+        private void hideOptions(int indexNumber)
+        {
+            ListBoxItem currentListBoxItem =
+    (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(indexNumber));
+
+            StackPanel currentStackPanel = (StackPanel)GetVisualChild<StackPanel>(currentListBoxItem);
+
+            foreach (UIElement element in currentStackPanel.Children)
+            {
+                if (element.GetType().Name == "Canvas")
+                {
+                    element.Visibility = Visibility.Collapsed;
+                }
+            }
+            currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
+        }
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{
