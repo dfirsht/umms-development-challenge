@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Media;
+using System.Reflection;
+using System.ComponentModel;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Actual_windows_phone_controller.Resources;
@@ -46,7 +48,9 @@ namespace Actual_windows_phone_controller
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
 
-            item_selected = 0;
+            item_selected = -1;
+
+            
         }
 
         // Load data for the ViewModel Items
@@ -64,7 +68,10 @@ namespace Actual_windows_phone_controller
             // If selected item is null (no selection) do nothing
             if (MainLongListSelector.SelectedItem == null)
                 return;
-
+            if (App.ViewModel.Items.IndexOf((MainLongListSelector.SelectedItem as ControllerViewModel)) == item_selected)
+            {
+                return;
+            }
             // Navigate to the new page
             NavigationService.Navigate(new Uri("/ControllerPage.xaml?selectedItem=" + (MainLongListSelector.SelectedItem as ControllerViewModel).ID, UriKind.Relative));
 
@@ -87,54 +94,33 @@ namespace Actual_windows_phone_controller
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            hideOptions(item_selected);
-            foreach(UIElement element in (sender as StackPanel).Children) {
-                if (element.GetType().Name == "Canvas")
-                {
-                    element.Visibility = Visibility.Visible;
-                }
+            if(item_selected >= 0)
+            {
+                hideOptions(item_selected);
             }
-            (sender as StackPanel).Margin =  new Thickness(0,0,0,80);
             ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
-            item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-        }
-        private void item_released(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            /* if (item_held_down)
+            if (App.ViewModel.Items.IndexOf(itemViewModel) != item_selected)
             {
-                item_held_down = false;
-                MessageBox.Show("done");
-                ScrollViewer viewer = GetVisualChild<ScrollViewer>(MainLongListSelector);
-                ScrollViewer.SetVerticalScrollBarVisibility(viewer, ScrollBarVisibility.Auto);
-            }
-             */
-        }
-        private void item_moved(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            /*
-            if (item_held_down)
-            {
-                ItemViewModel itemViewModel = (sender as StackPanel).DataContext as ItemViewModel;
-                item_hovered_over = App.ViewModel.Items.IndexOf(itemViewModel);
-                ItemViewModel originalViewModel = App.ViewModel.Items.ElementAt<ItemViewModel>(item_held_selected);
-                MainLongListSelector.ScrollIntoView(originalViewModel);
-                if (item_hovered_over != item_held_selected)
+                foreach (UIElement element in (sender as StackPanel).Children)
                 {
-                    //string temp = itemViewModel.ID;
-                    //itemViewModel.ID = originalViewModel.ID;
-                    //originalViewModel.ID = temp;
-                    string temp = itemViewModel.Title;
-                    itemViewModel.Title = originalViewModel.Title;
-                    originalViewModel.Title = temp;
-
-                    item_held_selected = App.ViewModel.Items.IndexOf(itemViewModel);
-
-                    (sender as UIElement).CaptureMouse();
-            
-                    //App.ViewModel.moveItem(item_held_selected, item_hovered_over);
+                    if (element.GetType().Name == "Canvas")
+                    {
+                        element.Visibility = Visibility.Visible;
+                    }
+                    else if (element.GetType().Name == "TextBox")
+                    {
+                        (element as TextBox).Focus();
+                    }
                 }
+                (sender as StackPanel).Margin = new Thickness(0, 0, 0, 80);
+
+                item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
             }
-             */
+            else
+            {
+                item_selected = -1;
+                MainLongListSelector.Focus();
+            }
         }
 
         private void moveElementUp(object sender, RoutedEventArgs e)
@@ -182,6 +168,10 @@ namespace Actual_windows_phone_controller
                 {
                     element.Visibility = Visibility.Visible;
                 }
+                else if (element.GetType().Name == "TextBox")
+                {
+                    (element as TextBox).Focus();
+                }
             }
             newStackPanel.Margin = new Thickness(0, 0, 0, 80);
         }
@@ -200,6 +190,54 @@ namespace Actual_windows_phone_controller
                 }
             }
             currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
+        }
+
+        private void controllerTitleTextLostFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush whiteBrush = new SolidColorBrush(Colors.White);
+            (sender as TextBox).Foreground = whiteBrush;
+        }
+
+        private void controllerTitleTextGotFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Black);
+            (sender as TextBox).Foreground = blackBrush;
+        }
+
+        private void controllerTitleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            ControllerViewModel itemViewModel = (sender as TextBox).DataContext as ControllerViewModel;
+            itemViewModel.Title = (sender as TextBox).Text;
+            itemViewModel.Save();
+        }
+
+        private void controllerTitleTextHeld(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+        }
+
+        private void controllerTitleTextTapped(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            ControllerViewModel itemViewModel = (sender as TextBox).DataContext as ControllerViewModel;
+            int item_tapped = App.ViewModel.Items.IndexOf(itemViewModel);
+            if (item_tapped != item_selected)
+            {
+                MainLongListSelector.SelectedIndex = item_tapped;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void item_tapped(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
+            int item_tapped = App.ViewModel.Items.IndexOf(itemViewModel);
+            if (item_tapped == item_selected)
+            {
+                MainLongListSelector.Focus();
+                e.Handled = true;
+            }
         }
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()

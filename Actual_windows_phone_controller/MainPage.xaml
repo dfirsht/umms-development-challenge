@@ -51,8 +51,8 @@
             <ListBox x:Name="MainLongListSelector" Margin="0,0,-12,78" ItemsSource="{Binding Items}" SelectionChanged="MainLongListSelector_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel x:Name="MainStackPanel"  Margin="0,0,0,20" MouseMove="item_moved" Hold="item_held">
-                          <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                        <StackPanel x:Name="MainStackPanel"  Margin="0,0,0,20" Hold="item_held" Tap="item_tapped">
+                          <TextBox Text="{Binding Title}" FontSize="40" TextWrapping="Wrap" Foreground="White" Background="Black"  BorderThickness="0" LostFocus="controllerTitleTextLostFocus" GotFocus="controllerTitleTextGotFocus" TextChanged="controllerTitleTextChanged" Hold="controllerTitleTextHeld" Tap="controllerTitleTextTapped"/>
                           <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Margin="12,10,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
                             <Canvas x:Name="opitionPanel" Visibility="Collapsed">
                                 <Button Content="Up" Click="moveElementUp">
