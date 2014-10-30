@@ -5,13 +5,12 @@ using System.Windows.Forms;
 
 namespace CMD
 {
-    
         /**
          * Utility for controlling the volume.
          * 
          * Does REQUIRE a form handle.
          */
-        public class Controller
+        public class VolumeControl
         {
             private const int APPCOMMAND_VOLUME_MUTE = 0x80000;
             private const int APPCOMMAND_VOLUME_UP = 0xA0000;
@@ -282,8 +281,6 @@ namespace CMD
             //Standard Windows Programs
             public static String appInternetExplorer = "iexplore.exe";
             public static String appFileExplorer = "explorer.exe";
-            public static String appWebBrowser = "http://www.microsoft.com";
-            public static String appWebGoogle = "http://www.google.com";
 
             //Microsoft Office
             public static String appMSWord = "winword.exe";
@@ -291,16 +288,15 @@ namespace CMD
             public static String appMSExcel = "excel.exe";
             //---------------------------------------------------------------------
 
-            //Useful Keywords
-            //---------------------------------------------------------------------
-            public static String appWebSearch = "http://google.com/serach?q=";
-            //---------------------------------------------------------------------
 
             //Command line arguments associated with applications
             //---------------------------------------------------------------------
             public static String appSteam_argBigPicture = "-bigpicture";
             //---------------------------------------------------------------------
 
+
+            //Processes
+            //---------------------------------------------------------------------
             /**
              * Opens the program from the specified path.
              * Will return true if the open was successful,
@@ -352,6 +348,55 @@ namespace CMD
                     return false;
                 }
             }
+            //---------------------------------------------------------------------
+        }
+
+        /**
+         * Utility for interacting with the web.
+         * 
+         * Does NOT require a form handle.
+         */
+        public class WebControl
+        {
+            //Websites
+            //---------------------------------------------------------------------
+            public static String appWebBrowser = "http://www.microsoft.com";
+            public static String appWebGoogle = "http://www.google.com";
+            public static String appWebGoogleSearch = "http://google.com/search?q=";
+
+            public static String appWebYouTube = "http://www.youtube.com";
+            public static String appWebFacebook = "http://www.facebook.com";
+            public static String appWebTwitter = "http://www.twitter.com";
+            //---------------------------------------------------------------------
+
+
+            //Browser
+            //---------------------------------------------------------------------
+            /**
+             * Opens the default browser.
+             */
+            public static bool openBrowser()
+            {
+                return openBrowser(appWebGoogle);
+            }
+
+            /**
+             * Opens the url in the default browser.
+             * 
+             * @param url: website url to open
+             */
+            public static bool openBrowser(string url)
+            {
+                try
+                {
+                    Process.Start(url);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
 
             /**
              * Searches google with the given query.
@@ -364,7 +409,7 @@ namespace CMD
             {
                 try
                 {
-                    Process.Start(appWebSearch + query);
+                    Process.Start(appWebGoogleSearch + query);
                     return true;
                 }
                 catch (Exception e)
@@ -372,6 +417,87 @@ namespace CMD
                     return false;
                 }
             }
+            //---------------------------------------------------------------------
         }
 
-}
+        /**
+         * Utility for interacting with file directories.
+         * 
+         * Does NOT require a form handle.
+         */
+        public class DirectoryControl
+        {
+            //Default Locations
+            //---------------------------------------------------------------------
+            public static string dirDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            public static string dirComputer = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+            public static string dirDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            public static string dirMusic = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            public static string dirPictures = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            public static string dirVideos = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos);
+            public static string dirProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            public static string dirProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            //---------------------------------------------------------------------
+
+            //Directory Control
+            //---------------------------------------------------------------------
+            /**
+             * Opens the file location in a file explorer browser.
+             * Returns true if operation successful, otherwise false.
+             * 
+             * @param path: file location
+             */
+            public static bool openDirectory(string path)
+            {
+                try
+                {
+                    string windir = Environment.GetEnvironmentVariable("WINDIR");
+                    Process prc = new Process();
+                    prc.StartInfo.FileName = windir + @"/explorer.exe";
+                    prc.StartInfo.Arguments = path;
+                    prc.Start();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            //---------------------------------------------------------------------
+        }
+
+        /**
+         * TODO: Goals
+         * The following are items that there should be control
+         * access to:
+         *      brightness control
+         *          increase
+         *          decrease
+         *          set
+         *          
+         *      display control
+         *          swap primary display
+         *          
+         *      audio control
+         *          play
+         *          pause
+         *          stop
+         *          next
+         *          previous
+         *          
+         * Useful Nircmd Commands:
+         *  sendkeypress
+         *  sendkey
+         *  sendmouse		
+         *  savescreenshot
+         *  speak				(reads text-file outloud)
+         *  mediaplay			(plays audio file)
+         *  killprocess
+         *  changebrightness
+         *  setprimarydisplay	(switch monitors)
+         *  moverecylcebin		(delete file)
+         *  emptybin			(empty recycle bin)
+         *  exec
+         *  urlshortcut
+         */
+    }
