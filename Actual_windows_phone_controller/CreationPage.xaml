@@ -32,9 +32,12 @@
             <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
-            <Canvas>
+            <Canvas x:Name="controllerCanvas">
                 <Rectangle Fill="#FF00FFE8" x:Name="rectangle"
-                 Width="100" Height="100" Canvas.Left="356"/>
+                 Width="100" Height="100" Canvas.Left="156" MouseMove="changePosition" ManipulationDelta="changeSize" MouseLeftButtonDown="recordPosition"/>
+                <StackPanel Background="DarkViolet" Height="300" Width="150" Canvas.Left="306">
+                    <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"></Rectangle>
+                </StackPanel>
             </Canvas>
 
         </Grid>
