@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using iTunesLib;
 
 namespace CMD
 {
@@ -343,7 +344,7 @@ namespace CMD
                     Process.Start(info);
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }
@@ -392,7 +393,7 @@ namespace CMD
                     Process.Start(url);
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }
@@ -412,7 +413,7 @@ namespace CMD
                     Process.Start(appWebGoogleSearch + query);
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }
@@ -458,7 +459,7 @@ namespace CMD
                     prc.Start();
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }
@@ -467,37 +468,75 @@ namespace CMD
         }
 
         /**
+         * Utility for interacting with iTunes.
+         * 
+         * Does NOT require a form handle.
+         */
+        public class iTunesControl
+        {
+            private delegate void Router(object arg);
+
+            private static iTunesApp app = null;
+
+            /**
+             * Ensures iTunes is opened.
+             */
+            public static void itunesOpen()
+            {
+                app = new iTunesApp();
+            }
+
+            /**
+             * Skips to the next song in iTunes.
+             */
+            public static void next()
+            {
+                if (app == null) itunesOpen();
+                app.NextTrack();
+            }
+
+            /**
+             * Skips to the previous song in iTunes.
+             */
+            public static void previous()
+            {
+                if (app == null) itunesOpen();
+                app.PreviousTrack();
+            }
+
+            /**
+             * Plays a song in iTunes.
+             */
+            public static void play()
+            {
+                if (app == null) itunesOpen();
+                app.Play();
+            }
+
+            /**
+             * Pauses a playing song in iTunes.
+             */
+            public static void pause()
+            {
+                if (app == null) itunesOpen();
+                app.Pause();
+            }
+
+            /**
+             * Stops a playing song in iTunes.
+             */
+            public static void stop()
+            {
+                if (app == null) itunesOpen();
+                app.Stop();
+            }
+        }
+
+        /**
          * TODO: Goals
-         * The following are items that there should be control
-         * access to:
-         *      brightness control
-         *          increase
-         *          decrease
-         *          set
-         *          
-         *      display control
-         *          swap primary display
-         *          
-         *      audio control
-         *          play
-         *          pause
-         *          stop
-         *          next
-         *          previous
-         *          
-         * Useful Nircmd Commands:
-         *  sendkeypress
-         *  sendkey
-         *  sendmouse		
-         *  savescreenshot
+         * 
+         * Useful Nircmd Commands:	
          *  speak				(reads text-file outloud)
-         *  mediaplay			(plays audio file)
-         *  killprocess
-         *  changebrightness
          *  setprimarydisplay	(switch monitors)
-         *  moverecylcebin		(delete file)
-         *  emptybin			(empty recycle bin)
-         *  exec
-         *  urlshortcut
          */
     }
