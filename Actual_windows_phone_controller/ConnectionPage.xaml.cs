@@ -29,6 +29,8 @@ namespace Actual_windows_phone_controller
         public char cmdTag = 'c';
         public char mouseTag = 'm';
         public bool mouseOn = false;
+        public double lastMouseX = 0;
+        public double lastMouseY = 0;
         public double mouseX = 0;
         public double mouseY = 0;
         
@@ -214,6 +216,8 @@ namespace Actual_windows_phone_controller
                 x = RoundToSig(e.GetPosition(null).X - mouseX);
                 y = RoundToSig(e.GetPosition(null).Y - mouseY);
 
+                mouseX = e.GetPosition(null).X;
+                mouseY = e.GetPosition(null).Y;
                
                 NotifyUser.Text = "x = " + x + " y = " + y;
                 string stringToSend = mouseTag + x + y;
@@ -255,6 +259,7 @@ namespace Actual_windows_phone_controller
 
         private void LayoutRoot_MouseEnter(object sender, MouseEventArgs e)
         {
+
             if (mouseOn)
             {
                 mouseX = e.GetPosition(null).X;

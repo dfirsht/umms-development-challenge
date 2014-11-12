@@ -126,14 +126,10 @@ namespace CMD
         {
             int x = int.Parse(callStrings[i].Substring(0, 4),NumberStyles.AllowLeadingSign);
             int y = int.Parse(callStrings[i].Substring(4, 4), NumberStyles.AllowLeadingSign);
-            
+                    
+            //if (y == 0) { y = 1; }
 
-            x = x / 5;
-            y = y / 5;
-            
-            if (y == 0) { y = 1; }
-            Console.WriteLine("x : " + x + ", y : " + y);
-            MouseControl.setMouse(MouseControl.getMouseX() + x, MouseControl.getMouseY() + y);
+            MouseControl.moveMouse(x, y);
         }
     };
 }
