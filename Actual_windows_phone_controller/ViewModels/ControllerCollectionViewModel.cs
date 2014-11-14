@@ -58,7 +58,7 @@ namespace Actual_windows_phone_controller.ViewModels
 
         public void LoadData()
         {
-            // IsolatedStorageSettings.ApplicationSettings.Clear();
+            //IsolatedStorageSettings.ApplicationSettings.Clear(); // uncomment to clear save
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("ControllerCollectionCount"))
             {
                 //// Sample data; replace with real data

@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Input;
+using Actual_windows_phone_controller.ViewModels;
 
 namespace Actual_windows_phone_controller
 {
@@ -19,35 +20,71 @@ namespace Actual_windows_phone_controller
         {
             InitializeComponent();
         }
-
+        // When page is navigated to set data context to selected item in list
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (DataContext == null)
+            {
+                string selectedIndex = "";
+                if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
+                {
+                    int index = int.Parse(selectedIndex);
+                    DataContext = App.ViewModel.Items[index];
+                    foreach (ControllerButton button in ((ControllerViewModel)DataContext).Buttons)
+                    {
+                        Control uibutton = button.getVisualElement();
+                        controllerCanvas.Children.Add(uibutton);
+                        //Set event handlers
+                        uibutton.MouseMove += changePosition;
+                        uibutton.ManipulationDelta += changeSize;
+                    }
+                }
+            }
+        }
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
-            // Inialize new object
-            Rectangle newRectangle = new Rectangle();
-            newRectangle.Width = 100;
-            newRectangle.Height = 100;
-            newRectangle.Fill = new SolidColorBrush(Colors.Blue);
-            Point mouseCordinates = e.GetPosition(controllerCanvas);
+            // Inialize new data object
+            ControllerButton button = new ControllerButton();
+            button.width = 100;
+            button.height = 100;
+            
             //Set object position
-            Canvas.SetLeft(newRectangle, mouseCordinates.X - newRectangle.Width / 2);
-            Canvas.SetTop(newRectangle, mouseCordinates.Y - newRectangle.Height / 2);
-            controllerCanvas.Children.Add(newRectangle);
+            Point mouseCordinates = e.GetPosition(controllerCanvas);
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            Control uibutton = button.getVisualElement();
+            controllerCanvas.Children.Add(uibutton);
             //Set event handlers
             mousePreviousPosition = mouseCordinates;
-            newRectangle.MouseMove += changePosition;
-            newRectangle.ManipulationDelta += changeSize;
-            newRectangle.MouseLeftButtonDown += recordPosition;
-            newRectangle.CaptureMouse();
+            uibutton.MouseMove += changePosition;
+            uibutton.ManipulationDelta += changeSize;
+            uibutton.CaptureMouse();
+            //Add to Controller
+            if (DataContext != null)
+            {
+                ((ControllerViewModel)DataContext).Buttons.Add(button);
+                ((ControllerViewModel)DataContext).Save();
+            }
         }
-
+        object previousSender;
         private void changePosition(object sender, MouseEventArgs e)
         {
             Point mousePosition = e.GetPosition(controllerCanvas);
-            double originalLeft = Canvas.GetLeft((UIElement)sender);
-            double originalTop = Canvas.GetTop((UIElement)sender);
-            Canvas.SetLeft((UIElement)sender, originalLeft + mousePosition.X - mousePreviousPosition.X);
-            Canvas.SetTop((UIElement)sender, originalTop + mousePosition.Y - mousePreviousPosition.Y);
+            if (previousSender == sender)
+            {
+                Control controlSender = (Control)sender;
+                double originalLeft = Canvas.GetLeft(controlSender);
+                double originalTop = Canvas.GetTop(controlSender);
+                Canvas.SetLeft(controlSender, originalLeft + mousePosition.X - mousePreviousPosition.X);
+                Canvas.SetTop(controlSender, originalTop + mousePosition.Y - mousePreviousPosition.Y);
+                ((ControllerButton)(controlSender.DataContext)).updateData(controlSender);
+                if (DataContext != null)
+                {
+                    ((ControllerViewModel)DataContext).Save();
+                }
+            }
             mousePreviousPosition = mousePosition;
+            previousSender = sender;
         }
 
         private void changeSize(object sender, ManipulationDeltaEventArgs e)
@@ -61,12 +98,13 @@ namespace Actual_windows_phone_controller
                 rectangle.Height = rectangle.Height * e.DeltaManipulation.Scale.Y;
                 Canvas.SetLeft(rectangle, centerX - rectangle.Width  / 2);
                 Canvas.SetTop(rectangle, centerY - rectangle.Height / 2);
+                ((ControllerButton)(((Control)sender).DataContext)).updateData((Control)sender);
+                if (DataContext != null)
+                {
+                    ((ControllerViewModel)DataContext).Save();
+                }
             }
         }
         Point mousePreviousPosition;
-        private void recordPosition(object sender, MouseButtonEventArgs e)
-        {
-            mousePreviousPosition = e.GetPosition(controllerCanvas);
-        }
     }
 }

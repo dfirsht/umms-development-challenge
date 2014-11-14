@@ -28,9 +28,7 @@
         </StackPanel>
 
         <!--ContentPanel contains details text. Place additional content here-->
-        <ContentControl Content="{Binding UICanvas}">
-            
-        </ContentControl>
+        <ContentControl Content="{Binding UICanvas}" />
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
             account for the System Tray. Set this to 0 (or remove the margin altogether)

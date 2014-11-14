@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -14,33 +15,29 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid x:Name="LayoutRoot" Background="Transparent" d:DataContext="{Binding Items[0]}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28" HorizontalAlignment="Left">
+        <StackPanel Grid.Row="0" Margin="12,17,0,0" HorizontalAlignment="Left" Width="468">
             <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
         </StackPanel>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
-            <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
-            <Canvas x:Name="controllerCanvas">
-                <Rectangle Fill="#FF00FFE8" x:Name="rectangle"
-                 Width="100" Height="100" Canvas.Left="156" MouseMove="changePosition" ManipulationDelta="changeSize" MouseLeftButtonDown="recordPosition"/>
-                <StackPanel Background="DarkViolet" Height="300" Width="150" Canvas.Left="306">
+        <ContentControl >
+            <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0">
+                <StackPanel Background="DarkViolet" Height="300" Width="150" Canvas.Left="84" Canvas.Top="114">
                     <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"></Rectangle>
                 </StackPanel>
             </Canvas>
+        </ContentControl>
 
-        </Grid>
     </Grid>
 
 

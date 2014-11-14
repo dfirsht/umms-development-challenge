@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.IsolatedStorage;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Actual_windows_phone_controller.ViewModels
 {
@@ -19,6 +22,8 @@ namespace Actual_windows_phone_controller.ViewModels
             DisplayTitle = reader.ReadLine();
             x = Convert.ToDouble(reader.ReadLine());
             y = Convert.ToDouble(reader.ReadLine());
+            width = Convert.ToDouble(reader.ReadLine());
+            height = Convert.ToDouble(reader.ReadLine());
         }
         private string _displayTitle;
         public string DisplayTitle
@@ -62,11 +67,15 @@ namespace Actual_windows_phone_controller.ViewModels
                 }
             }
         }
+        public double width;
+        public double height;
         public void Save(StreamWriter writer)
         {
             writer.WriteLine(DisplayTitle);
             writer.WriteLine(x);
             writer.WriteLine(y);
+            writer.WriteLine(width);
+            writer.WriteLine(height);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
@@ -76,6 +85,32 @@ namespace Actual_windows_phone_controller.ViewModels
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+        public Control getVisualElement()
+        {
+            Button uibutton = new Button();
+            uibutton.Content = DisplayTitle;
+            uibutton.Width = width;
+            uibutton.Height = height;
+            Canvas.SetLeft(uibutton, x);
+            Canvas.SetTop(uibutton, y);
+            
+            uibutton.DataContext = this;
+            Binding contentBinder = new Binding {
+                Source = DisplayTitle,
+                Path = new PropertyPath("Content"),
+                Mode = BindingMode.TwoWay,
+            };
+            return uibutton;
+        }
+        public void updateData(Control control)
+        {
+            Button uibutton = (Button)control;
+            DisplayTitle = Convert.ToString(uibutton.Content);
+            x = Canvas.GetLeft(uibutton);
+            y = Canvas.GetTop(uibutton);
+            width = control.Width;
+            height = control.Height;
         }
     }
 }

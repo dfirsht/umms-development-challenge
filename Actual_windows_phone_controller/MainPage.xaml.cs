@@ -107,10 +107,10 @@ namespace Actual_windows_phone_controller
                     {
                         element.Visibility = Visibility.Visible;
                     }
-                    else if (element.GetType().Name == "TextBox")
-                    {
-                        (element as TextBox).Focus();
-                    }
+                    //else if (element.GetType().Name == "TextBox")
+                    //{
+                    //    (element as TextBox).Focus();
+                    //}
                 }
                 (sender as StackPanel).Margin = new Thickness(0, 0, 0, 80);
 
@@ -238,6 +238,15 @@ namespace Actual_windows_phone_controller
                 MainLongListSelector.Focus();
                 e.Handled = true;
             }
+        }
+
+        private void navagateToEditPage(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the new page
+            NavigationService.Navigate(new Uri("/CreationPage.xaml?selectedItem=" + item_selected, UriKind.Relative));
+
+            // Reset selected item to null (no selection)
+            MainLongListSelector.SelectedItem = null;
         }
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()

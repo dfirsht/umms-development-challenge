@@ -23,11 +23,15 @@ namespace Actual_windows_phone_controller.ViewModels
             sampleButton.DisplayTitle = "Hello";
             sampleButton.x = 100;
             sampleButton.y = 300;
+            sampleButton.width = 200;
+            sampleButton.height = 100;
             this.Buttons.Add(sampleButton);
             ControllerButton sampleButton2 = new ControllerButton();
             sampleButton2.DisplayTitle = "Buttons";
             sampleButton2.x = 50;
             sampleButton2.y = 400;
+            sampleButton2.width = 200;
+            sampleButton2.height = 100;
             this.Buttons.Add(sampleButton2);
         }
         public ControllerViewModel(IsolatedStorageFileStream file)
@@ -65,11 +69,7 @@ namespace Actual_windows_phone_controller.ViewModels
             newCanvas.Margin = new Thickness(12, 0, 12, 0);
             foreach (ControllerButton button in Buttons)
             {
-                Button uibutton = new Button();
-                uibutton.Content = button.DisplayTitle;
-                Canvas.SetLeft(uibutton, button.x);
-                Canvas.SetTop(uibutton, button.y);
-                newCanvas.Children.Add(uibutton);
+                newCanvas.Children.Add(button.getVisualElement());
             }
             return newCanvas;
         }
