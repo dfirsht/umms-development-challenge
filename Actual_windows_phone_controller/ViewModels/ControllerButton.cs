@@ -1,23 +1,23 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO.IsolatedStorage;
-using System.IO;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace Actual_windows_phone_controller.ViewModels
 {
-    public class ControllerButton : INotifyPropertyChanged
+    class ControllerButton : AbstractControllerButton
     {
         public ControllerButton()
         {
         }
-        public ControllerButton(StreamReader reader)
+        public ControllerButton(StreamReader reader) : base(reader)
+        {
+        }
+        override protected void initalizeFromStream(StreamReader reader)
         {
             DisplayTitle = reader.ReadLine();
             x = Convert.ToDouble(reader.ReadLine());
@@ -25,68 +25,16 @@ namespace Actual_windows_phone_controller.ViewModels
             width = Convert.ToDouble(reader.ReadLine());
             height = Convert.ToDouble(reader.ReadLine());
         }
-        private string _displayTitle;
-        public string DisplayTitle
+        override public void Save(StreamWriter writer)
         {
-            get
-            {
-                return _displayTitle;
-            }
-            set
-            {
-                if (value != _displayTitle)
-                {
-                    _displayTitle = value;
-                    NotifyPropertyChanged("DisplayTitle");
-                }
-            }
-        }
-        private double _x;
-        public double x
-        {
-            get { return _x; }
-            set
-            {
-                if (value != _x)
-                {
-                    _x = value;
-                    NotifyPropertyChanged("x");
-                }
-            }
-        }
-        private double _y;
-        public double y
-        {
-            get { return _y; }
-            set
-            {
-                if (value != _y)
-                {
-                    _y = value;
-                    NotifyPropertyChanged("y");
-                }
-            }
-        }
-        public double width;
-        public double height;
-        public void Save(StreamWriter writer)
-        {
+            writer.WriteLine(ButtonType.Button);
             writer.WriteLine(DisplayTitle);
             writer.WriteLine(x);
             writer.WriteLine(y);
             writer.WriteLine(width);
             writer.WriteLine(height);
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (null != handler)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        public Control getVisualElement()
+        override public Control getVisualElement()
         {
             Button uibutton = new Button();
             uibutton.Content = DisplayTitle;
@@ -96,14 +44,14 @@ namespace Actual_windows_phone_controller.ViewModels
             Canvas.SetTop(uibutton, y);
             
             uibutton.DataContext = this;
-            Binding contentBinder = new Binding {
-                Source = DisplayTitle,
-                Path = new PropertyPath("Content"),
-                Mode = BindingMode.TwoWay,
-            };
+            //Binding contentBinder = new Binding {
+            //    Source = DisplayTitle,
+            //    Path = new PropertyPath("Content"),
+            //    Mode = BindingMode.TwoWay,
+            //};
             return uibutton;
         }
-        public void updateData(Control control)
+        override public void updateData(Control control)
         {
             Button uibutton = (Button)control;
             DisplayTitle = Convert.ToString(uibutton.Content);
@@ -114,3 +62,4 @@ namespace Actual_windows_phone_controller.ViewModels
         }
     }
 }
+

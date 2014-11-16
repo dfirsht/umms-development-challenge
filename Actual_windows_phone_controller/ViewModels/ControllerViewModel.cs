@@ -18,15 +18,15 @@ namespace Actual_windows_phone_controller.ViewModels
     {
         public ControllerViewModel()
         {
-            this.Buttons = new ObservableCollection<ControllerButton>();
-            ControllerButton sampleButton = new ControllerButton();
+            this.Buttons = new ObservableCollection<AbstractControllerButton>();
+            AbstractControllerButton sampleButton = new ControllerButton();
             sampleButton.DisplayTitle = "Hello";
             sampleButton.x = 100;
             sampleButton.y = 300;
             sampleButton.width = 200;
             sampleButton.height = 100;
             this.Buttons.Add(sampleButton);
-            ControllerButton sampleButton2 = new ControllerButton();
+            AbstractControllerButton sampleButton2 = new ControllerButton();
             sampleButton2.DisplayTitle = "Buttons";
             sampleButton2.x = 50;
             sampleButton2.y = 400;
@@ -41,11 +41,13 @@ namespace Actual_windows_phone_controller.ViewModels
             Title = reader.ReadLine();
             Subtitle = reader.ReadLine();
 
-            this.Buttons = new ObservableCollection<ControllerButton>();
+            this.Buttons = new ObservableCollection<AbstractControllerButton>();
             int numButtons = Convert.ToInt16(reader.ReadLine());
             for (int i = 0; i < numButtons; ++i)
             {
-                Buttons.Add(new ControllerButton(reader));
+                String buttonName = reader.ReadLine();
+                ButtonType buttonType = (ButtonType)Enum.Parse(typeof(ButtonType), buttonName, true);
+                Buttons.Add(AbstractControllerButton.ButtonFactory(buttonType, reader));
             }
         }
         private Canvas _UICanvas;
@@ -62,12 +64,12 @@ namespace Actual_windows_phone_controller.ViewModels
 
             }
         }
-        public ObservableCollection<ControllerButton> Buttons { get; private set; }
+        public ObservableCollection<AbstractControllerButton> Buttons { get; private set; }
         public Canvas Draw()
         {
             Canvas newCanvas = new Canvas();
             newCanvas.Margin = new Thickness(12, 0, 12, 0);
-            foreach (ControllerButton button in Buttons)
+            foreach (AbstractControllerButton button in Buttons)
             {
                 newCanvas.Children.Add(button.getVisualElement());
             }
@@ -149,7 +151,7 @@ namespace Actual_windows_phone_controller.ViewModels
                 writer.WriteLine(Title);
                 writer.WriteLine(Subtitle);
                 writer.WriteLine(Buttons.Count);
-                foreach (ControllerButton button in Buttons)
+                foreach (AbstractControllerButton button in Buttons)
                 {
                     button.Save(writer);
                 }

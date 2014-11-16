@@ -30,21 +30,25 @@ namespace Actual_windows_phone_controller
                 {
                     int index = int.Parse(selectedIndex);
                     DataContext = App.ViewModel.Items[index];
-                    foreach (ControllerButton button in ((ControllerViewModel)DataContext).Buttons)
+                    foreach (AbstractControllerButton button in ((ControllerViewModel)DataContext).Buttons)
                     {
                         Control uibutton = button.getVisualElement();
+                        setControlEventHandlers(uibutton);
                         controllerCanvas.Children.Add(uibutton);
-                        //Set event handlers
-                        uibutton.MouseMove += changePosition;
-                        uibutton.ManipulationDelta += changeSize;
                     }
                 }
             }
         }
+        private void setControlEventHandlers(Control control)
+        {
+            control.MouseMove += changePosition;
+            control.ManipulationDelta += changeSize;
+            control.LostMouseCapture += removeReference;
+        }
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
-            ControllerButton button = new ControllerButton();
+            AbstractControllerButton button = new ControllerButton();
             button.width = 100;
             button.height = 100;
             
@@ -54,10 +58,9 @@ namespace Actual_windows_phone_controller
             button.y = mouseCordinates.Y - button.height / 2;
             Control uibutton = button.getVisualElement();
             controllerCanvas.Children.Add(uibutton);
-            //Set event handlers
             mousePreviousPosition = mouseCordinates;
-            uibutton.MouseMove += changePosition;
-            uibutton.ManipulationDelta += changeSize;
+            //Set event handlers
+            setControlEventHandlers(uibutton);
             uibutton.CaptureMouse();
             //Add to Controller
             if (DataContext != null)
@@ -77,7 +80,7 @@ namespace Actual_windows_phone_controller
                 double originalTop = Canvas.GetTop(controlSender);
                 Canvas.SetLeft(controlSender, originalLeft + mousePosition.X - mousePreviousPosition.X);
                 Canvas.SetTop(controlSender, originalTop + mousePosition.Y - mousePreviousPosition.Y);
-                ((ControllerButton)(controlSender.DataContext)).updateData(controlSender);
+                ((AbstractControllerButton)(controlSender.DataContext)).updateData(controlSender);
                 if (DataContext != null)
                 {
                     ((ControllerViewModel)DataContext).Save();
@@ -98,7 +101,7 @@ namespace Actual_windows_phone_controller
                 rectangle.Height = rectangle.Height * e.DeltaManipulation.Scale.Y;
                 Canvas.SetLeft(rectangle, centerX - rectangle.Width  / 2);
                 Canvas.SetTop(rectangle, centerY - rectangle.Height / 2);
-                ((ControllerButton)(((Control)sender).DataContext)).updateData((Control)sender);
+                ((AbstractControllerButton)(((Control)sender).DataContext)).updateData((Control)sender);
                 if (DataContext != null)
                 {
                     ((ControllerViewModel)DataContext).Save();
@@ -106,5 +109,9 @@ namespace Actual_windows_phone_controller
             }
         }
         Point mousePreviousPosition;
+        private void removeReference(object sender, MouseEventArgs e)
+        {
+            previousSender = null;
+        }
     }
 }
