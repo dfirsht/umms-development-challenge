@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" MouseMove="SendMouseMove" MouseEnter="LayoutRoot_MouseEnter" Tap="SendLeftClick" DoubleTap="SendRightClick" Hold="SendHold">
+    <Grid x:Name="LayoutRoot" Background="Transparent" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -36,7 +36,6 @@
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
             <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
             <TextBox x:Name="SendKeyBox" HorizontalAlignment="Left" Height="72" Margin="0,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Visibility="Visible" TextChanged="OnKeyDownHandler" KeyDown="EnterDel" />
-            <Button Content="Mouse" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         </Grid>
     </Grid>
 

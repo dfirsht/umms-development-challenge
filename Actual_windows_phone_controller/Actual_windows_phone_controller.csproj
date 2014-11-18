@@ -112,8 +112,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AbstractControllerButton.cs" />
-    <Compile Include="ViewModels\ControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\AbstractControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\ControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\MouseControllerButton.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\ControllerCollectionViewModel.cs" />
     <Compile Include="ViewModels\Network.cs" />

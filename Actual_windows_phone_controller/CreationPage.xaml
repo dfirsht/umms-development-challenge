@@ -34,6 +34,11 @@
             <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0">
                 <StackPanel Background="DarkViolet" Height="300" Width="150" Canvas.Left="84" Canvas.Top="114">
                     <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"></Rectangle>
+                    <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"></Rectangle>
+                </StackPanel>
+                <StackPanel Background="DarkViolet" Height="300" Width="150" Canvas.Left="84" Canvas.Top="114">
+                    <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>
+                    <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
                 </StackPanel>
             </Canvas>
         </ContentControl>

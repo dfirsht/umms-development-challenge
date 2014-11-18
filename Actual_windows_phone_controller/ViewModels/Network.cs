@@ -113,6 +113,10 @@ namespace Actual_windows_phone_controller.ViewModels
 
         public async void SendString(string stringToSend)
         {
+            if (!connected)
+            {
+                return;
+            }
             stringToSend += "<EOF>";
             writer.WriteUInt32(writer.MeasureString(stringToSend));
             writer.WriteString(stringToSend);

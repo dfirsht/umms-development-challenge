@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Input;
 using Actual_windows_phone_controller.ViewModels;
+using Actual_windows_phone_controller.ViewModels.Buttons;
 
 namespace Actual_windows_phone_controller
 {
@@ -34,14 +35,14 @@ namespace Actual_windows_phone_controller
                     DataContext = App.ViewModel.Items[index];
                     foreach (AbstractControllerButton button in ((ControllerViewModel)DataContext).Buttons)
                     {
-                        Control uibutton = button.getVisualElement();
-                        setControlEventHandlers(uibutton);
+                        FrameworkElement uibutton = button.getVisualElement();
+                        SetFrameworkElementEventHandlers(uibutton);
                         controllerCanvas.Children.Add(uibutton);
                     }
                 }
             }
         }
-        private void setControlEventHandlers(Control control)
+        private void SetFrameworkElementEventHandlers(FrameworkElement control)
         {
             control.MouseMove += changePosition;
             control.ManipulationDelta += changeSize;
@@ -51,18 +52,16 @@ namespace Actual_windows_phone_controller
         {
             // Inialize new data object
             AbstractControllerButton button = new ControllerButton();
-            button.width = 100;
-            button.height = 100;
             
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);
             button.x = mouseCordinates.X - button.width / 2;
             button.y = mouseCordinates.Y - button.height / 2;
-            Control uibutton = button.getVisualElement();
+            FrameworkElement uibutton = button.getVisualElement();
             controllerCanvas.Children.Add(uibutton);
             mousePreviousPosition = mouseCordinates;
             //Set event handlers
-            setControlEventHandlers(uibutton);
+            SetFrameworkElementEventHandlers(uibutton);
             uibutton.CaptureMouse();
             //Add to Controller
             if (DataContext != null)
@@ -77,7 +76,7 @@ namespace Actual_windows_phone_controller
             Point mousePosition = e.GetPosition(controllerCanvas);
             if (previousSender == sender)
             {
-                Control controlSender = (Control)sender;
+                FrameworkElement controlSender = (FrameworkElement)sender;
                 double originalLeft = Canvas.GetLeft(controlSender);
                 double originalTop = Canvas.GetTop(controlSender);
                 Canvas.SetLeft(controlSender, originalLeft + mousePosition.X - mousePreviousPosition.X);
@@ -103,7 +102,7 @@ namespace Actual_windows_phone_controller
                 rectangle.Height = rectangle.Height * e.DeltaManipulation.Scale.Y;
                 Canvas.SetLeft(rectangle, centerX - rectangle.Width  / 2);
                 Canvas.SetTop(rectangle, centerY - rectangle.Height / 2);
-                ((AbstractControllerButton)(((Control)sender).DataContext)).updateData((Control)sender);
+                ((AbstractControllerButton)(((FrameworkElement)sender).DataContext)).updateData((FrameworkElement)sender);
                 if (DataContext != null)
                 {
                     ((ControllerViewModel)DataContext).Save();
@@ -114,6 +113,29 @@ namespace Actual_windows_phone_controller
         private void removeReference(object sender, MouseEventArgs e)
         {
             previousSender = null;
+        }
+
+        private void MouseItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            // Inialize new data object
+            AbstractControllerButton button = new MouseControllerButton();
+
+            //Set object position
+            Point mouseCordinates = e.GetPosition(controllerCanvas);
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            FrameworkElement uibutton = button.getVisualElement();
+            controllerCanvas.Children.Add(uibutton);
+            mousePreviousPosition = mouseCordinates;
+            //Set event handlers
+            SetFrameworkElementEventHandlers(uibutton);
+            uibutton.CaptureMouse();
+            //Add to Controller
+            if (DataContext != null)
+            {
+                ((ControllerViewModel)DataContext).Buttons.Add(button);
+                ((ControllerViewModel)DataContext).Save();
+            }
         }
     }
 }
