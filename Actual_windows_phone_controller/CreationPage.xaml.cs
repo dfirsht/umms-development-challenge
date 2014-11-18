@@ -18,6 +18,8 @@ namespace Actual_windows_phone_controller
     {
         public CreationPage()
         {
+            // get instance
+            // pass error handler 
             InitializeComponent();
         }
         // When page is navigated to set data context to selected item in list

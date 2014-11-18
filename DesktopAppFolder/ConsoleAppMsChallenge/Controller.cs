@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using iTunesLib;
+//using iTunesLib;
 
 namespace CMD
 {
@@ -96,6 +96,15 @@ namespace CMD
          */
         public class MouseControl
         {
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+            public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+            private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+            private const int MOUSEEVENTF_LEFTUP = 0x04;
+            private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+            private const int MOUSEEVENTF_RIGHTUP = 0x10;
+
             /**
              * Imported function to set the position of the mouse cursor
              * @param X: x position of the mouse
@@ -141,6 +150,31 @@ namespace CMD
             public static void moveMouse(int x, int y)
             {
                 setMouse(getMouseX() + x, getMouseY() + y);
+            }
+
+            //sends a click event to the mouse at its current position
+             public static void clickEvent(bool hold, bool right)
+            {
+                int X = Cursor.Position.X;
+                int Y = Cursor.Position.Y;
+
+                //assume left click
+                int mouseClickEvent = MOUSEEVENTF_LEFTDOWN;
+                int mouseReleaseEvent = MOUSEEVENTF_LEFTUP;
+
+                if(right)
+                {
+                    mouseClickEvent = MOUSEEVENTF_RIGHTDOWN;
+                    mouseReleaseEvent = MOUSEEVENTF_RIGHTUP;
+                }
+
+                mouse_event(mouseClickEvent, X, Y, 0, 0);
+                
+                if(!hold)
+                {
+                    mouse_event(mouseReleaseEvent, X, Y, 0, 0);
+                }
+
             }
         }
 
@@ -276,7 +310,7 @@ namespace CMD
             //---------------------------------------------------------------------
             //Common Programs
             public static String appNotepad = "notepad.exe";
-            public static String appItunes = "itunes.exe";
+           // public static String appItunes = "itunes.exe";
             public static String appSteam = "steam.exe";
 
             //Standard Windows Programs
@@ -471,66 +505,66 @@ namespace CMD
          * Utility for interacting with iTunes.
          * 
          * Does NOT require a form handle.
-         */
-        public class iTunesControl
-        {
-            private delegate void Router(object arg);
+        // */
+        //public class iTunesControl
+        //{
+        //    private delegate void Router(object arg);
 
-            private static iTunesApp app = null;
+        //    private static iTunesApp app = null;
 
-            /**
-             * Ensures iTunes is opened.
-             */
-            public static void itunesOpen()
-            {
-                app = new iTunesApp();
-            }
+        //    /**
+        //     * Ensures iTunes is opened.
+        //     */
+        //    public static void itunesOpen()
+        //    {
+        //        app = new iTunesApp();
+        //    }
 
-            /**
-             * Skips to the next song in iTunes.
-             */
-            public static void next()
-            {
-                if (app == null) itunesOpen();
-                app.NextTrack();
-            }
+        //    /**
+        //     * Skips to the next song in iTunes.
+        //     */
+        //    public static void next()
+        //    {
+        //        if (app == null) itunesOpen();
+        //        app.NextTrack();
+        //    }
 
-            /**
-             * Skips to the previous song in iTunes.
-             */
-            public static void previous()
-            {
-                if (app == null) itunesOpen();
-                app.PreviousTrack();
-            }
+        //    /**
+        //     * Skips to the previous song in iTunes.
+        //     */
+        //    public static void previous()
+        //    {
+        //        if (app == null) itunesOpen();
+        //        app.PreviousTrack();
+        //    }
 
-            /**
-             * Plays a song in iTunes.
-             */
-            public static void play()
-            {
-                if (app == null) itunesOpen();
-                app.Play();
-            }
+        //    /**
+        //     * Plays a song in iTunes.
+        //     */
+        //    public static void play()
+        //    {
+        //        if (app == null) itunesOpen();
+        //        app.Play();
+        //    }
 
-            /**
-             * Pauses a playing song in iTunes.
-             */
-            public static void pause()
-            {
-                if (app == null) itunesOpen();
-                app.Pause();
-            }
+        //    /**
+        //     * Pauses a playing song in iTunes.
+        //     */
+        //    public static void pause()
+        //    {
+        //        if (app == null) itunesOpen();
+        //        app.Pause();
+        //    }
 
-            /**
-             * Stops a playing song in iTunes.
-             */
-            public static void stop()
-            {
-                if (app == null) itunesOpen();
-                app.Stop();
-            }
-        }
+        //    /**
+        //     * Stops a playing song in iTunes.
+        //     */
+        //    public static void stop()
+        //    {
+        //        if (app == null) itunesOpen();
+        //        app.Stop();
+        //    }
+        //}
 
         /**
          * TODO: Goals

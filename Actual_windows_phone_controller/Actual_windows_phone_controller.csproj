@@ -116,6 +116,7 @@
     <Compile Include="ViewModels\ControllerButton.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\ControllerCollectionViewModel.cs" />
+    <Compile Include="ViewModels\Network.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

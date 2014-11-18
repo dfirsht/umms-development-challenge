@@ -45,6 +45,11 @@ namespace CMD
              
              Console.WriteLine(MouseControl.getMouseX());
 
+
+             /*while(true)
+             {
+                 MouseControl.clickEvent(false, true);
+             }*/
              ReadInput();
          }
 

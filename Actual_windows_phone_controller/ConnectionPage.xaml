@@ -32,11 +32,10 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Margin="10,191,14,66" Grid.RowSpan="2" >
-            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="35.2.66.235" VerticalAlignment="Top" Width="456"/>
+            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="35.2.66.235" VerticalAlignment="Top" Width="456" />
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
             <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
-            <Button x:Name="HelloButton" Content="Mute" HorizontalAlignment="Left" Margin="142,304,0,0" VerticalAlignment="Top" Click="SendMessage" Visibility="Collapsed"/>
-            <TextBox x:Name="SendKeyBox" HorizontalAlignment="Left" Height="72" Margin="0,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Visibility="Collapsed" TextChanged="OnKeyDownHandler" KeyDown="EnterDel" />
+            <TextBox x:Name="SendKeyBox" HorizontalAlignment="Left" Height="72" Margin="0,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Visibility="Visible" TextChanged="OnKeyDownHandler" KeyDown="EnterDel" />
             <Button Content="Mouse" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Click="Button_Click"/>
         </Grid>
     </Grid>
