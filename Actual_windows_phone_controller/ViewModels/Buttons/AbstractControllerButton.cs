@@ -15,7 +15,7 @@ namespace Actual_windows_phone_controller.ViewModels
 {
     public enum ButtonType
     {
-        Button, Mouse
+        Button, Mouse, Keyboard
     }
     abstract public class AbstractControllerButton : INotifyPropertyChanged
     {
@@ -52,6 +52,17 @@ namespace Actual_windows_phone_controller.ViewModels
                         newButton = new MouseControllerButton();
                     }
                     
+                    return newButton;
+                case ButtonType.Keyboard:
+                    if (reader != null)
+                    {
+                        newButton = new KeyboardControllerButton(reader);
+                    }
+                    else
+                    {
+                        newButton = new KeyboardControllerButton();
+                    }
+
                     return newButton;
                 default:
                     throw new InvalidDataException();

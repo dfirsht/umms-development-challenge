@@ -96,6 +96,7 @@
     <Compile Include="CreationPage.xaml.cs">
       <DependentUpon>CreationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardButtonEventArgs.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="ControllerPage.xaml.cs">
       <DependentUpon>ControllerPage.xaml</DependentUpon>
@@ -114,6 +115,7 @@
     </Compile>
     <Compile Include="ViewModels\Buttons\AbstractControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\ControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\KeyboardControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\MouseControllerButton.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\ControllerCollectionViewModel.cs" />

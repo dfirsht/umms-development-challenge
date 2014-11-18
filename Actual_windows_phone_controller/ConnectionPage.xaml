@@ -35,7 +35,6 @@
             <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="35.2.113.235" VerticalAlignment="Top" Width="456" />
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
             <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
-            <TextBox x:Name="SendKeyBox" HorizontalAlignment="Left" Height="72" Margin="0,402,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" Visibility="Visible" TextChanged="OnKeyDownHandler" KeyDown="EnterDel" />
         </Grid>
     </Grid>
 

@@ -137,5 +137,28 @@ namespace Actual_windows_phone_controller
                 ((ControllerViewModel)DataContext).Save();
             }
         }
+
+        private void KeyboardItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            // Inialize new data object
+            AbstractControllerButton button = new KeyboardControllerButton();
+
+            //Set object position
+            Point mouseCordinates = e.GetPosition(controllerCanvas);
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            FrameworkElement uibutton = button.getVisualElement();
+            controllerCanvas.Children.Add(uibutton);
+            mousePreviousPosition = mouseCordinates;
+            //Set event handlers
+            SetFrameworkElementEventHandlers(uibutton);
+            uibutton.CaptureMouse();
+            //Add to Controller
+            if (DataContext != null)
+            {
+                ((ControllerViewModel)DataContext).Buttons.Add(button);
+                ((ControllerViewModel)DataContext).Save();
+            }
+        }
     }
 }
