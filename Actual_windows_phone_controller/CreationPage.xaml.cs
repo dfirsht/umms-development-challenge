@@ -47,6 +47,7 @@ namespace Actual_windows_phone_controller
             control.MouseMove += changePosition;
             control.ManipulationDelta += changeSize;
             control.LostMouseCapture += removeReference;
+            control.MouseLeave += removeReference;
         }
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
@@ -114,7 +115,6 @@ namespace Actual_windows_phone_controller
         {
             previousSender = null;
         }
-
         private void MouseItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
