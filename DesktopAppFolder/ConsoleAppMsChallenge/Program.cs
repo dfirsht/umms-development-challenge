@@ -20,11 +20,12 @@ namespace CMD
         private  const string cmdString = "";
         private  const string keyString = "";
         private const string mouseString = "";
+        private const string clickString = "";
 
         // these variables corrispond with how many functions we can call
         // each string is filled by the network loop
-        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos};
-        public static string[] callStrings = { keyString, cmdString, mouseString }; 
+        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent };
+        public static string[] callStrings = { keyString, cmdString, mouseString, clickString }; 
 
 
          static void Main(string[] args)
@@ -45,11 +46,6 @@ namespace CMD
              
              Console.WriteLine(MouseControl.getMouseX());
 
-
-             /*while(true)
-             {
-                 MouseControl.clickEvent(false, true);
-             }*/
              ReadInput();
          }
 
@@ -127,6 +123,7 @@ namespace CMD
             cmd_writer.WriteLine(callStrings[i]); 
         }
 
+        //control mouse
         private static void SendMousePos(int i)
         {
             int x = int.Parse(callStrings[i].Substring(0, 4),NumberStyles.AllowLeadingSign);
@@ -135,6 +132,23 @@ namespace CMD
             //if (y == 0) { y = 1; }
 
             MouseControl.moveMouse(x, y);
+        }
+
+        // controll mouse clicks
+        private static void SendClickEvent(int i)
+        {
+            if (callStrings[i] == "left")
+            {
+                MouseControl.clickEvent(false, false);
+            }
+            else if (callStrings[i] == "right")
+            {
+                MouseControl.clickEvent(false, true);
+            }
+            else if (callStrings[i] == "hold")
+            {
+                MouseControl.clickEvent(true, false);
+            }
         }
     };
 }

@@ -20,6 +20,13 @@ public class StateObject
 
 public class AsynchronousSocketListener
 {
+    
+    private const char keyTag = 'k';
+    private const char consoleTag = 'c';
+    private const char mouseTag = 'm';
+    private const char clickTag = 't';
+
+    public static char[] tags = { keyTag, consoleTag, mouseTag, clickTag };
     // Thread signal.
     public static ManualResetEvent allDone = new ManualResetEvent(false);
 
@@ -197,24 +204,22 @@ public class AsynchronousSocketListener
                         Monitor.Wait(CMD.Program.keyLock);
                     }
                     string fill = msg.Substring(1, msg.Length-1);
+                    bool invalidTag = true;
 
-                    if(msg[0] == 'k')
+                    for (int j = 0; j < tags.Length; j++)
                     {
-                        CMD.Program.callStrings[0] = fill;
+                        if(msg[0] == tags[j])
+                        {
+                            invalidTag = false;
+                            CMD.Program.callStrings[j] = fill;
+                            break;
+                        }
                     }
-                    else if(msg[0] == 'c')
-                    {
-                        CMD.Program.callStrings[1] = fill;
-                    }
-                    else if(msg[0] == 'm')
-                    {
-                        CMD.Program.callStrings[2] = fill;
-                    }
-                    else
+                    if (invalidTag)
                     {
                         // this should never happen, it means that the there is no first tag
-                       // Exception e = new Exception("invalid network tag");
-                       // throw e;
+                        // Exception e = new Exception("invalid network tag");
+                        // throw e;
                     }
                     Monitor.Pulse(CMD.Program.keyLock);
                 }

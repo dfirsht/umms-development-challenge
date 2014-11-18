@@ -40,11 +40,13 @@ namespace Actual_windows_phone_controller
 
         private void OnKeyDownHandler(object sender, TextChangedEventArgs e)
         {
-            if (SendKeyBox.Text == "" || SendKeyBox.Text == "£" || SendKeyBox.Text == "€" ||
-                SendKeyBox.Text == "¥" || SendKeyBox.Text == "•")
+            if(SendKeyBox.Text == "")
             {
                 return;
             }
+
+            char index = SendKeyBox.Text[SendKeyBox.Text.Length-1];
+
 
             string stringToSend = SendKeyBox.Text;
            
@@ -58,7 +60,6 @@ namespace Actual_windows_phone_controller
             network.SendString(stringToSend);
         }
 
-        
 
         private void EnterDel(object sender, KeyEventArgs e)
         {
@@ -149,6 +150,34 @@ namespace Actual_windows_phone_controller
         private void ConnectionClick(object sender, RoutedEventArgs e)
         {
             network.CreateConnection(IpText.Text);
+        }
+
+
+        private void SendRightClick(object sender, GestureEventArgs e)
+        {
+            if (mouseOn)
+            {
+                string stringToSend = Network.clickTag + "right";
+                network.SendString(stringToSend);
+            }
+        }
+
+        private void SendLeftClick(object sender, GestureEventArgs e)
+        {
+            if (mouseOn)
+            {
+                string stringToSend = Network.clickTag + "left";
+                network.SendString(stringToSend);
+            }
+        }
+
+        private void SendHold(object sender, GestureEventArgs e)
+        {
+            if (mouseOn)
+            {
+                string stringToSend = Network.clickTag + "hold";
+                network.SendString(stringToSend);
+            }
         }
 
     }
