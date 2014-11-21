@@ -24,7 +24,7 @@ namespace CMD
 
         // these variables corrispond with how many functions we can call
         // each string is filled by the network loop
-        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent };
+        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent};
         public static string[] callStrings = { keyString, cmdString, mouseString, clickString }; 
 
 
@@ -150,5 +150,7 @@ namespace CMD
                 MouseControl.clickEvent(true, false);
             }
         }
+
+      
     };
 }
