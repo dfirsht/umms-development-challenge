@@ -25,6 +25,9 @@ namespace Actual_windows_phone_controller.ViewModels
         public const char cmdTag = 'c';
         public const char mouseTag = 'm';
         public const char clickTag = 't';
+        public const char percentTag = 'p';
+
+        public const int maxVolume = 65535;
 
         private StreamSocket socket;
         private DataWriter writer;

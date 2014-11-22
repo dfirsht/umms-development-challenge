@@ -80,6 +80,7 @@ public class AsynchronousSocketListener
         }
 
         int portNum = 7777;
+        ipAddress = IPAddress.Parse("192.168.173.1");
         IPEndPoint localEndPoint = new IPEndPoint(ipAddress, portNum);
 
         //NetworkStream(Socket)

@@ -8,29 +8,74 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Globalization;
+using System.Security.Principal;
 
 namespace CMD
 {
     public class Program
     {
         public static StreamWriter cmd_writer;
+        public static StreamReader cmd_read;
+
         public static readonly object cmdLock = new object();
         public static readonly object keyLock = new object();
 
-        private  const string cmdString = "";
-        private  const string keyString = "";
+        private const string cmdString = "";
+        private const string keyString = "";
         private const string mouseString = "";
         private const string clickString = "";
+        
 
         // these variables corrispond with how many functions we can call
         // each string is filled by the network loop
-        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent };
+        public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent};
         public static string[] callStrings = { keyString, cmdString, mouseString, clickString }; 
 
+        private static string format = "";
 
-         static void Main(string[] args)
-         {
-             // creating a seprate thread to run the network
+        static void Main(string[] args)
+        {
+             if(!IsAdministrator())
+             {
+                 Console.WriteLine("App must be run as Administrator");
+                 Console.WriteLine("Press any character to exit");
+                 Console.Read();
+                 Environment.Exit(0);
+             }
+
+             CreateCmdWindow();
+
+             // user and pass
+             string networkName = "";
+             string password = "";
+
+             string prompt = "the name of your network";
+             string promptValue = "Name";
+             UserPass(ref networkName,UserLen, prompt, promptValue);
+
+             prompt = "a password over 8 characters long";
+             promptValue = "Password";
+             UserPass(ref password, PassLen, prompt, promptValue);
+
+             // make sure the lan netowrk is killed when the app exits
+             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
+             // creating lan network
+             format = String.Format("netsh wlan set hostednetwork mode=allow ssid={0} key={1}", networkName, password);
+
+             callStrings[1] = format;
+             ConsoleCall(1);
+             callStrings[1] = "netsh wlan start hostednetwork";
+             ConsoleCall(1);
+             callStrings[1] = "";
+             string x = "";
+             while (x != "The hosted network started. ")
+             {
+                 x = cmd_read.ReadLine();
+             }
+             
+
+             // creating a seprate thread to run the sockets
              AsynchronousSocketListener network = new AsynchronousSocketListener();
 
              Thread networkThread = new Thread(new ThreadStart(network.StartListening));
@@ -38,16 +83,33 @@ namespace CMD
              // Start the thread may need to spin for a bit: while (!networkThread.IsAlive) ;
              networkThread.Start();
 
-             lock (cmdLock)
-             {
-                 CreateCmdWindow();
-                 Monitor.PulseAll(cmdLock);
-             }
-             
-             Console.WriteLine(MouseControl.getMouseX());
-
              ReadInput();
-         }
+        }
+        static void OnProcessExit(object sender, EventArgs e)
+        {
+            callStrings[1] = format;
+            ConsoleCall(1);
+        }
+
+        public static bool IsAdministrator()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        private static bool PassLen(int pass) { return (pass < 8 || pass > 20); }
+        private static bool UserLen(int name) { return (name <= 0 || name > 20); }
+
+        private static void UserPass(ref string input, Func<int,bool> function, string prompt, string promptValue)
+        {
+            while (function(input.Length))
+            {
+                Console.WriteLine("Please enter " + prompt);
+                Console.Write(promptValue + " :");
+                input = Console.ReadLine();
+            }
+        }
 
         private static void CreateCmdWindow()
         {
@@ -63,12 +125,14 @@ namespace CMD
 
             //establish that I want to use the console as an output stream (receives input from my output)s
             startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = true;
             startInfo.UseShellExecute = false;
 
             process.StartInfo = startInfo;
             process.Start();
 
             cmd_writer = process.StandardInput;
+            cmd_read = process.StandardOutput;
          }
 
         private static void ReadInput()
@@ -150,5 +214,7 @@ namespace CMD
                 MouseControl.clickEvent(true, false);
             }
         }
+
+      
     };
 }
