@@ -40,8 +40,6 @@ namespace Actual_windows_phone_controller
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             string name = "nircmd.exe setsysvolume";
-            Slide.Maximum = 100;
-            Slide.Minimum = 0;
             double percent = (Math.Floor(Slide.Value));
             // fill percent with zeroes to give unified format
             percent = percent / Slide.Maximum;

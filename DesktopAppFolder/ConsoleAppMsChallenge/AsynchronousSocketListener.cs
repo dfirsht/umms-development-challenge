@@ -87,7 +87,7 @@ public class AsynchronousSocketListener
         // Create a TCP/IP socket.
         Socket listener = new Socket(AddressFamily.InterNetwork,
             SocketType.Stream, ProtocolType.Tcp);
-
+        listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
         //NetworkStream nStream;
 
        // nStream = new NetworkStream(listener, true);
@@ -96,7 +96,7 @@ public class AsynchronousSocketListener
         try
         {
             listener.Bind(localEndPoint);
-            listener.Listen(1);
+            listener.Listen(5);
             Console.WriteLine("listening on: " + ipAddress + " on port: " + portNum);
 
             while (true)
@@ -142,9 +142,15 @@ public class AsynchronousSocketListener
             // Create the state object.
             StateObject state = new StateObject();
             state.workSocket = handler;
-
-            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
+            try
+            {
+                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                     new AsyncCallback(ReadCallback), state);
+            }
+            catch(Exception e)
+            {
+                listener.Close();
+            }
         }
     }
 
