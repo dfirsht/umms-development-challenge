@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using Actual_windows_phone_controller.ViewModels;
 using Actual_windows_phone_controller.ViewModels.Buttons;
+using Windows.UI;
 
 namespace Actual_windows_phone_controller
 {
@@ -48,6 +49,15 @@ namespace Actual_windows_phone_controller
             control.ManipulationDelta += changeSize;
             control.LostMouseCapture += removeReference;
             control.MouseLeave += removeReference;
+            control.DoubleTap += doubleTapped;
+        }
+        private void doubleTapped(object sender, GestureEventArgs e)
+        {
+            FrameworkElement rectangle = (FrameworkElement)sender;
+            rectangle.Width = this.ActualWidth;
+            rectangle.Height = this.ActualHeight;
+            Canvas.SetLeft(rectangle, 0);
+            Canvas.SetTop(rectangle, -rectangle.Height/3);
         }
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
@@ -100,7 +110,19 @@ namespace Actual_windows_phone_controller
                 double centerX = Canvas.GetLeft(rectangle) + rectangle.Width / 2;
                 double centerY = Canvas.GetTop(rectangle) + rectangle.Height / 2;
                 rectangle.Width = rectangle.Width * e.DeltaManipulation.Scale.X;
+                if (rectangle.Width > this.ActualWidth)
+                {
+                    rectangle.Width = this.ActualWidth;
+                }
+                if (rectangle.Width < 50)
+                    rectangle.Width = 50;
                 rectangle.Height = rectangle.Height * e.DeltaManipulation.Scale.Y;
+                if (rectangle.Height > this.ActualHeight)
+                {
+                    rectangle.Height = this.ActualHeight;
+                }
+                if (rectangle.Height < 50)
+                    rectangle.Height = 50;
                 Canvas.SetLeft(rectangle, centerX - rectangle.Width  / 2);
                 Canvas.SetTop(rectangle, centerY - rectangle.Height / 2);
                 ((AbstractControllerButton)(((FrameworkElement)sender).DataContext)).updateData((FrameworkElement)sender);
