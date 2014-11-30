@@ -26,7 +26,7 @@ namespace Actual_windows_phone_controller.ViewModels
         public const char mouseTag = 'm';
         public const char clickTag = 't';
         public const char percentTag = 'p';
-
+        public const char controllerTag = 'x';
         public const int maxVolume = 65535;
 
         private StreamSocket socket;

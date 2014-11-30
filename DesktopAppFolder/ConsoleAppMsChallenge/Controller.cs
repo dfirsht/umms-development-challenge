@@ -6,6 +6,125 @@ using System.Windows.Forms;
 
 namespace CMD
 {
+        public class Controller
+        {
+            public static void act(String command)
+            {
+                try
+                {
+                    switch (command)
+                    {
+                        case "PC Control Panel":          //Settings
+                            SettingsControl.openControlPanel();
+                            break;
+                        case "PC Task Manager":
+                            SettingsControl.openTaskManager();
+                            break;
+                        case "PC Shutdown":
+                            SettingsControl.pcShutdown();
+                            break;
+                        case "PC Restart":
+                            SettingsControl.pcRestart();
+                            break;
+                        case "PC Logoff":
+                            SettingsControl.pcLogOff();
+                            break;
+                        case "PC Lock":
+                            SettingsControl.pcLock();
+                            break;
+                        case "PC Hibernate":
+                            SettingsControl.pcHibernate();
+                            break;
+                        case "PC Sleep":
+                            SettingsControl.pcStandby();
+                            break;
+                        case "Open Notepad":                //Applications
+                            ApplicationControl.openProgram(ApplicationControl.appNotepad);
+                            break;
+                        case "Open iTunes":
+                            ApplicationControl.openProgram(ApplicationControl.appItunes);
+                            break;
+                        case "Open Steam":
+                            ApplicationControl.openProgram(ApplicationControl.appSteam);
+                            break;
+                        case "Open Internet Explorer":
+                            ApplicationControl.openProgram(ApplicationControl.appInternetExplorer);
+                            break;
+                        case "Open File Explorer":
+                            ApplicationControl.openProgram(ApplicationControl.appFileExplorer);
+                            break;
+                        case "Open Microsoft Word":
+                            ApplicationControl.openProgram(ApplicationControl.appMSWord);
+                            break;
+                        case "Open Microsoft PowerPoint":
+                            ApplicationControl.openProgram(ApplicationControl.appMSPowerPoint);
+                            break;
+                        case "Open Microsoft Excel":
+                            ApplicationControl.openProgram(ApplicationControl.appMSExcel);
+                            break;
+                        case "View Web Browser":            //Web Control
+                            WebControl.openBrowser();
+                            break;
+                        case "View Google":
+                            WebControl.openBrowser(WebControl.appWebGoogle);
+                            break;
+                        case "View YouTube":
+                            WebControl.openBrowser(WebControl.appWebYouTube);
+                            break;
+                        case "View Facebook":
+                            WebControl.openBrowser(WebControl.appWebFacebook);
+                            break;
+                        case "View Twitter":
+                            WebControl.openBrowser(WebControl.appWebTwitter);
+                            break;
+                        case "Browse Desktop":                //Directory Control
+                            DirectoryControl.openDirectory(DirectoryControl.dirDesktop);
+                            break;
+                        case "Browse Computer":
+                            DirectoryControl.openDirectory(DirectoryControl.dirComputer);
+                            break;
+                        case "Browse Documents":
+                            DirectoryControl.openDirectory(DirectoryControl.dirDocuments);
+                            break;
+                        case "Browse Music":
+                            DirectoryControl.openDirectory(DirectoryControl.dirMusic);
+                            break;
+                        case "Browse Pictures":
+                            DirectoryControl.openDirectory(DirectoryControl.dirPictures);
+                            break;
+                        case "Browse Videos":
+                            DirectoryControl.openDirectory(DirectoryControl.dirVideos);
+                            break;
+                        case "Browse Program Files":
+                            DirectoryControl.openDirectory(DirectoryControl.dirProgramFiles);
+                            break;
+                        case "Browse Program Files (x86)":
+                            DirectoryControl.openDirectory(DirectoryControl.dirProgramFilesX86);
+                            break;
+                        case "Play Song":                   //iTunes Control
+                            //iTunesControl.play();
+                            break;
+                        case "Pause Song":
+                            //iTunesControl.pause();
+                            break;
+                        case "Stop Song":
+                            //iTunesControl.stop();
+                            break;
+                        case "Next Song":
+                            //iTunesControl.next();
+                            break;
+                        case "Previous Song":
+                            //iTunesControl.previous();
+                            break;
+                    }
+                }
+                catch (Exception e)
+                {
+                    return;
+                }
+            }
+        }
+        
         /**
          * Utility for controlling the volume.
          * 
@@ -306,11 +425,9 @@ namespace CMD
          */
         public class ApplicationControl
         {
-            //Applications that can be opened
-            //---------------------------------------------------------------------
             //Common Programs
             public static String appNotepad = "notepad.exe";
-           // public static String appItunes = "itunes.exe";
+            public static String appItunes = "itunes.exe";
             public static String appSteam = "steam.exe";
 
             //Standard Windows Programs
@@ -321,17 +438,7 @@ namespace CMD
             public static String appMSWord = "winword.exe";
             public static String appMSPowerPoint = "powerpnt.exe";
             public static String appMSExcel = "excel.exe";
-            //---------------------------------------------------------------------
 
-
-            //Command line arguments associated with applications
-            //---------------------------------------------------------------------
-            public static String appSteam_argBigPicture = "-bigpicture";
-            //---------------------------------------------------------------------
-
-
-            //Processes
-            //---------------------------------------------------------------------
             /**
              * Opens the program from the specified path.
              * Will return true if the open was successful,
@@ -383,7 +490,6 @@ namespace CMD
                     return false;
                 }
             }
-            //---------------------------------------------------------------------
         }
 
         /**
