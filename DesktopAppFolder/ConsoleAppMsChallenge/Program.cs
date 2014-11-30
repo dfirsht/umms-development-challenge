@@ -26,12 +26,12 @@ namespace CMD
     private const string keyString = "";
     private const string mouseString = "";
     private const string clickString = "";
-        
+    private const String controllerString = "";
 
     // these variables corrispond with how many functions we can call
     // each string is filled by the network loop
-    public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent};
-    public static string[] callStrings = { keyString, cmdString, mouseString, clickString }; 
+    public static Action<int>[] functions = { SendKeyStrokes, ConsoleCall, SendMousePos, SendClickEvent, SendControlEvent};
+    public static string[] callStrings = { keyString, cmdString, mouseString, clickString, controllerString }; 
 
     private static string format = "";
 
@@ -243,6 +243,11 @@ namespace CMD
             }
         }
 
+        //general event for simple PC / Application / Web control
+        private static void SendControlEvent(int i)
+        {
+            Controller.act(callStrings[i]);
+        }
       
     };
 }

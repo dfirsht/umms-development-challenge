@@ -25,8 +25,9 @@ public class AsynchronousSocketListener
     private const char consoleTag = 'c';
     private const char mouseTag = 'm';
     private const char clickTag = 't';
+    private const char controllerTag = 'x';
 
-    public static char[] tags = { keyTag, consoleTag, mouseTag, clickTag };
+    public static char[] tags = { keyTag, consoleTag, mouseTag, clickTag , controllerTag};
     // Thread signal.
     public static ManualResetEvent allDone = new ManualResetEvent(false);
 
