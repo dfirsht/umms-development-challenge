@@ -52,7 +52,7 @@ namespace Actual_windows_phone_controller
             control.MouseLeave += checkGarbageCollision;
             control.LostMouseCapture += removeReference;
             control.MouseLeave += removeReference;
-            control.DoubleTap += doubleTapped;
+            //control.DoubleTap += doubleTapped;
         }
 
         void checkGarbageCollision(object sender, MouseEventArgs e)
@@ -208,6 +208,33 @@ namespace Actual_windows_phone_controller
                 ((ControllerViewModel)DataContext).Buttons.Add(button);
                 ((ControllerViewModel)DataContext).Save();
             }
+        }
+        Point previousSelectorSelectionPosition;
+        private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
+        {
+            previousSelectorSelectionPosition = e.GetPosition(null);
+        }
+
+        private void ButtonSelectorMoved(object sender, MouseEventArgs e)
+        {
+            StackPanel selector = (StackPanel)sender;
+            Double newXposition = Canvas.GetLeft(selector) + e.GetPosition(null).X - previousSelectorSelectionPosition.X;
+            Double minX = contentControl.ActualWidth/2 - selector.ActualWidth;
+            Double maxX = contentControl.ActualWidth/2 - 30;
+            
+            if (newXposition < minX)
+            {
+                Canvas.SetLeft(selector,minX);
+            }
+            else if (newXposition > maxX)
+            {
+                Canvas.SetLeft(selector, maxX);
+            }
+            else
+            {
+                Canvas.SetLeft(selector, newXposition);
+            }
+            previousSelectorSelectionPosition = e.GetPosition(null);
         }
     }
 }
