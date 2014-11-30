@@ -32,13 +32,13 @@ namespace Actual_windows_phone_controller.ViewModels
             switch(type)
             {
                 case ButtonType.Button: 
-                    if(reader != null)
+                    if (reader != null)
                     {
-                        newButton = new ControllerButton(reader);
+                        newButton = new StringControllerButton(reader);
                     }
                     else
                     {
-                        newButton = new ControllerButton();
+                        newButton = new StringControllerButton();
                     }
                     
                     return newButton;
@@ -83,48 +83,9 @@ namespace Actual_windows_phone_controller.ViewModels
             }
         }
         // Fat interface properties
-        private string _displayTitle;
-        public string DisplayTitle
-        {
-            get
-            {
-                return _displayTitle;
-            }
-            set
-            {
-                if (value != _displayTitle)
-                {
-                    _displayTitle = value;
-                    NotifyPropertyChanged("DisplayTitle");
-                }
-            }
-        }
-        private double _x;
-        public double x
-        {
-            get { return _x; }
-            set
-            {
-                if (value != _x)
-                {
-                    _x = value;
-                    NotifyPropertyChanged("x");
-                }
-            }
-        }
-        private double _y;
-        public double y
-        {
-            get { return _y; }
-            set
-            {
-                if (value != _y)
-                {
-                    _y = value;
-                    NotifyPropertyChanged("y");
-                }
-            }
-        }
+        public string DisplayTitle;
+        public double x;
+        public double y;
         public double width;
         public double height;
     }

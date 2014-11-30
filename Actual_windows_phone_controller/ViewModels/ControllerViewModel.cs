@@ -19,14 +19,14 @@ namespace Actual_windows_phone_controller.ViewModels
         public ControllerViewModel()
         {
             this.Buttons = new ObservableCollection<AbstractControllerButton>();
-            AbstractControllerButton sampleButton = new ControllerButton();
+            AbstractControllerButton sampleButton = new StringControllerButton();
             sampleButton.DisplayTitle = "Hello";
             sampleButton.x = 100;
             sampleButton.y = 300;
             sampleButton.width = 200;
             sampleButton.height = 100;
             this.Buttons.Add(sampleButton);
-            AbstractControllerButton sampleButton2 = new ControllerButton();
+            AbstractControllerButton sampleButton2 = new StringControllerButton();
             sampleButton2.DisplayTitle = "Buttons";
             sampleButton2.x = 50;
             sampleButton2.y = 400;

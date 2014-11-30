@@ -37,6 +37,9 @@
                     <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
                     <Rectangle Fill="Red" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20"/>
                 </StackPanel>
+                <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10">
+                 
+                </Rectangle>
             </Canvas>
         </ContentControl>
 

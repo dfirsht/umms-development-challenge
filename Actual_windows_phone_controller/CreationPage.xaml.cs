@@ -22,6 +22,7 @@ namespace Actual_windows_phone_controller
             // get instance
             // pass error handler 
             InitializeComponent();
+            //Canvas.SetTop(garbageCan, Application.Current.RootVisual.RenderSize.Height - garbageCan.ActualHeight);
         }
         // When page is navigated to set data context to selected item in list
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,13 +47,39 @@ namespace Actual_windows_phone_controller
         {
             control.MouseMove += changePosition;
             control.ManipulationDelta += changeSize;
+            control.LostMouseCapture += checkGarbageCollision;
+            control.MouseLeave += checkGarbageCollision;
             control.LostMouseCapture += removeReference;
             control.MouseLeave += removeReference;
+
+        }
+
+        void checkGarbageCollision(object sender, MouseEventArgs e)
+        {
+            if (previousSender != sender)
+            {
+                return;
+            }
+            FrameworkElement button = (FrameworkElement)sender;
+            double mouseX = mousePreviousPosition.X;
+            double mouseY = mousePreviousPosition.Y;
+            double garbageCanX = Canvas.GetLeft(garbageCan) + garbageCan.ActualWidth / 2;
+            double garbageCanY = Canvas.GetTop(garbageCan) + garbageCan.ActualHeight / 2;
+            if (Math.Abs(mouseX - garbageCanX) <= 15 && Math.Abs(mouseY - garbageCanY) <= 15)
+            {
+                controllerCanvas.Children.Remove(button);
+                if (DataContext != null)
+                {
+                    ((ControllerViewModel)DataContext).Buttons.Remove((AbstractControllerButton)button.DataContext);
+                    ((ControllerViewModel)DataContext).Save();
+                }
+                
+            }
         }
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
-            AbstractControllerButton button = new ControllerButton();
+            AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Button);
             
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);

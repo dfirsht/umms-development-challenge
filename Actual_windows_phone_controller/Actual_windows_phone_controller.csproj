@@ -114,7 +114,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Buttons\AbstractControllerButton.cs" />
-    <Compile Include="ViewModels\Buttons\ControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\StringControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\KeyboardControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\MouseControllerButton.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
