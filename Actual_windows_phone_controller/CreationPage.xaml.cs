@@ -23,6 +23,7 @@ namespace Actual_windows_phone_controller
             // get instance
             // pass error handler 
             InitializeComponent();
+            // Set the data context of the LongListSelector control to the sample data
             //Canvas.SetTop(garbageCan, Application.Current.RootVisual.RenderSize.Height - garbageCan.ActualHeight);
         }
         // When page is navigated to set data context to selected item in list

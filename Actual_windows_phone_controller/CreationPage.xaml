@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+        d:DataContext="{d:DesignData SampleData/CreateViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -31,26 +31,29 @@
 
             </Canvas>-->
         <ContentControl x:Name="contentControl" >
-            <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0">
-                <StackPanel Background="DarkViolet" Height="422" Width="150" Canvas.Left="84" Canvas.Top="154" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved">
-                    <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>
-                    <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
-                    <Grid>
-                        <TextBlock 
+            <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0" >
+                <ScrollViewer Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" >
+                    <StackPanel Background="DarkViolet" Width="150" VerticalAlignment="Stretch" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
+                        <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>
+                        <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
+                        <!--<Grid>
+                            <TextBlock 
                             Margin="55,50,52,65" 
                             Foreground="Black"
                             FontSize="20"
                             FontFamily="Segoe WP"
                             FontWeight="Bold">
                             Text
-                        </TextBlock>
-                        <Rectangle Fill="Aqua" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>
-                    </Grid>
-                    
-                </StackPanel>
-                <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10">
-                 
-                </Rectangle>
+                            </TextBlock>-->
+                            <Rectangle Fill="Aqua" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>
+                        <!--</Grid>-->
+                        <Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
+                    </StackPanel>
+
+                </ScrollViewer>
+                <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" />
+                
+              
             </Canvas>
         </ContentControl>
 

@@ -211,10 +211,6 @@ namespace Actual_windows_phone_controller
             itemViewModel.Save();
         }
 
-        private void controllerTitleTextHeld(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-        }
-
         private void controllerTitleTextTapped(object sender, System.Windows.Input.GestureEventArgs e)
         {
             ControllerViewModel itemViewModel = (sender as TextBox).DataContext as ControllerViewModel;
