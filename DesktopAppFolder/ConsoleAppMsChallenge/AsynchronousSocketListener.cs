@@ -27,6 +27,9 @@ public class AsynchronousSocketListener
     private const char clickTag = 't';
     private const char controllerTag = 'x';
 
+    private Socket listener = null;
+
+
     public static char[] tags = { keyTag, consoleTag, mouseTag, clickTag , controllerTag};
     // Thread signal.
     public static ManualResetEvent allDone = new ManualResetEvent(false);
@@ -37,87 +40,50 @@ public class AsynchronousSocketListener
 
     public void StartListening()
     {
-        // Data buffer for incoming data.
-        byte[] bytes = new Byte[1024];
-
-        // Establish the local endpoint for the socket.
-        // The DNS name of the computer
-        // running the listener is "host.contoso.com".
-        IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-
-        // get all available network devices
-        NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
-
         IPAddress ipAddress = null;
-        // iterate through each adapter with "wireless"
-        // I may need to change this code if some one has ipv6, or 
-        foreach (NetworkInterface adapter in interfaces)
-        {
-            var ipProps = adapter.GetIPProperties();
-
-            foreach (var ip in ipProps.UnicastAddresses)
-            {
-                // looking for ipv4 internal network
-                if ((adapter.OperationalStatus == OperationalStatus.Up)
-                    && (ip.Address.AddressFamily == AddressFamily.InterNetwork))
-                {
-                    string addType = adapter.NetworkInterfaceType.ToString();
-                    // attempting to find the network address of wireless adapter
-                    addType = addType.ToLower();
-                    if(addType.Contains("wireless") || addType.Contains("wifi"))
-                    {
-                        ipAddress = ip.Address;
-                        break;
-                    }
-                }
-            }
-        }
-
-        //Console.WriteLine(ipAddress);
-        if(ipAddress == null)
-        {
-            Console.WriteLine("socket error");
-            throw new SocketException();
-        }
-
         int portNum = 7777;
-        ipAddress = IPAddress.Parse("192.168.173.1");
-        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, portNum);
-
-        //NetworkStream(Socket)
-        // Create a TCP/IP socket.
-        Socket listener = new Socket(AddressFamily.InterNetwork,
-            SocketType.Stream, ProtocolType.Tcp);
-        listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-        //NetworkStream nStream;
-
-       // nStream = new NetworkStream(listener, true);
-
-        // Bind the socket to the local endpoint and listen for incoming connections.
+        
         try
         {
-            listener.Bind(localEndPoint);
-            listener.Listen(5);
-            Console.WriteLine("listening on: " + ipAddress + " on port: " + portNum);
-
-            while (true)
+            // Create a TCP/IP socket.
+            while(true)
             {
-                // Set the event to nonsignaled state.
-                allDone.Reset();
+                ipAddress = IPAddress.Parse("192.168.173.1");
 
-                // Start an asynchronous socket to listen for connections.
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddress, portNum);
+
+                var worker = new AsynchronousSocketListener();
+
+                worker.listener = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Stream, ProtocolType.Tcp);
+
+                worker.listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
+                // Bind to my address
+                worker.listener.Bind(localEndPoint);
+
+                worker.listener.Listen(5);
+
+                Console.WriteLine("listening on: " + ipAddress + " on port: " + portNum);
+
                 Console.WriteLine("Waiting for a connection...");
-                listener.BeginAccept(
-                    new AsyncCallback(AcceptCallback),
-                    listener);
 
-                // Wait until a connection is made before continuing.
-                allDone.WaitOne();
+                // Start new connection on the current thread, this is used for new client
+
+                worker.listener = worker.listener.Accept();
+
+                Thread receiveConnection = new Thread(worker.AcceptMessage);
+
+                receiveConnection.Start();
+                while (!receiveConnection.IsAlive) ;
             }
-
         }
         catch (Exception e)
         {
+            if (listener != null)
+            {
+                listener.Close();
+            }
             Console.WriteLine(e.ToString());
         }
 
@@ -126,46 +92,54 @@ public class AsynchronousSocketListener
 
     }
 
-    public static void AcceptCallback(IAsyncResult ar)
+    public void AcceptMessage()
     {
         Console.WriteLine("connection attempt");
-        // Signal the main thread to continue.
-        allDone.Set();
-
-        // Get the socket that handles the client request.
-        Socket listener = (Socket)ar.AsyncState;
-        Socket handler = listener.EndAccept(ar);
 
         // this is my loop to continue accepting messages from the mobile
         // socket which i connected to.
-        while (pollSocket(listener))
+        StateObject state = new StateObject();
+        state.workSocket = listener;
+        const int buf_size = 200;
+
+        // this function should loop forever, so that I can asynchrenously pole the socket
+        try
         {
-            // Create the state object.
-            StateObject state = new StateObject();
-            state.workSocket = handler;
-            try
-            {
-                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                     new AsyncCallback(ReadCallback), state);
-            }
-            catch(Exception e)
-            {
-                listener.Close();
-            }
+            listener.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                         new AsyncCallback(ReadCallback), state);
         }
+        catch(Exception e)
+        {
+            listener.Close();
+        }
+        while(listener.Connected)
+        {
+            //do nothing
+        }
+        // thread dies 
     }
 
-    public static void ReadCallback(IAsyncResult ar)
+    public void ReadCallback(IAsyncResult ar)
     {
         String content = String.Empty;
 
         // Retrieve the state object and the handler socket
         // from the asynchronous state object.
         StateObject state = (StateObject)ar.AsyncState;
-        Socket handler = state.workSocket;
 
-        // Read data from the client socket. 
-        int bytesRead = handler.EndReceive(ar);
+        // Read data from the client socket.
+        int bytesRead;
+
+        try
+        {
+            bytesRead = listener.EndReceive(ar);
+        }
+        catch (Exception e)
+        {
+
+            listener.Close();
+            return;
+        }
 
         if (bytesRead > 0)
         {
@@ -234,11 +208,17 @@ public class AsynchronousSocketListener
             }
             else
             {
-                // Not all data received. Get more.
-                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                new AsyncCallback(ReadCallback), state);
+                listener.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                        new AsyncCallback(ReadCallback), state);
             }
+
+            
         }
+        // non blocking continues to call itself
+        state = new StateObject();
+        state.workSocket = listener;
+        listener.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
     }
 
     private static void Send(Socket handler, String data)
