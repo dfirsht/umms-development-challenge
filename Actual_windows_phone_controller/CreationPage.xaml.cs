@@ -30,6 +30,7 @@ namespace Actual_windows_phone_controller
             InitializeComponent();
             // Set the data context of the LongListSelector control to the sample data
         }
+        
         // When page is navigated to set data context to selected item in list
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -62,6 +63,7 @@ namespace Actual_windows_phone_controller
             control.MouseLeave += checkInGarbageCan;
             control.MouseLeave += removeReference;
         }
+        
         //GarbageCan Handlers
         void checkToOpenGarbageCan(object sender, MouseEventArgs e)
         {
@@ -110,12 +112,14 @@ namespace Actual_windows_phone_controller
             }
 
         }
+        
         // To remove mouse capture on garbageCan
         private void LoseMouseCapture(object sender, MouseEventArgs e)
         {
             if (previousObjectSelected != null)
                 ((FrameworkElement)previousObjectSelected).CaptureMouse();
         }
+        
         // Button manipulation handlers
         private void changePosition(object sender, MouseEventArgs e)
         {
@@ -192,6 +196,7 @@ namespace Actual_windows_phone_controller
                 ((ControllerViewModel)DataContext).Save();
             }
         }
+        
         // Button Selector click handlers
         private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
         {
@@ -205,13 +210,42 @@ namespace Actual_windows_phone_controller
             AbstractControllerButton button = new MouseControllerButton();
             initalizeVisualElement(button, e);
         }
-
         private void KeyboardItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
             AbstractControllerButton button = new KeyboardControllerButton();
             initalizeVisualElement(button, e);
         }
+
+        // Web Browser Buttons
+        private void stringControllerSelected(String title, MouseButtonEventArgs e)
+        {
+            AbstractControllerButton button = new StringControllerButton();
+            button.DisplayTitle = title;
+            initalizeVisualElement(button, e);
+        }
+        private void viewBrowserItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Web Browser", e);
+        }
+        private void viewGoogleItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Google", e);
+        }
+        private void viewYouTubeItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View YouTube", e);
+        }
+        private void viewFacebookItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Facebook", e);
+        }
+        private void viewTwitterItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Twitter", e);
+        }
+
+
         // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
         {

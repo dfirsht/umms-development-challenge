@@ -49,6 +49,12 @@
                             <Rectangle Fill="PaleTurquoise" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>
                         <!--</Grid>-->
                         <Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
+
+                        <Rectangle Fill="Red" Width="100" Height="100" MouseLeftButtonDown="viewBrowserItemSelected" Margin="0,20"/>
+                        <Rectangle Fill="Firebrick" Width="100" Height="100" MouseLeftButtonDown="viewGoogleItemSelected" Margin="0,20"/>
+                        <Rectangle Fill="DarkRed" Width="100" Height="100" MouseLeftButtonDown="viewYouTubeItemSelected" Margin="0,20"/>
+                        <Rectangle Fill="Magenta" Width="100" Height="100" MouseLeftButtonDown="viewFacebookItemSelected" Margin="0,20"/>
+                        <Rectangle Fill="Pink" Width="100" Height="100" MouseLeftButtonDown="viewTwitterItemSelected" Margin="0,20"/>
                     </StackPanel>
 
                 </ScrollViewer>
