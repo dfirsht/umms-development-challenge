@@ -86,7 +86,7 @@ namespace CMD
         {
             x = cmd_read.ReadLine();
         }
-        cmdProcess.Close();
+       // cmdProcess.Close();
         cmdProcess = CreateCmdWindow(false, ref cmd_read, ref cmd_writer, "");
         
         // creating a seprate thread to run the sockets

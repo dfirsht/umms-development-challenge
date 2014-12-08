@@ -86,6 +86,7 @@ namespace Actual_windows_phone_controller.ViewModels
                 return;
             }
             socket = new StreamSocket();
+            
 
             // I need to save the socket so that I can send and recieve
             // messages on the socket. Save the socket, so subsequent steps can use it.
@@ -139,6 +140,7 @@ namespace Actual_windows_phone_controller.ViewModels
                 {
                     throw;
                 }
+                connected = false;
                // NotifyUser.Text = "Send failed with error: " + exception.Message;
             }
         }
