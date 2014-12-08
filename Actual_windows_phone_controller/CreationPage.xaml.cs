@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Actual_windows_phone_controller.ViewModels;
 using Actual_windows_phone_controller.ViewModels.Buttons;
 using Windows.UI;
+using System.Windows.Media.Imaging;
 
 namespace Actual_windows_phone_controller
 {
@@ -69,11 +70,17 @@ namespace Actual_windows_phone_controller
         {
             if(isOverGarbageCan(sender))
             {
+                //BitmapImage bitmapImage = new BitmapImage();
+                //bitmapImage.UriSource = new Uri("ms-appx:///Assets/Images/trash2.png");
                 garbageCan.Fill = new SolidColorBrush(Colors.Red);
+                //garbageCan.Source = bitmapImage;
             }
             else 
             {
+                //BitmapImage bitmapImage = new BitmapImage();
+                //bitmapImage.UriSource = new Uri("ms-appx:///Assets/Images/trash.png");
                 garbageCan.Fill = new SolidColorBrush(Colors.Gray);
+                //garbageCan.Source = bitmapImage;
             }
         }
         bool isOverGarbageCan(object sender)
@@ -180,8 +187,10 @@ namespace Actual_windows_phone_controller
         {
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);
-            button.x = mouseCordinates.X - button.width / 2;
-            button.y = mouseCordinates.Y - button.height / 2;
+            //button.x = mouseCordinates.X - button.width / 2;
+            //button.y = mouseCordinates.Y - button.height / 2;
+            button.x = controllerCanvas.ActualWidth / 4 - button.width / 2;
+            button.y = controllerCanvas.ActualHeight / 4 + button.height;
             FrameworkElement uibutton = button.getVisualElement();
             controllerCanvas.Children.Add(uibutton);
             mousePreviousPosition = mouseCordinates;

@@ -105,5 +105,11 @@ namespace Actual_windows_phone_controller.ViewModels
             newController.Save();
             IsolatedStorageSettings.ApplicationSettings.Save();
         }
+
+        public void removeItem(ControllerViewModel toDelete)
+        {
+            this.Items.Remove(toDelete);
+            IsolatedStorageSettings.ApplicationSettings.Save();
+        }
     }
 }

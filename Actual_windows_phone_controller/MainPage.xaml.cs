@@ -18,6 +18,7 @@ namespace Actual_windows_phone_controller
 
     public partial class MainPage : PhoneApplicationPage
     {
+        //private bool optionsShown = false;
          public T GetVisualChild<T>(UIElement parent) where T : UIElement
         {
             T child = null; // default(T);
@@ -89,7 +90,7 @@ namespace Actual_windows_phone_controller
 
         private void add_button_pressed(object sender, RoutedEventArgs e)
         {
-            App.ViewModel.addItem("New Controller!");
+            App.ViewModel.addItem("New Controller");
         }
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
@@ -123,6 +124,12 @@ namespace Actual_windows_phone_controller
             }
         }
 
+        //private void randomClick(object sender, RoutedEventArgs e)
+        //{
+        //    if (optionsShown)
+        //        hideOptions(item_selected);
+        //}
+
         private void moveElementUp(object sender, RoutedEventArgs e)
         {
             if (item_selected != 0)
@@ -155,8 +162,16 @@ namespace Actual_windows_phone_controller
             }
         }
 
+        private void deleteElement(object sender, RoutedEventArgs e)
+        {
+            ControllerViewModel NorthernItem = App.ViewModel.Items.ElementAt<ControllerViewModel>(item_selected);
+            App.ViewModel.removeItem(NorthernItem);
+            item_selected = -1;
+        }
+
         private void showOptions(int indexNumber)
         {
+            //optionsShown = true;
             ListBoxItem newListBoxItem =
       (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(indexNumber));
 
@@ -177,6 +192,7 @@ namespace Actual_windows_phone_controller
         }
         private void hideOptions(int indexNumber)
         {
+            //optionsShown = false;
             ListBoxItem currentListBoxItem =
     (ListBoxItem)(MainLongListSelector.ItemContainerGenerator.ContainerFromIndex(indexNumber));
 

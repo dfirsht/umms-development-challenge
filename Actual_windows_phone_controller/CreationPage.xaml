@@ -23,43 +23,108 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,0" HorizontalAlignment="Left" Width="468">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
+            <TextBlock Text="REACH" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="create" Margin="9,-7,0,0" FontWeight="Bold" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
         </StackPanel>
 
         <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
-        <ContentControl x:Name="contentControl" >
+        <ContentControl x:Name="contentControl" Margin="-10,0,10,0" >
             <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0" >
                 <ScrollViewer Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" >
-                    <StackPanel Background="DarkBlue"  Width="150" VerticalAlignment="Stretch" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
-                        <!--<Image Source="Resources/tabOpen.png" Height="100" Margin="0,0,100,0"></Image>-->
-                        <Rectangle Fill="Black" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>
-                        <Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
-                        <!--<Grid>
-                            <TextBlock 
-                            Margin="55,50,52,65" 
-                            Foreground="Black"
-                            FontSize="20"
-                            FontFamily="Segoe WP"
-                            FontWeight="Bold">
-                            Text
-                            </TextBlock>-->
-                            <Rectangle Fill="PaleTurquoise" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>
-                        <!--</Grid>-->
-                        <Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>
-
-                        <Rectangle Fill="Red" Width="100" Height="100" MouseLeftButtonDown="viewBrowserItemSelected" Margin="0,20"/>
-                        <Rectangle Fill="Firebrick" Width="100" Height="100" MouseLeftButtonDown="viewGoogleItemSelected" Margin="0,20"/>
-                        <Rectangle Fill="DarkRed" Width="100" Height="100" MouseLeftButtonDown="viewYouTubeItemSelected" Margin="0,20"/>
-                        <Rectangle Fill="Magenta" Width="100" Height="100" MouseLeftButtonDown="viewFacebookItemSelected" Margin="0,20"/>
-                        <Rectangle Fill="Pink" Width="100" Height="100" MouseLeftButtonDown="viewTwitterItemSelected" Margin="0,20"/>
-                    </StackPanel>
+                    <Border BorderThickness="3" BorderBrush="AntiqueWhite" Name="outerBorder">
+                        <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
+                            <!--<Image Source="Resources/tabOpen.png" Height="100" Margin="0,0,100,0"></Image>-->
+                            <Rectangle Fill="Black" Height="10"></Rectangle>
+                            <!--<Rectangle Fill="DarkBlue" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>-->
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                                <Image 
+                                Height="100"
+                                Width="100"
+                                MouseLeftButtonDown="toolbarItemSelected"
+                                Source="/Assets/Images/point.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30"/>
+                            <!--<Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                                <Image 
+                                Height="100"
+                                Width="100"
+                                MouseLeftButtonDown="toolbarItemSelected"
+                                Source="/Assets/Images/type.png"/>
+                            </Border>-->
+                            <!--<Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                                <Image 
+                                Height="100"
+                                Width="100"
+                                MouseLeftButtonDown="MouseItemSelected"
+                                Source="/Assets/Images/mouse.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30"></Rectangle>
+                            <!--<Rectangle Fill="PaleTurquoise" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>-->
+                            <!--<Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                                <Image 
+                                Height="100"
+                                Width="100"
+                                MouseLeftButtonDown="KeyboardItemSelected"
+                                Source="/Assets/Images/type.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30"></Rectangle>
+                            <!--<Rectangle Fill="Red" Width="100" Height="100" MouseLeftButtonDown="viewBrowserItemSelected" Margin="0,20"/>-->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewBrowserItemSelected"
+                                    Source="/Assets/Images/browser.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30"></Rectangle>
+                            <!--<Rectangle Fill="Firebrick" Width="100" Height="100" MouseLeftButtonDown="viewGoogleItemSelected" Margin="0,20"/>-->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewGoogleItemSelected"
+                                    Source="/Assets/Images/google.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30" Width="50"/>
+                            <!--<Rectangle Fill="DarkRed" Width="100" Height="100" MouseLeftButtonDown="viewYouTubeItemSelected" Margin="0,20"/>-->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewYouTubeItemSelected"
+                                    Source="/Assets/Images/youtube.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="30" Width="50"/>
+                            <!--<Rectangle Fill="Magenta" Width="100" Height="100" MouseLeftButtonDown="viewFacebookItemSelected" Margin="0,20"/>-->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewFacebookItemSelected"
+                                    Source="/Assets/Images/fb.png"/>
+                            </Border>
+                            <!--<Rectangle Fill="Pink" Width="100" Height="100" MouseLeftButtonDown="viewTwitterItemSelected" Margin="0,20"/>-->
+                            <Rectangle Fill="Black" Height="30" Width="50"/>
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewTwitterItemSelected"
+                                    Source="/Assets/Images/twitter.png"/>
+                            </Border>
+                            <Rectangle Fill="Black" Height="10" Width="50"/>
+                        </StackPanel>
+                    </Border>
 
                 </ScrollViewer>
-                <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" MouseEnter="LoseMouseCapture" />
-                
+                <Border BorderBrush="AntiqueWhite" BorderThickness="3" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10">
+                    <!--<Image Name="garbageCan" Source="/Assets/Images/trash.png" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" MouseEnter="LoseMouseCapture" />-->
+                    <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" MouseEnter="LoseMouseCapture" />
+                </Border>
               
             </Canvas>
         </ContentControl>

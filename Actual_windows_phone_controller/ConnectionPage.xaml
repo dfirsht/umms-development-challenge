@@ -22,9 +22,9 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="REACH" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}">
-            	<Run Text="Connection"/>
+            	<Run Text="connect" FontWeight="Bold"/>
             	<LineBreak/>
             	<Run/>
             </TextBlock>
@@ -34,7 +34,7 @@
         <Grid x:Name="ContentPanel" Margin="10,191,14,66" Grid.RowSpan="2" >
             <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="192.168.173.1" VerticalAlignment="Top" Width="456" />
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
-            <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="446"/>
+            <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="446"/>
             <Slider x:Name="Slide" HorizontalAlignment="Left" Margin="91,267,0,0" VerticalAlignment="Top" Width="234" ValueChanged="Slider_ValueChanged" Maximum="100"/>
         </Grid>
     </Grid>
