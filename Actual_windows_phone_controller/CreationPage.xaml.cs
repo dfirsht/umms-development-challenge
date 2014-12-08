@@ -18,20 +18,26 @@ namespace Actual_windows_phone_controller
 {
     public partial class CreationPage : PhoneApplicationPage
     {
+        object previousSender;
+        Point mousePreviousPosition;
+        object previousObjectSelected = null;
+        Point previousSelectorSelectionPosition;
+
         public CreationPage()
         {
             // get instance
             // pass error handler 
             InitializeComponent();
             // Set the data context of the LongListSelector control to the sample data
-            //Canvas.SetTop(garbageCan, Application.Current.RootVisual.RenderSize.Height - garbageCan.ActualHeight);
         }
+        
         // When page is navigated to set data context to selected item in list
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (DataContext == null)
             {
                 string selectedIndex = "";
+                // Attempt to load Controller Buttons from the ControllerViewModel
                 if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
                 {
                     int index = int.Parse(selectedIndex);
@@ -47,29 +53,56 @@ namespace Actual_windows_phone_controller
         }
         private void SetFrameworkElementEventHandlers(FrameworkElement control)
         {
+            // event handelers to handle moving the object and resizing it
+            // In addition handler user stop moving an dragging it to garbage
             control.MouseMove += changePosition;
+            control.MouseMove += checkToOpenGarbageCan;
             control.ManipulationDelta += changeSize;
-            control.LostMouseCapture += checkGarbageCollision;
-            control.MouseLeave += checkGarbageCollision;
+            control.LostMouseCapture += checkInGarbageCan;
             control.LostMouseCapture += removeReference;
+            control.MouseLeave += checkInGarbageCan;
             control.MouseLeave += removeReference;
-            //control.DoubleTap += doubleTapped;
         }
-
-        void checkGarbageCollision(object sender, MouseEventArgs e)
+        
+        //GarbageCan Handlers
+        void checkToOpenGarbageCan(object sender, MouseEventArgs e)
         {
+            if(isOverGarbageCan(sender))
+            {
+                garbageCan.Fill = new SolidColorBrush(Colors.Red);
+            }
+            else 
+            {
+                garbageCan.Fill = new SolidColorBrush(Colors.Gray);
+            }
+        }
+        bool isOverGarbageCan(object sender)
+        {
+            // check if previous coordinates are valid
             if (previousSender != sender)
             {
-                return;
+                return false;
             }
-            FrameworkElement button = (FrameworkElement)sender;
             double mouseX = mousePreviousPosition.X;
             double mouseY = mousePreviousPosition.Y;
             double garbageCanX = Canvas.GetLeft(garbageCan) + garbageCan.ActualWidth / 2;
             double garbageCanY = Canvas.GetTop(garbageCan) + garbageCan.ActualHeight / 2;
             if (Math.Abs(mouseX - garbageCanX) <= 15 && Math.Abs(mouseY - garbageCanY) <= 15)
             {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        void checkInGarbageCan(object sender, MouseEventArgs e)
+        {
+            FrameworkElement button = (FrameworkElement)sender;
+            if(isOverGarbageCan(sender))
+            {
                 controllerCanvas.Children.Remove(button);
+                garbageCan.Fill = new SolidColorBrush(Colors.Gray);
                 if (DataContext != null)
                 {
                     ((ControllerViewModel)DataContext).Buttons.Remove((AbstractControllerButton)button.DataContext);
@@ -79,42 +112,21 @@ namespace Actual_windows_phone_controller
             }
 
         }
-        private void doubleTapped(object sender, GestureEventArgs e)
+        
+        // To remove mouse capture on garbageCan
+        private void LoseMouseCapture(object sender, MouseEventArgs e)
         {
-            FrameworkElement rectangle = (FrameworkElement)sender;
-            rectangle.Width = this.ActualWidth;
-            rectangle.Height = this.ActualHeight;
-            Canvas.SetLeft(rectangle, 0);
-            Canvas.SetTop(rectangle, -rectangle.Height/3);
+            if (previousObjectSelected != null)
+                ((FrameworkElement)previousObjectSelected).CaptureMouse();
         }
-        private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
-        {
-            // Inialize new data object
-            AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Button);
-            
-            //Set object position
-            Point mouseCordinates = e.GetPosition(controllerCanvas);
-            button.x = mouseCordinates.X - button.width / 2;
-            button.y = mouseCordinates.Y - button.height / 2;
-            FrameworkElement uibutton = button.getVisualElement();
-            controllerCanvas.Children.Add(uibutton);
-            mousePreviousPosition = mouseCordinates;
-            //Set event handlers
-            SetFrameworkElementEventHandlers(uibutton);
-            uibutton.CaptureMouse();
-            //Add to Controller
-            if (DataContext != null)
-            {
-                ((ControllerViewModel)DataContext).Buttons.Add(button);
-                ((ControllerViewModel)DataContext).Save();
-            }
-        }
-        object previousSender;
+        
+        // Button manipulation handlers
         private void changePosition(object sender, MouseEventArgs e)
         {
             Point mousePosition = e.GetPosition(controllerCanvas);
             if (previousSender == sender)
             {
+                // Calculate difference in mouse position since last update
                 FrameworkElement controlSender = (FrameworkElement)sender;
                 double originalLeft = Canvas.GetLeft(controlSender);
                 double originalTop = Canvas.GetTop(controlSender);
@@ -129,7 +141,6 @@ namespace Actual_windows_phone_controller
             mousePreviousPosition = mousePosition;
             previousSender = sender;
         }
-
         private void changeSize(object sender, ManipulationDeltaEventArgs e)
         {
             if (e.DeltaManipulation.Scale.X > 0 && e.DeltaManipulation.Scale.Y > 0)
@@ -160,62 +171,86 @@ namespace Actual_windows_phone_controller
                 }
             }
         }
-        Point mousePreviousPosition;
         private void removeReference(object sender, MouseEventArgs e)
         {
+            previousObjectSelected = previousSender;
             previousSender = null;
+        }
+        void initalizeVisualElement(AbstractControllerButton button, MouseButtonEventArgs e)
+        {
+            //Set object position
+            Point mouseCordinates = e.GetPosition(controllerCanvas);
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            FrameworkElement uibutton = button.getVisualElement();
+            controllerCanvas.Children.Add(uibutton);
+            mousePreviousPosition = mouseCordinates;
+            //Set event handlers
+            SetFrameworkElementEventHandlers(uibutton);
+            //give focus to visual object
+            uibutton.CaptureMouse();
+            //Add to Controller
+            if (DataContext != null)
+            {
+                ((ControllerViewModel)DataContext).Buttons.Add(button);
+                ((ControllerViewModel)DataContext).Save();
+            }
+        }
+        
+        // Button Selector click handlers
+        private void toolbarItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            // Inialize new data object
+            AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Button);
+            initalizeVisualElement(button, e);
         }
         private void MouseItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
             AbstractControllerButton button = new MouseControllerButton();
-
-            //Set object position
-            Point mouseCordinates = e.GetPosition(controllerCanvas);
-            button.x = mouseCordinates.X - button.width / 2;
-            button.y = mouseCordinates.Y - button.height / 2;
-            FrameworkElement uibutton = button.getVisualElement();
-            controllerCanvas.Children.Add(uibutton);
-            mousePreviousPosition = mouseCordinates;
-            //Set event handlers
-            SetFrameworkElementEventHandlers(uibutton);
-            uibutton.CaptureMouse();
-            //Add to Controller
-            if (DataContext != null)
-            {
-                ((ControllerViewModel)DataContext).Buttons.Add(button);
-                ((ControllerViewModel)DataContext).Save();
-            }
+            initalizeVisualElement(button, e);
         }
-
         private void KeyboardItemSelected(object sender, MouseButtonEventArgs e)
         {
             // Inialize new data object
             AbstractControllerButton button = new KeyboardControllerButton();
-
-            //Set object position
-            Point mouseCordinates = e.GetPosition(controllerCanvas);
-            button.x = mouseCordinates.X - button.width / 2;
-            button.y = mouseCordinates.Y - button.height / 2;
-            FrameworkElement uibutton = button.getVisualElement();
-            controllerCanvas.Children.Add(uibutton);
-            mousePreviousPosition = mouseCordinates;
-            //Set event handlers
-            SetFrameworkElementEventHandlers(uibutton);
-            uibutton.CaptureMouse();
-            //Add to Controller
-            if (DataContext != null)
-            {
-                ((ControllerViewModel)DataContext).Buttons.Add(button);
-                ((ControllerViewModel)DataContext).Save();
-            }
+            initalizeVisualElement(button, e);
         }
-        Point previousSelectorSelectionPosition;
+
+        // Web Browser Buttons
+        private void stringControllerSelected(String title, MouseButtonEventArgs e)
+        {
+            AbstractControllerButton button = new StringControllerButton();
+            button.DisplayTitle = title;
+            initalizeVisualElement(button, e);
+        }
+        private void viewBrowserItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Web Browser", e);
+        }
+        private void viewGoogleItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Google", e);
+        }
+        private void viewYouTubeItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View YouTube", e);
+        }
+        private void viewFacebookItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Facebook", e);
+        }
+        private void viewTwitterItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("View Twitter", e);
+        }
+
+
+        // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
         {
             previousSelectorSelectionPosition = e.GetPosition(null);
         }
-
         private void ButtonSelectorMoved(object sender, MouseEventArgs e)
         {
             StackPanel selector = (StackPanel)sender;
