@@ -140,6 +140,7 @@ namespace Actual_windows_phone_controller.ViewModels
                 {
                     throw;
                 }
+                connected = false;
                // NotifyUser.Text = "Send failed with error: " + exception.Message;
             }
         }
