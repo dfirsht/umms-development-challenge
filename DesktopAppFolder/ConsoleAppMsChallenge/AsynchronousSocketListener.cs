@@ -46,23 +46,24 @@ public class AsynchronousSocketListener
         try
         {
             // Create a TCP/IP socket.
-            while(true)
-            {
+            
                 ipAddress = IPAddress.Parse("192.168.173.1");
 
                 IPEndPoint localEndPoint = new IPEndPoint(ipAddress, portNum);
 
-                var worker = new AsynchronousSocketListener();
 
-                worker.listener = new Socket(AddressFamily.InterNetwork,
+                listener = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
 
-                worker.listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
+                listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                listener.ExclusiveAddressUse = false;
                 // Bind to my address
-                worker.listener.Bind(localEndPoint);
+                listener.Bind(localEndPoint);
 
-                worker.listener.Listen(5);
+                listener.Listen(100);
+            while (true)
+            {
+                var worker = new AsynchronousSocketListener();
 
                 Console.WriteLine("listening on: " + ipAddress + " on port: " + portNum);
 
@@ -70,11 +71,12 @@ public class AsynchronousSocketListener
 
                 // Start new connection on the current thread, this is used for new client
 
-                worker.listener = worker.listener.Accept();
+                worker.listener = listener.Accept();
 
                 Thread receiveConnection = new Thread(worker.AcceptMessage);
 
                 receiveConnection.Start();
+
                 while (!receiveConnection.IsAlive) ;
             }
         }
@@ -99,7 +101,7 @@ public class AsynchronousSocketListener
         // this is my loop to continue accepting messages from the mobile
         // socket which i connected to.
         StateObject state = new StateObject();
-        state.workSocket = listener;
+        state.workSocket = this.listener;
         const int buf_size = 200;
 
         // this function should loop forever, so that I can asynchrenously pole the socket
@@ -110,12 +112,14 @@ public class AsynchronousSocketListener
         }
         catch(Exception e)
         {
-            listener.Close();
+            this.listener.Disconnect(true);
         }
         while(listener.Connected)
         {
             //do nothing
         }
+        listener.Dispose();
+       // Thread.CurrentThread.a
         // thread dies 
     }
 
@@ -132,12 +136,12 @@ public class AsynchronousSocketListener
 
         try
         {
-            bytesRead = listener.EndReceive(ar);
+            bytesRead = this.listener.EndReceive(ar);
         }
         catch (Exception e)
         {
 
-            listener.Close();
+            this.listener.Close();
             return;
         }
 
