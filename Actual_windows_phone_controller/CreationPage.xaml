@@ -32,9 +32,9 @@
             </Canvas>-->
         <ContentControl x:Name="contentControl" Margin="-10,0,10,0" >
             <Canvas x:Name="controllerCanvas"  Margin="10,0,12,0" >
-                <ScrollViewer Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer x:Name="selectorScroller" Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
                     <Border BorderThickness="3" BorderBrush="AntiqueWhite" Name="outerBorder">
-                        <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
+                        <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" >
                             <!--<Image Source="Resources/tabOpen.png" Height="100" Margin="0,0,100,0"></Image>-->
                             <Rectangle Fill="Black" Height="10"></Rectangle>
                             <!--<Rectangle Fill="DarkBlue" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>-->

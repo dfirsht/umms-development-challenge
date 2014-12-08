@@ -262,22 +262,22 @@ namespace Actual_windows_phone_controller
         }
         private void ButtonSelectorMoved(object sender, MouseEventArgs e)
         {
-            StackPanel selector = (StackPanel)sender;
-            Double newXposition = Canvas.GetLeft(selector) + e.GetPosition(null).X - previousSelectorSelectionPosition.X;
-            Double minX = contentControl.ActualWidth/2 - selector.ActualWidth;
+            ScrollViewer selectorScroller = (ScrollViewer)sender;
+            Double newXposition = Canvas.GetLeft(selectorScroller) + e.GetPosition(null).X - previousSelectorSelectionPosition.X;
+            Double minX = contentControl.ActualWidth / 2 - selectorScroller.ActualWidth;
             Double maxX = contentControl.ActualWidth/2 - 30;
             
             if (newXposition < minX)
             {
-                Canvas.SetLeft(selector,minX);
+                Canvas.SetLeft(selectorScroller, minX);
             }
             else if (newXposition > maxX)
             {
-                Canvas.SetLeft(selector, maxX);
+                Canvas.SetLeft(selectorScroller, maxX);
             }
             else
             {
-                Canvas.SetLeft(selector, newXposition);
+                Canvas.SetLeft(selectorScroller, newXposition);
             }
             previousSelectorSelectionPosition = e.GetPosition(null);
         }
