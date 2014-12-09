@@ -29,6 +29,7 @@ namespace Actual_windows_phone_controller
             // get instance
             // pass error handler 
             InitializeComponent();
+            Network.isEditing = true;
             // Set the data context of the LongListSelector control to the sample data
         }
         

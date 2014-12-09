@@ -20,7 +20,7 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
         public KeyboardControllerButton()
         {
             width = 300;
-            height = 300;
+            height = 80;
             Initalize();
         }
         public KeyboardControllerButton(StreamReader reader) : base(reader)
@@ -76,7 +76,10 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
             {
                 stringToSend = network.convertKey[stringToSend];
             }
-            SendKeyBox.Text = "";
+            if (String.IsNullOrWhiteSpace(SendKeyBox.Text.ElementAt(SendKeyBox.Text.Length - 1).ToString()))
+            {
+                SendKeyBox.Text = "";
+            }
             stringToSend = Network.keyTag + stringToSend;
             network.SendString(stringToSend);
         }
