@@ -14,6 +14,7 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using System.Threading;
 using Windows.UI;
+using System.Windows.Media;
 
 namespace Actual_windows_phone_controller.ViewModels
 {
@@ -99,7 +100,9 @@ namespace Actual_windows_phone_controller.ViewModels
                 await socket.ConnectAsync(hostname, portNum);
                 //NotifyUser.Text = "Connected";
                 writer = new DataWriter(socket.OutputStream);
-                connected = true;
+                
+                ChangeConnected(true);
+                
                // HelloButton.Visibility = Visibility.Visible;
                // SendKeyBox.Visibility = Visibility.Visible;
 
@@ -141,9 +144,14 @@ namespace Actual_windows_phone_controller.ViewModels
                 {
                     throw;
                 }
-                connected = false;
+                 ChangeConnected(false);
                // NotifyUser.Text = "Send failed with error: " + exception.Message;
             }
+        }
+
+        private void ChangeConnected(bool change)
+        {
+            connected = change;
         }
 
         private void InitDict()
