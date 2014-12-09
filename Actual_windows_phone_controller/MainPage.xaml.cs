@@ -123,7 +123,7 @@ namespace Actual_windows_phone_controller
             
             App.ViewModel.addItem(name);
 
-            //CreatePage_Click(sender, e);
+            CreatePage_Click(sender, e);
         }
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
