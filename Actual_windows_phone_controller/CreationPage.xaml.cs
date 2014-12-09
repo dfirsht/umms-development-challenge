@@ -253,7 +253,38 @@ namespace Actual_windows_phone_controller
         {
             stringControllerSelected("View Twitter", e);
         }
-
+        private void pcShutdownItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("PC Shutdown", e);
+        }
+        private void pcSleepItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("PC Sleep", e);
+        }
+        private void openiTunesItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open iTunes", e);
+        }
+        private void openSteamItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Steam", e);
+        }
+        private void openIEItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Internet Explorer", e);
+        }
+        private void openFileExplorerItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open File Explorer", e);
+        }
+        private void openMSWordItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Microsoft Word", e);
+        }
+        private void openMSPPTItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Microsoft PowerPoint", e);
+        }
 
         // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
