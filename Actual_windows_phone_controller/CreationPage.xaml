@@ -27,6 +27,7 @@
             <TextBlock Text="create" Margin="9,-7,0,0" FontWeight="Bold" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
         </StackPanel>
 
+
         <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
@@ -201,6 +202,15 @@
                                     MouseLeftButtonDown="viewVolumeItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
+
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="macroItemSelected"
+                                    Source="/Assets/Images/type.png"/>
+                            </Border>
+                            
                         </StackPanel>
                     </Border>
 

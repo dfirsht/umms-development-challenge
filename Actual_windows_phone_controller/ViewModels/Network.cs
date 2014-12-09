@@ -159,6 +159,33 @@ namespace Actual_windows_phone_controller.ViewModels
             convertKey.Add(")", "{)}");
             convertKey.Add("[", "{[}");
             convertKey.Add("]", "{]}");
+
+            convertKey.Add("CTRL", "+");
+            convertKey.Add("SHIFT", "^");
+            convertKey.Add("ALT", "%");
+
+            convertKey.Add("DOWN", "{DOWN}");
+            convertKey.Add("UP", "{UP}");
+            convertKey.Add("LEFT", "{LEFT}");
+            convertKey.Add("RIGHT", "{RIGHT}");
+
+            convertKey.Add("F1", "{F1}");
+            convertKey.Add("F2", "{F2}");
+            convertKey.Add("F3", "{F3}");
+            convertKey.Add("F4", "{F4}");
+            convertKey.Add("F5", "{F5}");
+            convertKey.Add("F6", "{F6}");
+            convertKey.Add("F7", "{F7}");
+            convertKey.Add("F8", "{F8}");
+            convertKey.Add("F9", "{F9}");
+            convertKey.Add("F10", "{F10}");
+            convertKey.Add("F11", "{F11}");
+            convertKey.Add("F12", "{F12}");
+            convertKey.Add("F13", "{F13}");
+            convertKey.Add("F14", "{F14}");
+            convertKey.Add("F15", "{F15}");
+            convertKey.Add("F16", "{F16}");
+
         }
     }
 }
