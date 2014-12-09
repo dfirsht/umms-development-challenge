@@ -20,6 +20,7 @@ namespace Actual_windows_phone_controller.ViewModels
     public class Network
     {
         public bool connected = false;
+        public static bool isEditing = false;
         public Dictionary<String, String> convertKey;
         public const char keyTag = 'k';
         public const char cmdTag = 'c';
@@ -119,7 +120,7 @@ namespace Actual_windows_phone_controller.ViewModels
 
         public async void SendString(string stringToSend)
         {
-            if (!connected)
+            if (!connected || isEditing)
             {
                 return;
             }

@@ -51,7 +51,7 @@ namespace Actual_windows_phone_controller
 
             item_selected = -1;
 
-            
+            Network.isEditing = false;
         }
 
         // Load data for the ViewModel Items
