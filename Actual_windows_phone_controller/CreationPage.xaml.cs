@@ -44,6 +44,7 @@ namespace Actual_windows_phone_controller
                 {
                     int index = int.Parse(selectedIndex);
                     DataContext = App.ViewModel.Items[index];
+                    controllerTitle.Text = (DataContext as ControllerViewModel).Title;
                     foreach (AbstractControllerButton button in ((ControllerViewModel)DataContext).Buttons)
                     {
                         FrameworkElement uibutton = button.getVisualElement();
@@ -188,10 +189,10 @@ namespace Actual_windows_phone_controller
         {
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);
-            //button.x = mouseCordinates.X - button.width / 2;
-            //button.y = mouseCordinates.Y - button.height / 2;
-            button.x = controllerCanvas.ActualWidth / 4 - button.width / 2;
-            button.y = controllerCanvas.ActualHeight / 4 + button.height;
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            //button.x = controllerCanvas.ActualWidth / 4 - button.width / 2;
+            //button.y = controllerCanvas.ActualHeight / 4 + button.height;
             FrameworkElement uibutton = button.getVisualElement();
             controllerCanvas.Children.Add(uibutton);
             mousePreviousPosition = mouseCordinates;
@@ -330,6 +331,24 @@ namespace Actual_windows_phone_controller
             // Inialize new data object
             AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
             initalizeVisualElement(button, e);
+        }
+
+        private void TitleGotFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Black);
+            (sender as TextBox).Foreground = blackBrush;
+        }
+
+        private void TitleLostFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush whiteBrush = new SolidColorBrush(Colors.White);
+            (sender as TextBox).Foreground = whiteBrush;
+        }
+
+        private void TitleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((ControllerViewModel)DataContext).Title = ((TextBox)sender).Text;
+            ((ControllerViewModel)DataContext).Save();
         }
     }
 }

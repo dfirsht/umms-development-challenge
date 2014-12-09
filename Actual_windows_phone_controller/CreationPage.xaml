@@ -6,7 +6,6 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        d:DataContext="{d:DesignData SampleData/CreateViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -24,7 +23,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,0" HorizontalAlignment="Left" Width="468">
             <TextBlock Text="REACH" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="create" Margin="9,-7,0,0" FontWeight="Bold" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Left"/>
+            <TextBox x:Name="controllerTitle" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Text="create" Margin="-5,-7,0,0" FontWeight="Bold" Background="Black" Foreground="White" BorderThickness="0" GotFocus="TitleGotFocus" LostFocus="TitleLostFocus" TextChanged="TitleTextChanged" />
         </StackPanel>
 
         <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -129,7 +128,7 @@
                                     MouseLeftButtonDown="openiTunesItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <!-- Open Steam -->                            
+                            <!-- Open Steam -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -137,7 +136,7 @@
                                     MouseLeftButtonDown="openSteamItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <!-- Open IE -->                            
+                            <!-- Open IE -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -145,7 +144,7 @@
                                     MouseLeftButtonDown="openIEItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <!-- Open File Explorer -->                            
+                            <!-- Open File Explorer -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -153,7 +152,7 @@
                                     MouseLeftButtonDown="openFileExplorerItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <!-- Open MS Word -->                            
+                            <!-- Open MS Word -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -161,7 +160,7 @@
                                     MouseLeftButtonDown="openMSWordItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <!-- Open MS Powerpoint -->                            
+                            <!-- Open MS Powerpoint -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -193,7 +192,7 @@
                                     MouseLeftButtonDown="browsePicturesItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            
+
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
@@ -209,7 +208,7 @@
                     <!--<Image Name="garbageCan" Source="/Assets/Images/trash.png" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" MouseEnter="LoseMouseCapture" />-->
                     <Rectangle Name="garbageCan" Fill="Gray" Width="46" Height="57" Canvas.Left="188" Canvas.Top="640" Canvas.ZIndex="10" MouseEnter="LoseMouseCapture" />
                 </Border>
-              
+
             </Canvas>
         </ContentControl>
 
