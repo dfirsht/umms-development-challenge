@@ -54,7 +54,7 @@ namespace Actual_windows_phone_controller.ViewModels
         void SendCommand(object sender, RoutedEventArgs e)
         {
             Network network = Network.GetInstance();
-            network.SendString(DisplayTitle);
+            network.SendString(Network.controllerTag + DisplayTitle);
         }
         override public void updateData(FrameworkElement control)
         {
