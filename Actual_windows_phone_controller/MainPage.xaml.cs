@@ -51,7 +51,7 @@ namespace Actual_windows_phone_controller
 
             item_selected = -1;
 
-            
+            Network.isEditing = false;
         }
 
         // Load data for the ViewModel Items
@@ -90,7 +90,40 @@ namespace Actual_windows_phone_controller
 
         private void add_button_pressed(object sender, RoutedEventArgs e)
         {
-            App.ViewModel.addItem("New Controller");
+            string name = "New Controller";
+
+            bool valid = true;
+            foreach (ControllerViewModel x in App.ViewModel.Items){
+                if (x.Title == name){
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (!valid){
+                name += " - ";
+                int id = 0;
+
+                while (!valid)
+                {
+                    id++;
+                    valid = true;
+                    foreach (ControllerViewModel x in App.ViewModel.Items)
+                    {
+                        if (x.Title == (name + id))
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+
+                name = name + id;
+            }
+            
+            App.ViewModel.addItem(name);
+
+            NavigationService.Navigate(new Uri("/CreationPage.xaml?selectedItem=" + (App.ViewModel.Items.Count - 1).ToString(), UriKind.Relative));
         }
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)

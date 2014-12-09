@@ -29,6 +29,7 @@ namespace Actual_windows_phone_controller
             // get instance
             // pass error handler 
             InitializeComponent();
+            Network.isEditing = true;
             // Set the data context of the LongListSelector control to the sample data
         }
         
@@ -43,6 +44,7 @@ namespace Actual_windows_phone_controller
                 {
                     int index = int.Parse(selectedIndex);
                     DataContext = App.ViewModel.Items[index];
+                    controllerTitle.Text = (DataContext as ControllerViewModel).Title;
                     foreach (AbstractControllerButton button in ((ControllerViewModel)DataContext).Buttons)
                     {
                         FrameworkElement uibutton = button.getVisualElement();
@@ -187,10 +189,10 @@ namespace Actual_windows_phone_controller
         {
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);
-            //button.x = mouseCordinates.X - button.width / 2;
-            //button.y = mouseCordinates.Y - button.height / 2;
-            button.x = controllerCanvas.ActualWidth / 4 - button.width / 2;
-            button.y = controllerCanvas.ActualHeight / 4 + button.height;
+            button.x = mouseCordinates.X - button.width / 2;
+            button.y = mouseCordinates.Y - button.height / 2;
+            //button.x = controllerCanvas.ActualWidth / 4 - button.width / 2;
+            //button.y = controllerCanvas.ActualHeight / 4 + button.height;
             FrameworkElement uibutton = button.getVisualElement();
             controllerCanvas.Children.Add(uibutton);
             mousePreviousPosition = mouseCordinates;
@@ -253,8 +255,50 @@ namespace Actual_windows_phone_controller
         {
             stringControllerSelected("View Twitter", e);
         }
-
-
+        private void pcShutdownItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("PC Shutdown", e);
+        }
+        private void pcSleepItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("PC Sleep", e);
+        }
+        private void openiTunesItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open iTunes", e);
+        }
+        private void openSteamItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Steam", e);
+        }
+        private void openIEItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Internet Explorer", e);
+        }
+        private void openFileExplorerItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open File Explorer", e);
+        }
+        private void openMSWordItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Microsoft Word", e);
+        }
+        private void openMSPPTItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Open Microsoft PowerPoint", e);
+        }
+        private void browseDocumentsItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Documents", e);
+        }
+        private void browseMusicItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Music", e);
+        }
+        private void browsePicturesItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Pictures", e);
+        }
         // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
         {
@@ -280,6 +324,31 @@ namespace Actual_windows_phone_controller
                 Canvas.SetLeft(selectorScroller, newXposition);
             }
             previousSelectorSelectionPosition = e.GetPosition(null);
+        }
+
+        private void viewVolumeItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            // Inialize new data object
+            AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
+            initalizeVisualElement(button, e);
+        }
+
+        private void TitleGotFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Black);
+            (sender as TextBox).Foreground = blackBrush;
+        }
+
+        private void TitleLostFocus(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush whiteBrush = new SolidColorBrush(Colors.White);
+            (sender as TextBox).Foreground = whiteBrush;
+        }
+
+        private void TitleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((ControllerViewModel)DataContext).Title = ((TextBox)sender).Text;
+            ((ControllerViewModel)DataContext).Save();
         }
     }
 }

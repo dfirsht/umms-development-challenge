@@ -518,7 +518,7 @@ namespace CMD
              */
             public static bool openBrowser()
             {
-                return openBrowser(appWebGoogle);
+                return openBrowser(appWebBrowser);
             }
 
             /**
