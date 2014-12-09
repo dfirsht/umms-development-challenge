@@ -285,7 +285,18 @@ namespace Actual_windows_phone_controller
         {
             stringControllerSelected("Open Microsoft PowerPoint", e);
         }
-
+        private void browseDocumentsItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Documents", e);
+        }
+        private void browseMusicItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Music", e);
+        }
+        private void browsePicturesItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            stringControllerSelected("Browse Pictures", e);
+        }
         // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
         {

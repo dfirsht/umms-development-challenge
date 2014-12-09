@@ -169,6 +169,30 @@
                                     MouseLeftButtonDown="openMSPPTItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
+                            <!-- Browse Documents -->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="browseDocumentsItemSelected"
+                                    Source="/Assets/Images/twitter.png"/>
+                            </Border>
+                            <!-- Browse Music -->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="browseMusicItemSelected"
+                                    Source="/Assets/Images/twitter.png"/>
+                            </Border>
+                            <!-- Browse Pictures -->
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="browsePicturesItemSelected"
+                                    Source="/Assets/Images/twitter.png"/>
+                            </Border>
                             
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
