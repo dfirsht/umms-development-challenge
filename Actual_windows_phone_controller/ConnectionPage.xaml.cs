@@ -15,6 +15,7 @@ using Windows.Storage.Streams;
 using System.Threading;
 using Windows.UI;
 using Actual_windows_phone_controller.ViewModels;
+using System.Windows.Media;
 
 namespace Actual_windows_phone_controller
 {
@@ -24,17 +25,26 @@ namespace Actual_windows_phone_controller
         //NetworkAdapter adapter = null;
 
         Network network;
-        
+        Page1 page;
+        System.Threading.Thread t;
 
         public Page1()
         {
             network = Network.GetInstance();
+            
             InitializeComponent();
+
         }
+
 
         private void ConnectionClick(object sender, RoutedEventArgs e)
         {
-            network.CreateConnection(IpText.Text);
+            if (!network.connected)
+            {
+                network.CreateConnection(IpText.Text);
+            }
+            Thread.Sleep(500);
+            isConnected();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -52,7 +62,22 @@ namespace Actual_windows_phone_controller
             NotifyUser.Text = percent.ToString();
             string stringToSend = Network.cmdTag + name + ' ' + percent.ToString();
             network.SendString(stringToSend);
-        } 
+        }
+
+        public void isConnected()
+        {
+            if(network.connected)
+            {
+                connectBox.Text = "Connected";
+                connectBox.Background = new SolidColorBrush(Colors.Green);
+            }
+            else
+            {
+                connectBox.Text = "Disconnected";
+                connectBox.Background = new SolidColorBrush(Colors.Red);
+            }
+        }
+
 
     }
 }
