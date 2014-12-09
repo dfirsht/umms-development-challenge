@@ -90,7 +90,40 @@ namespace Actual_windows_phone_controller
 
         private void add_button_pressed(object sender, RoutedEventArgs e)
         {
-            App.ViewModel.addItem("New Controller");
+            string name = "New Controller";
+
+            bool valid = true;
+            foreach (ControllerViewModel x in App.ViewModel.Items){
+                if (x.Title == name){
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (!valid){
+                name += " - ";
+                int id = 0;
+
+                while (!valid)
+                {
+                    id++;
+                    valid = true;
+                    foreach (ControllerViewModel x in App.ViewModel.Items)
+                    {
+                        if (x.Title == (name + id))
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+
+                name = name + id;
+            }
+            
+            App.ViewModel.addItem(name);
+
+            //CreatePage_Click(sender, e);
         }
         private int item_selected;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
