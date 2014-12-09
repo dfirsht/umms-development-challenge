@@ -117,6 +117,7 @@
     <Compile Include="ViewModels\Buttons\StringControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\KeyboardControllerButton.cs" />
     <Compile Include="ViewModels\Buttons\MouseControllerButton.cs" />
+    <Compile Include="ViewModels\Buttons\VolumeSliderControllerButton.cs" />
     <Compile Include="ViewModels\ControllerViewModel.cs" />
     <Compile Include="ViewModels\ControllerCollectionViewModel.cs" />
     <Compile Include="ViewModels\Network.cs" />

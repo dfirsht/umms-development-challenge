@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,21 +7,21 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Actual_windows_phone_controller.ViewModels
+namespace Actual_windows_phone_controller.ViewModels.Buttons
 {
-    class StringControllerButton : AbstractControllerButton
+    class VolumeSliderControllerButton : AbstractControllerButton
     {
-        public StringControllerButton()
+        public VolumeSliderControllerButton()
         {
-            width = 300;
-            height = 100;
+            width = 234;
+            height = 84;
         }
-        public StringControllerButton(StreamReader reader) : base(reader)
+        public VolumeSliderControllerButton(StreamReader reader)
+            : base(reader)
         {
         }
         override protected void initalizeFromStream(StreamReader reader)
         {
-            DisplayTitle = reader.ReadLine();
             x = Convert.ToDouble(reader.ReadLine());
             y = Convert.ToDouble(reader.ReadLine());
             width = Convert.ToDouble(reader.ReadLine());
@@ -30,8 +29,7 @@ namespace Actual_windows_phone_controller.ViewModels
         }
         override public void Save(StreamWriter writer)
         {
-            writer.WriteLine(ButtonType.Button);
-            writer.WriteLine(DisplayTitle);
+            writer.WriteLine(ButtonType.Volume);
             writer.WriteLine(x);
             writer.WriteLine(y);
             writer.WriteLine(width);
@@ -39,27 +37,39 @@ namespace Actual_windows_phone_controller.ViewModels
         }
         override public FrameworkElement getVisualElement()
         {
-            Button uibutton = new Button();
-            uibutton.Content = DisplayTitle;
+            Slider uibutton = new Slider();
             uibutton.Width = width;
             uibutton.Height = height;
+            uibutton.Maximum = 100;
             Canvas.SetLeft(uibutton, x);
             Canvas.SetTop(uibutton, y);
-            uibutton.Click += SendCommand;
+            uibutton.ValueChanged += uibutton_ValueChanged;
 
             uibutton.DataContext = this;
             return uibutton;
         }
 
-        void SendCommand(object sender, RoutedEventArgs e)
+        void uibutton_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            Slider Slide = (Slider)sender;
+            string name = "nircmd.exe setsysvolume";
+            double percent = (Math.Floor(Slide.Value));
+            // fill percent with zeroes to give unified format
+            percent = percent / Slide.Maximum;
+
+            if (name == "nircmd.exe setsysvolume")
+            {
+                percent = (Math.Floor(Network.maxVolume * percent));
+            }
+
+            string stringToSend = Network.cmdTag + name + ' ' + percent.ToString();
             Network network = Network.GetInstance();
-            network.SendString(DisplayTitle);
+            network.SendString(stringToSend);
         }
+
         override public void updateData(FrameworkElement control)
         {
-            Button uibutton = (Button)control;
-            DisplayTitle = Convert.ToString(uibutton.Content);
+            Slider uibutton = (Slider)control;
             x = Canvas.GetLeft(uibutton);
             y = Canvas.GetTop(uibutton);
             width = control.Width;
@@ -67,4 +77,3 @@ namespace Actual_windows_phone_controller.ViewModels
         }
     }
 }
-

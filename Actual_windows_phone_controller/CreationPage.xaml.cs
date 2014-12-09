@@ -281,5 +281,12 @@ namespace Actual_windows_phone_controller
             }
             previousSelectorSelectionPosition = e.GetPosition(null);
         }
+
+        private void viewVolumeItemSelected(object sender, MouseButtonEventArgs e)
+        {
+            // Inialize new data object
+            AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
+            initalizeVisualElement(button, e);
+        }
     }
 }

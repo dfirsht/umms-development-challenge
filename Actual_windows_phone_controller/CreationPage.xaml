@@ -36,16 +36,14 @@
                     <Border BorderThickness="3" BorderBrush="AntiqueWhite" Name="outerBorder">
                         <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" >
                             <!--<Image Source="Resources/tabOpen.png" Height="100" Margin="0,0,100,0"></Image>-->
-                            <Rectangle Fill="Black" Height="10"></Rectangle>
                             <!--<Rectangle Fill="DarkBlue" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>-->
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 10 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
                                 MouseLeftButtonDown="toolbarItemSelected"
                                 Source="/Assets/Images/point.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30"/>
                             <!--<Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
                                 <Image 
                                 Height="100"
@@ -54,53 +52,48 @@
                                 Source="/Assets/Images/type.png"/>
                             </Border>-->
                             <!--<Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
                                 MouseLeftButtonDown="MouseItemSelected"
                                 Source="/Assets/Images/mouse.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30"></Rectangle>
                             <!--<Rectangle Fill="PaleTurquoise" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>-->
                             <!--<Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
                                 MouseLeftButtonDown="KeyboardItemSelected"
                                 Source="/Assets/Images/type.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30"></Rectangle>
                             <!--<Rectangle Fill="Red" Width="100" Height="100" MouseLeftButtonDown="viewBrowserItemSelected" Margin="0,20"/>-->
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
                                     MouseLeftButtonDown="viewBrowserItemSelected"
                                     Source="/Assets/Images/browser.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30"></Rectangle>
                             <!--<Rectangle Fill="Firebrick" Width="100" Height="100" MouseLeftButtonDown="viewGoogleItemSelected" Margin="0,20"/>-->
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
                                     MouseLeftButtonDown="viewGoogleItemSelected"
                                     Source="/Assets/Images/google.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30" Width="50"/>
                             <!--<Rectangle Fill="DarkRed" Width="100" Height="100" MouseLeftButtonDown="viewYouTubeItemSelected" Margin="0,20"/>-->
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
                                     MouseLeftButtonDown="viewYouTubeItemSelected"
                                     Source="/Assets/Images/youtube.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="30" Width="50"/>
                             <!--<Rectangle Fill="Magenta" Width="100" Height="100" MouseLeftButtonDown="viewFacebookItemSelected" Margin="0,20"/>-->
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
@@ -108,15 +101,20 @@
                                     Source="/Assets/Images/fb.png"/>
                             </Border>
                             <!--<Rectangle Fill="Pink" Width="100" Height="100" MouseLeftButtonDown="viewTwitterItemSelected" Margin="0,20"/>-->
-                            <Rectangle Fill="Black" Height="30" Width="50"/>
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100">
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
                                     MouseLeftButtonDown="viewTwitterItemSelected"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
-                            <Rectangle Fill="Black" Height="10" Width="50"/>
+                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="viewVolumeItemSelected"
+                                    Source="/Assets/Images/twitter.png"/>
+                            </Border>
                         </StackPanel>
                     </Border>
 

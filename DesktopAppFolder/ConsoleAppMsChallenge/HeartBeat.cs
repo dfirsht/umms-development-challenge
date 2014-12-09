@@ -19,7 +19,7 @@ public class HeartBeat
 
     public void beat()
     {
-        batchLines[1] = "sleep 5";
+        batchLines[1] = "ping -n 6 127.0.0.1 >nul";
         batchLines[2] = "netsh wlan set hostednetwork mode=disallow";
 
         
