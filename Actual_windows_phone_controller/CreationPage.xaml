@@ -26,6 +26,7 @@
             <TextBox x:Name="controllerTitle" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Text="create" Margin="-5,-7,0,0" FontWeight="Bold" Background="Black" Foreground="White" BorderThickness="0" GotFocus="TitleGotFocus" LostFocus="TitleLostFocus" TextChanged="TitleTextChanged" />
         </StackPanel>
 
+
         <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
@@ -114,7 +115,7 @@
                                     Width="100"
                                     MouseLeftButtonDown="startPC"
                                     MouseLeftButtonUp="endPC"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/powerbutton.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="pcShutdownItemSelected"-->
                             <!-- PC Sleep -->
@@ -124,7 +125,7 @@
                                     Width="100"
                                     MouseLeftButtonDown="startSleep"
                                     MouseLeftButtonUp="endSleep"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/sleep.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="pcSleepItemSelected"-->
                             <!-- Open iTunes -->
@@ -194,7 +195,7 @@
                                     Width="100"
                                     MouseLeftButtonDown="startDocs"
                                     MouseLeftButtonUp="endDocs"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/doc.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browseDocumentsItemSelected"-->
                             <!-- Browse Music -->
@@ -204,7 +205,7 @@
                                     Width="100"
                                     MouseLeftButtonDown="startMusic"
                                     MouseLeftButtonUp="endMusic"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/music.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browseMusicItemSelected"-->
                             <!-- Browse Pictures -->
@@ -214,7 +215,7 @@
                                     Width="100"
                                     MouseLeftButtonDown="startPics"
                                     MouseLeftButtonUp="endPics"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/photo.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browsePicturesItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
@@ -223,9 +224,18 @@
                                     Width="100"
                                     MouseLeftButtonDown="startVol"
                                     MouseLeftButtonUp="endVol"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    Source="/Assets/Images/volume.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewVolumeItemSelected"-->
+                                <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                    <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="startMacro"
+                                    MouseLeftButtonUp="endMacro"
+                                    Source="/Assets/Images/type.png"/>
+                                </Border>
+                            <!-- MouseLeftButtonDown="macroItemSelected"-->
                         </StackPanel>
                     </Border>
 

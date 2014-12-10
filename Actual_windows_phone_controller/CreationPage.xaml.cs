@@ -14,6 +14,7 @@ using Actual_windows_phone_controller.ViewModels;
 using Actual_windows_phone_controller.ViewModels.Buttons;
 using Windows.UI;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls.Primitives;
 
 namespace Actual_windows_phone_controller
 {
@@ -299,6 +300,35 @@ namespace Actual_windows_phone_controller
         {
             stringControllerSelected("Browse Pictures", e);
         }
+
+        private void macroItemSelected(object sender, MouseButtonEventArgs e)
+        {
+
+            Popup popup = new Popup();
+            popup.Height = this.Height;
+            popup.Width = this.Width;
+            popup.VerticalOffset = 0;
+            PopupBox control = new PopupBox();
+            control.Height = Application.Current.Host.Content.ActualHeight;
+            control.Width = Application.Current.Host.Content.ActualWidth;
+            popup.Child = control;
+            popup.IsOpen = true;
+
+            control.btnOK.Click += (s, args) =>
+            {
+                popup.IsOpen = false;
+
+                AbstractControllerButton button = new MacroControllerButton();
+                button.DisplayTitle = control.tbx.Text;
+                initalizeVisualElement(button, e);
+            };
+
+            control.btnCancel.Click += (s, args) =>
+            {
+                popup.IsOpen = false;
+            };
+        }
+
         // Handler Selector Sliding
         private void ButtonSelectorSelected(object sender, MouseButtonEventArgs e)
         {
@@ -629,6 +659,42 @@ namespace Actual_windows_phone_controller
             {
                 AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
                 initalizeVisualElement(button, e);
+            }
+        }
+
+        DateTime macroStarted;
+        private void startMacro(object sender, MouseButtonEventArgs e)
+        {
+            macroStarted = DateTime.Now;
+        }
+
+        private void endMacro(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - macroStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                Popup popup = new Popup();
+                popup.Height = this.Height;
+                popup.Width = this.Width;
+                popup.VerticalOffset = 0;
+                PopupBox control = new PopupBox();
+                control.Height = Application.Current.Host.Content.ActualHeight;
+                control.Width = Application.Current.Host.Content.ActualWidth;
+                popup.Child = control;
+                popup.IsOpen = true;
+
+                control.btnOK.Click += (s, args) =>
+                {
+                    popup.IsOpen = false;
+
+                    AbstractControllerButton button = new MacroControllerButton();
+                    button.DisplayTitle = control.tbx.Text;
+                    initalizeVisualElement(button, e);
+                };
+
+                control.btnCancel.Click += (s, args) =>
+                {
+                    popup.IsOpen = false;
+                };
             }
         }
 
