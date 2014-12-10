@@ -161,18 +161,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\browser.png" />
+    <Content Include="Assets\Images\explorer.png" />
+    <Content Include="Assets\Images\file.png" />
+    <Content Include="Assets\Images\iTunes.png" />
     <Content Include="Assets\Images\mouse.png" />
     <Content Include="Assets\Images\point.png" />
+    <Content Include="Assets\Images\powerpoint.png" />
     <Content Include="Assets\Images\reach.png" />
     <Content Include="Assets\Images\arrow.png" />
     <Content Include="Assets\Images\button.jpg" />
     <Content Include="Assets\Images\fb.png" />
     <Content Include="Assets\Images\google.png" />
+    <Content Include="Assets\Images\steam.png" />
     <Content Include="Assets\Images\temp.jpg" />
     <Content Include="Assets\Images\trash.png" />
     <Content Include="Assets\Images\trash2.png" />
     <Content Include="Assets\Images\twitter.png" />
     <Content Include="Assets\Images\type.png" />
+    <Content Include="Assets\Images\word.png" />
     <Content Include="Assets\Images\youtube.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

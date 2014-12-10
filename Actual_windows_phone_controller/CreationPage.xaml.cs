@@ -345,6 +345,293 @@ namespace Actual_windows_phone_controller
             (sender as TextBox).Foreground = whiteBrush;
         }
 
+        double buttonHoldTime = .25;
+
+        DateTime toolbarStarted;
+        private void startToolbar(object sender, MouseButtonEventArgs e)
+        {
+            toolbarStarted = DateTime.Now;
+        }
+
+        private void endToolbar(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - toolbarStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Button);
+                initalizeVisualElement(button, e);
+            }
+        }
+
+        DateTime mouseStarted;
+        private void startMouse(object sender, MouseButtonEventArgs e)
+        {
+            mouseStarted = DateTime.Now;
+        }
+
+        private void endMouse(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - mouseStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                //MouseItemSelected(sender, e);
+                AbstractControllerButton button = new MouseControllerButton();
+                initalizeVisualElement(button, e);
+            }
+        }
+
+        DateTime keyboardStarted;
+        private void startKB(object sender, MouseButtonEventArgs e)
+        {
+            keyboardStarted = DateTime.Now;
+        }
+
+        private void endKB(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - keyboardStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                AbstractControllerButton button = new KeyboardControllerButton();
+                initalizeVisualElement(button, e);
+            }
+        }
+        
+        DateTime browserStarted;
+        private void startBrowser(object sender, MouseButtonEventArgs e)
+        {
+            browserStarted = DateTime.Now;
+        }
+
+        private void endBrowser(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - browserStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("View Web Browser", e);
+            }
+        }
+
+        DateTime ytStarted;
+        private void startYT(object sender, MouseButtonEventArgs e)
+        {
+            ytStarted = DateTime.Now;
+        }
+
+        private void endYT(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - ytStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("View YouTube", e);
+            }
+        }
+
+        DateTime googleStarted;
+        private void startGoogle(object sender, MouseButtonEventArgs e)
+        {
+            googleStarted = DateTime.Now;
+        }
+
+        private void endGoogle(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - googleStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("View Google", e);
+            }
+        }
+
+        DateTime fbStarted;
+        private void startFB(object sender, MouseButtonEventArgs e)
+        {
+            fbStarted = DateTime.Now;
+        }
+
+        private void endFB(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - fbStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("View Facebook", e);
+            }
+        }
+        
+        DateTime twitStarted;
+        private void startTwit(object sender, MouseButtonEventArgs e)
+        {
+            twitStarted = DateTime.Now;
+        }
+
+        private void endTwit(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - twitStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("View Twitter", e);
+            }
+        }
+        
+        DateTime pcStarted;
+        private void startPC(object sender, MouseButtonEventArgs e)
+        {
+            pcStarted = DateTime.Now;
+        }
+
+        private void endPC(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - pcStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("PC Shutdown", e);
+            }
+        }
+        
+        DateTime sleepStarted;
+        private void startSleep(object sender, MouseButtonEventArgs e)
+        {
+            sleepStarted = DateTime.Now;
+        }
+
+        private void endSleep(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - sleepStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("PC Sleep", e);
+            }
+        }
+        
+        DateTime itunesStarted;
+        private void startItunes(object sender, MouseButtonEventArgs e)
+        {
+            itunesStarted = DateTime.Now;
+        }
+
+        private void endItunes(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - itunesStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open iTunes", e);
+            }
+        }
+
+        DateTime steamStarted;
+        private void startSteam(object sender, MouseButtonEventArgs e)
+        {
+            steamStarted = DateTime.Now;
+        }
+
+        private void endSteam(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - steamStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open Steam", e);
+            }
+        }
+
+        DateTime ieStarted;
+        private void startIE(object sender, MouseButtonEventArgs e)
+        {
+            ieStarted = DateTime.Now;
+        }
+
+        private void endIE(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - ieStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open Internet Explorer", e);
+            }
+        }
+
+        DateTime feStarted;
+        private void startFE(object sender, MouseButtonEventArgs e)
+        {
+            feStarted = DateTime.Now;
+        }
+
+        private void endFE(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - feStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open File Explorer", e);
+            }
+        }
+        
+        DateTime wordStarted;
+        private void startWord(object sender, MouseButtonEventArgs e)
+        {
+            wordStarted = DateTime.Now;
+        }
+
+        private void endWord(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - wordStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open Microsoft Word", e);
+            }
+        }
+        
+        DateTime ppStarted;
+        private void startPP(object sender, MouseButtonEventArgs e)
+        {
+            ppStarted = DateTime.Now;
+        }
+
+        private void endPP(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - ppStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Open Microsoft PowerPoint", e);
+            }
+        }
+
+        DateTime docsStarted;
+        private void startDocs(object sender, MouseButtonEventArgs e)
+        {
+            docsStarted = DateTime.Now;
+        }
+
+        private void endDocs(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - docsStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Browse Documents", e);
+            }
+        }
+
+        DateTime musicStarted;
+        private void startMusic(object sender, MouseButtonEventArgs e)
+        {
+            musicStarted = DateTime.Now;
+        }
+
+        private void endMusic(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - musicStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Browse Music", e);
+            }
+        }
+
+        DateTime picsStarted;
+        private void startPics(object sender, MouseButtonEventArgs e)
+        {
+            picsStarted = DateTime.Now;
+        }
+
+        private void endPics(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - picsStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                stringControllerSelected("Browse Pictures", e);
+            }
+        }
+
+        DateTime volumeStarted;
+        private void startVol(object sender, MouseButtonEventArgs e)
+        {
+            volumeStarted = DateTime.Now;
+        }
+
+        private void endVol(object sender, MouseButtonEventArgs e)
+        {
+            if (DateTime.Now - volumeStarted > TimeSpan.FromSeconds(buttonHoldTime))
+            {
+                AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
+                initalizeVisualElement(button, e);
+            }
+        }
+
         private void TitleTextChanged(object sender, TextChangedEventArgs e)
         {
             ((ControllerViewModel)DataContext).Title = ((TextBox)sender).Text;
