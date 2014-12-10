@@ -56,7 +56,7 @@ namespace CMD
         string promptValue = "Name";
         UserPass(ref networkName,UserLen, prompt, promptValue);
 
-        prompt = "a password over 8 characters long";
+        prompt = "a password at least 8 characters long";
         promptValue = "Password";
         UserPass(ref password, PassLen, prompt, promptValue);
 
