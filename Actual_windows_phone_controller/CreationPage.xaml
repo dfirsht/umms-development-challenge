@@ -26,6 +26,7 @@
             <TextBox x:Name="controllerTitle" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Text="create" Margin="-5,-7,0,0" FontWeight="Bold" Background="Black" Foreground="White" BorderThickness="0" GotFocus="TitleGotFocus" LostFocus="TitleLostFocus" TextChanged="TitleTextChanged" />
         </StackPanel>
 
+
         <!--<Canvas x:Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
             </Canvas>-->
@@ -34,172 +35,207 @@
                 <ScrollViewer x:Name="selectorScroller" Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
                     <Border BorderThickness="3" BorderBrush="AntiqueWhite" Name="outerBorder">
                         <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" >
-                            <!--<Image Source="Resources/tabOpen.png" Height="100" Margin="0,0,100,0"></Image>-->
-                            <!--<Rectangle Fill="DarkBlue" Width="100" Height="100" MouseLeftButtonDown="toolbarItemSelected"/>-->
                             <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 10 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
-                                MouseLeftButtonDown="toolbarItemSelected"
+                                MouseLeftButtonDown="startToolbar"
+                                MouseLeftButtonUp="endToolbar"
                                 Source="/Assets/Images/point.png"/>
                             </Border>
-                            <!--<Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100">
-                                <Image 
-                                Height="100"
-                                Width="100"
-                                MouseLeftButtonDown="toolbarItemSelected"
-                                Source="/Assets/Images/type.png"/>
-                            </Border>-->
-                            <!--<Rectangle Fill="Wheat" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
+                            <!--MouseLeftButtonDown="toolbarItemSelected"-->
                             <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
-                                MouseLeftButtonDown="MouseItemSelected"
+                                MouseLeftButtonDown="startMouse"
+                                MouseLeftButtonUp="endMouse"
                                 Source="/Assets/Images/mouse.png"/>
                             </Border>
-                            <!--<Rectangle Fill="PaleTurquoise" Width="100" Height="100" MouseLeftButtonDown="KeyboardItemSelected" Margin="25,20" Opacity=".4"/>-->
-                            <!--<Rectangle Fill="Green" Width="100" Height="100" MouseLeftButtonDown="MouseItemSelected" Margin="0,20"/>-->
+                            <!--MouseLeftButtonDown="MouseItemSelected"-->
                             <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
-                                MouseLeftButtonDown="KeyboardItemSelected"
+                                MouseLeftButtonDown="startKB"
+                                MouseLeftButtonUp="endKB"
                                 Source="/Assets/Images/type.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="KeyboardItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewBrowserItemSelected"
+                                    MouseLeftButtonDown="startBrowser"
+                                    MouseLeftButtonUp="endBrowser"
                                     Source="/Assets/Images/browser.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewBrowserItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewGoogleItemSelected"
+                                    MouseLeftButtonDown="startGoogle"
+                                    MouseLeftButtonUp="endGoogle"
                                     Source="/Assets/Images/google.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewGoogleItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewYouTubeItemSelected"
+                                    MouseLeftButtonDown="startYT"
+                                    MouseLeftButtonUp="endYT"
                                     Source="/Assets/Images/youtube.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewYouTubeItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewFacebookItemSelected"
+                                    MouseLeftButtonDown="startFB"
+                                    MouseLeftButtonUp="endFB"
                                     Source="/Assets/Images/fb.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewFacebookItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewTwitterItemSelected"
+                                    MouseLeftButtonDown="startTwit"
+                                    MouseLeftButtonUp="endTwit"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewTwitterItemSelected"-->
                             <!-- The following could use some specific images -->
                             <!-- PC Shutdown -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="pcShutdownItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startPC"
+                                    MouseLeftButtonUp="endPC"
+                                    Source="/Assets/Images/powerbutton.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="pcShutdownItemSelected"-->
                             <!-- PC Sleep -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="pcSleepItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startSleep"
+                                    MouseLeftButtonUp="endSleep"
+                                    Source="/Assets/Images/sleep.png"/>
                             </Border>
-
+                            <!--MouseLeftButtonDown="pcSleepItemSelected"-->
                             <!-- Open iTunes -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openiTunesItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startItunes"
+                                    MouseLeftButtonUp="endItunes"
+                                    Source="/Assets/Images/iTunes.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="openiTunesItemSelected"-->
                             <!-- Open Steam -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openSteamItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startSteam"
+                                    MouseLeftButtonUp="endSteam"
+                                    Source="/Assets/Images/steam.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="openSteamItemSelected"-->
                             <!-- Open IE -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openIEItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startIE"
+                                    MouseLeftButtonUp="endIE"
+                                    Source="/Assets/Images/explorer.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="openIEItemSelected"-->
                             <!-- Open File Explorer -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openFileExplorerItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startFE"
+                                    MouseLeftButtonUp="endFE"
+                                    Source="/Assets/Images/file.png"/>
                             </Border>
+                            <!-- MouseLeftButtonDown="openFileExplorerItemSelected"-->
                             <!-- Open MS Word -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openMSWordItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startWord"
+                                    MouseLeftButtonUp="endWord"
+                                    Source="/Assets/Images/word.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="openMSWordItemSelected"-->
                             <!-- Open MS Powerpoint -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="openMSPPTItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startPP"
+                                    MouseLeftButtonUp="endPP"
+                                    Source="/Assets/Images/powerpoint.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="openMSPPTItemSelected"-->
                             <!-- Browse Documents -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="browseDocumentsItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startDocs"
+                                    MouseLeftButtonUp="endDocs"
+                                    Source="/Assets/Images/doc.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="browseDocumentsItemSelected"-->
                             <!-- Browse Music -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="browseMusicItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startMusic"
+                                    MouseLeftButtonUp="endMusic"
+                                    Source="/Assets/Images/music.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="browseMusicItemSelected"-->
                             <!-- Browse Pictures -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="browsePicturesItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startPics"
+                                    MouseLeftButtonUp="endPics"
+                                    Source="/Assets/Images/photo.png"/>
                             </Border>
-
+                            <!--MouseLeftButtonDown="browsePicturesItemSelected"-->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="viewVolumeItemSelected"
-                                    Source="/Assets/Images/twitter.png"/>
+                                    MouseLeftButtonDown="startVol"
+                                    MouseLeftButtonUp="endVol"
+                                    Source="/Assets/Images/volume.png"/>
                             </Border>
+                            <!--MouseLeftButtonDown="viewVolumeItemSelected"-->
+                                <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                    <Image 
+                                    Height="100"
+                                    Width="100"
+                                    MouseLeftButtonDown="startMacro"
+                                    MouseLeftButtonUp="endMacro"
+                                    Source="/Assets/Images/type.png"/>
+                                </Border>
+                            <!-- MouseLeftButtonDown="macroItemSelected"-->
                         </StackPanel>
                     </Border>
 

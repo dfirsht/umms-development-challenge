@@ -21,8 +21,8 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="REACH" Style="{StaticResource PhoneTextNormalStyle}"/>
+        <StackPanel Grid.Row="0" Margin="10,0,2,45">
+            <TextBlock Text="REACH" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0,385,0" Height="32"/>
             <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}">
             	<Run Text="connect" FontWeight="Bold"/>
             	<LineBreak/>
@@ -36,6 +36,7 @@
             <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
             <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="446"/>
             <Slider x:Name="Slide" HorizontalAlignment="Left" Margin="91,267,0,0" VerticalAlignment="Top" Width="234" ValueChanged="Slider_ValueChanged" Maximum="100"/>
+            <TextBox x:Name="connectBox" HorizontalAlignment="Left" Height="72" Margin="0,377,0,0" TextWrapping="Wrap" Text="Not Connected" VerticalAlignment="Top" Width="456"/>
         </Grid>
     </Grid>
 
