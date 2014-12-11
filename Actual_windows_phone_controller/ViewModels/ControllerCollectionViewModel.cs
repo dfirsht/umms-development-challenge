@@ -115,6 +115,10 @@ namespace Actual_windows_phone_controller.ViewModels
                 Items[i].ID = id.ToString();
             }
             this.Items.Remove(toDelete);
+            foreach(ControllerViewModel controller in Items)
+            {
+                controller.Save();
+            }
             if (IsolatedStorageSettings.ApplicationSettings.Contains("ControllerCollectionCount"))
             {
                 IsolatedStorageSettings.ApplicationSettings.Remove("ControllerCollectionCount");
