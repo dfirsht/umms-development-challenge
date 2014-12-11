@@ -168,9 +168,16 @@ namespace Actual_windows_phone_controller.ViewModels
             convertKey.Add("[", "{[}");
             convertKey.Add("]", "{]}");
 
-            convertKey.Add("CTRL", "+");
-            convertKey.Add("SHIFT", "^");
+            convertKey.Add("CTRL", "^");
+            convertKey.Add("SHIFT", "+");
             convertKey.Add("ALT", "%");
+
+            convertKey.Add("DELETE", "{DELETE}");
+            convertKey.Add("HOME", "{HOME}");
+            convertKey.Add("END", "{END}");
+            convertKey.Add("ENTER", "{ENTER}");
+            convertKey.Add("TAB", "{TAB}");
+            convertKey.Add("ESC", "{ESC}");
 
             convertKey.Add("DOWN", "{DOWN}");
             convertKey.Add("UP", "{UP}");

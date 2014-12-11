@@ -66,9 +66,9 @@ namespace CMD
         // creat heart beat
         HeartBeat h = new HeartBeat();
         Thread heartThread = new Thread(new ThreadStart(h.beat));
-        heartThread.Start();
+        //heartThread.Start();
         // spin
-        while (!heartThread.IsAlive) { };
+        //while (!heartThread.IsAlive) { };
 
         // creating lan network
         callStrings[1] = "netsh wlan set hostednetwork mode=disallow";

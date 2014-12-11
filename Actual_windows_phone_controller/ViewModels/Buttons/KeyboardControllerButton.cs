@@ -70,7 +70,7 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
                 return;
             }
 
-            string stringToSend = SendKeyBox.Text;
+            string stringToSend = SendKeyBox.Text[SendKeyBox.Text.Length - 1].ToString();
 
             if (network.convertKey.ContainsKey(stringToSend))
             {

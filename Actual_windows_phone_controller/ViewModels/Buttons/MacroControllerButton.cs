@@ -31,7 +31,7 @@ namespace Actual_windows_phone_controller.ViewModels
         }
         override public void Save(StreamWriter writer)
         {
-            writer.WriteLine(ButtonType.Button);
+            writer.WriteLine(ButtonType.Macro);
             writer.WriteLine(DisplayTitle);
             writer.WriteLine(x);
             writer.WriteLine(y);
@@ -63,6 +63,10 @@ namespace Actual_windows_phone_controller.ViewModels
                 if (network.convertKey.ContainsKey(c.ToUpper()))
                 {
                     cmd += network.convertKey[c.ToUpper()];
+                }
+                else
+                {
+                    cmd += c;
                 }
             }
 

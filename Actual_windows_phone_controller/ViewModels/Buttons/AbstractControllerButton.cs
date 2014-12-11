@@ -15,7 +15,7 @@ namespace Actual_windows_phone_controller.ViewModels
 {
     public enum ButtonType
     {
-        Button, Mouse, Keyboard, Volume
+        Button, Mouse, Keyboard, Volume, Macro
     }
     abstract public class AbstractControllerButton : INotifyPropertyChanged
     {
@@ -72,6 +72,17 @@ namespace Actual_windows_phone_controller.ViewModels
                     else
                     {
                         newButton = new VolumeSliderControllerButton();
+                    }
+
+                    return newButton;
+                case ButtonType.Macro:
+                    if (reader != null)
+                    {
+                        newButton = new MacroControllerButton(reader);
+                    }
+                    else
+                    {
+                        newButton = new MacroControllerButton();
                     }
 
                     return newButton;
