@@ -52,7 +52,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel x:Name="MainStackPanel"  Margin="0,0,0,20" Hold="item_held" Tap="item_tapped">
-                          <TextBox Text="{Binding Title}" FontSize="40" TextWrapping="Wrap" Foreground="White" Background="Black"  BorderThickness="0" LostFocus="controllerTitleTextLostFocus" GotFocus="controllerTitleTextGotFocus" TextChanged="controllerTitleTextChanged" Tap="controllerTitleTextTapped"/>
+                          <TextBlock Text="{Binding Title}" FontSize="40" TextWrapping="Wrap" Foreground="White"/>
                           <TextBlock Text="{Binding Subtitle}" TextWrapping="Wrap" Margin="12,10,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
                             <Canvas x:Name="opitionPanel" Visibility="Collapsed">
                                 <Button Content="Up" Click="moveElementUp">

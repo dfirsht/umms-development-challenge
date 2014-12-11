@@ -35,21 +35,20 @@
                 <ScrollViewer x:Name="selectorScroller" Canvas.Left="84" Canvas.Top="128" Height="442" VerticalScrollBarVisibility="Auto" MouseLeftButtonDown="ButtonSelectorSelected" MouseMove="ButtonSelectorMoved" >
                     <Border BorderThickness="3" BorderBrush="AntiqueWhite" Name="outerBorder">
                         <StackPanel Background="Black"  Width="150" VerticalAlignment="Stretch" >
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 10 0 0">
+                            <!--<Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 10 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
                                 MouseLeftButtonDown="startToolbar"
                                 MouseLeftButtonUp="endToolbar"
-                                Source="/Assets/Images/point.png"/>
-                            </Border>
+                                Source="/Assets/Images/point.png" Margin="0,0,-6,-6" VerticalAlignment="Bottom"/>
+                            </Border>-->
                             <!--MouseLeftButtonDown="toolbarItemSelected"-->
-                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 30 0 0">
+                            <Border BorderBrush="AntiqueWhite" BorderThickness="3" Height="100" Width="100" Margin="0 10 0 0">
                                 <Image 
                                 Height="100"
                                 Width="100"
-                                MouseLeftButtonDown="startMouse"
-                                MouseLeftButtonUp="endMouse"
+                                DoubleTap="mouseStart"
                                 Source="/Assets/Images/mouse.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="MouseItemSelected"-->
@@ -57,8 +56,7 @@
                                 <Image 
                                 Height="100"
                                 Width="100"
-                                MouseLeftButtonDown="startKB"
-                                MouseLeftButtonUp="endKB"
+                                DoubleTap="kbStart"
                                 Source="/Assets/Images/type.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="KeyboardItemSelected"-->
@@ -66,8 +64,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startBrowser"
-                                    MouseLeftButtonUp="endBrowser"
+                                    DoubleTap="browserStart"
                                     Source="/Assets/Images/browser.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewBrowserItemSelected"-->
@@ -75,8 +72,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startGoogle"
-                                    MouseLeftButtonUp="endGoogle"
+                                    DoubleTap="googleStart"
                                     Source="/Assets/Images/google.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewGoogleItemSelected"-->
@@ -84,8 +80,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startYT"
-                                    MouseLeftButtonUp="endYT"
+                                    DoubleTap="ytStart"
                                     Source="/Assets/Images/youtube.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewYouTubeItemSelected"-->
@@ -93,8 +88,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startFB"
-                                    MouseLeftButtonUp="endFB"
+                                    DoubleTap="fbStart"
                                     Source="/Assets/Images/fb.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewFacebookItemSelected"-->
@@ -102,8 +96,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startTwit"
-                                    MouseLeftButtonUp="endTwit"
+                                    DoubleTap="twitStart"
                                     Source="/Assets/Images/twitter.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewTwitterItemSelected"-->
@@ -113,8 +106,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startPC"
-                                    MouseLeftButtonUp="endPC"
+                                    DoubleTap="pcStart"
                                     Source="/Assets/Images/powerbutton.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="pcShutdownItemSelected"-->
@@ -123,28 +115,25 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startSleep"
-                                    MouseLeftButtonUp="endSleep"
+                                    DoubleTap="sleepStart"
                                     Source="/Assets/Images/sleep.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="pcSleepItemSelected"-->
                             <!-- Open iTunes -->
-                            <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                            <!--<Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startItunes"
-                                    MouseLeftButtonUp="endItunes"
+                                    DoubleTap="itunesStart"
                                     Source="/Assets/Images/iTunes.png"/>
-                            </Border>
+                            </Border>-->
                             <!--MouseLeftButtonDown="openiTunesItemSelected"-->
                             <!-- Open Steam -->
                             <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startSteam"
-                                    MouseLeftButtonUp="endSteam"
+                                    DoubleTap="steamStart"
                                     Source="/Assets/Images/steam.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="openSteamItemSelected"-->
@@ -153,8 +142,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startIE"
-                                    MouseLeftButtonUp="endIE"
+                                    DoubleTap="ieStart"
                                     Source="/Assets/Images/explorer.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="openIEItemSelected"-->
@@ -163,8 +151,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startFE"
-                                    MouseLeftButtonUp="endFE"
+                                    DoubleTap="feStart"
                                     Source="/Assets/Images/file.png"/>
                             </Border>
                             <!-- MouseLeftButtonDown="openFileExplorerItemSelected"-->
@@ -173,8 +160,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startWord"
-                                    MouseLeftButtonUp="endWord"
+                                    DoubleTap="wordStart"
                                     Source="/Assets/Images/word.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="openMSWordItemSelected"-->
@@ -183,8 +169,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startPP"
-                                    MouseLeftButtonUp="endPP"
+                                    DoubleTap="ppStart"
                                     Source="/Assets/Images/powerpoint.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="openMSPPTItemSelected"-->
@@ -193,8 +178,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startDocs"
-                                    MouseLeftButtonUp="endDocs"
+                                    DoubleTap="docsStart"
                                     Source="/Assets/Images/doc.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browseDocumentsItemSelected"-->
@@ -203,8 +187,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startMusic"
-                                    MouseLeftButtonUp="endMusic"
+                                    DoubleTap="musicStart"
                                     Source="/Assets/Images/music.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browseMusicItemSelected"-->
@@ -213,8 +196,7 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startPics"
-                                    MouseLeftButtonUp="endPics"
+                                    DoubleTap="picsStart"
                                     Source="/Assets/Images/photo.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="browsePicturesItemSelected"-->
@@ -222,18 +204,16 @@
                                 <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startVol"
-                                    MouseLeftButtonUp="endVol"
+                                    DoubleTap="volStart"
                                     Source="/Assets/Images/volume.png"/>
                             </Border>
                             <!--MouseLeftButtonDown="viewVolumeItemSelected"-->
-                                <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 0">
+                                <Border BorderThickness="3" BorderBrush="AntiqueWhite" Height="100" Width="100" Margin="0 30 0 10">
                                     <Image 
                                     Height="100"
                                     Width="100"
-                                    MouseLeftButtonDown="startMacro"
-                                    MouseLeftButtonUp="endMacro"
-                                    Source="/Assets/Images/type.png"/>
+                                    DoubleTap="macroStart"
+                                    Source="/Assets/Images/point.png"/>
                                 </Border>
                             <!-- MouseLeftButtonDown="macroItemSelected"-->
                         </StackPanel>
