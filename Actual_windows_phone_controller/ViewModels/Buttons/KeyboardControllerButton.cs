@@ -65,31 +65,29 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
 
         void uibutton_SendKey(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            
-        }
+            if (SendKeyBox.Text == "")
+            {
+                return;
+            }
+            String stringToSend = SendKeyBox.Text[SendKeyBox.Text.Length - 1].ToString();
 
+            if (network.convertKey.ContainsKey(stringToSend))
+            {
+                stringToSend = network.convertKey[stringToSend];
+            }
+            if (String.IsNullOrWhiteSpace(SendKeyBox.Text.ElementAt(SendKeyBox.Text.Length - 1).ToString()))
+            {
+                SendKeyBox.Text = "";
+            }
+            stringToSend = Network.keyTag + stringToSend;
+            network.SendString(stringToSend);
+        }
+        bool shouldSend = true;
         private void uibutton_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             string stringToSend;
             if (e.Key != Key.Enter && e.Key != Key.Back)
             {
-                if (SendKeyBox.Text == "")
-                {
-                    return;
-                }
-
-                stringToSend = SendKeyBox.Text[SendKeyBox.Text.Length - 1].ToString();
-
-                if (network.convertKey.ContainsKey(stringToSend))
-                {
-                    stringToSend = network.convertKey[stringToSend];
-                }
-                if (String.IsNullOrWhiteSpace(SendKeyBox.Text.ElementAt(SendKeyBox.Text.Length - 1).ToString()))
-                {
-                    SendKeyBox.Text = "";
-                }
-                stringToSend = Network.keyTag + stringToSend;
-                network.SendString(stringToSend);
                 return;
             }
             if (e.Key == Key.Enter)
@@ -100,7 +98,7 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
             {
                 stringToSend = Network.keyTag + "{BS}";
             }
-
+            SendKeyBox.Text = "";
             //NotifyUser.Text = "You Entered: " + stringToSend;
             network.SendString(stringToSend);
         }
