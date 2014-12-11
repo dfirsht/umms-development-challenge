@@ -65,32 +65,33 @@ namespace Actual_windows_phone_controller.ViewModels.Buttons
 
         void uibutton_SendKey(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (SendKeyBox.Text == "")
-            {
-                return;
-            }
-
-            string stringToSend = SendKeyBox.Text[SendKeyBox.Text.Length - 1].ToString();
-
-            if (network.convertKey.ContainsKey(stringToSend))
-            {
-                stringToSend = network.convertKey[stringToSend];
-            }
-            if (String.IsNullOrWhiteSpace(SendKeyBox.Text.ElementAt(SendKeyBox.Text.Length - 1).ToString()))
-            {
-                SendKeyBox.Text = "";
-            }
-            stringToSend = Network.keyTag + stringToSend;
-            network.SendString(stringToSend);
+            
         }
 
         private void uibutton_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            string stringToSend;
             if (e.Key != Key.Enter && e.Key != Key.Back)
             {
+                if (SendKeyBox.Text == "")
+                {
+                    return;
+                }
+
+                stringToSend = SendKeyBox.Text[SendKeyBox.Text.Length - 1].ToString();
+
+                if (network.convertKey.ContainsKey(stringToSend))
+                {
+                    stringToSend = network.convertKey[stringToSend];
+                }
+                if (String.IsNullOrWhiteSpace(SendKeyBox.Text.ElementAt(SendKeyBox.Text.Length - 1).ToString()))
+                {
+                    SendKeyBox.Text = "";
+                }
+                stringToSend = Network.keyTag + stringToSend;
+                network.SendString(stringToSend);
                 return;
             }
-            string stringToSend;
             if (e.Key == Key.Enter)
             {
                 stringToSend = Network.keyTag + "~";
