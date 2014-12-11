@@ -108,7 +108,18 @@ namespace Actual_windows_phone_controller.ViewModels
 
         public void removeItem(ControllerViewModel toDelete)
         {
+            for(int i = Convert.ToInt16(toDelete.ID); i < Items.Count; ++i)
+            {
+                int id = Convert.ToInt16(Items[i].ID);
+                --id;
+                Items[i].ID = id.ToString();
+            }
             this.Items.Remove(toDelete);
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("ControllerCollectionCount"))
+            {
+                IsolatedStorageSettings.ApplicationSettings.Remove("ControllerCollectionCount");
+            }
+            IsolatedStorageSettings.ApplicationSettings.Add("ControllerCollectionCount", Items.Count.ToString());
             IsolatedStorageSettings.ApplicationSettings.Save();
         }
     }

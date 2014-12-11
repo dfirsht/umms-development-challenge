@@ -80,7 +80,6 @@ namespace Actual_windows_phone_controller
 
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
-            hideOptions(MainLongListSelector.SelectedIndex);
         }
         private void ConnectionPageClick(object sender, RoutedEventArgs e)
         {
@@ -294,6 +293,7 @@ namespace Actual_windows_phone_controller
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
             hideOptions(item_selected);
+            item_selected = -1;
         }
 
         private void showOptionsPanel(object sender, EventArgs e)
