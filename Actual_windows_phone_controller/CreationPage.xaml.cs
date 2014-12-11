@@ -186,7 +186,7 @@ namespace Actual_windows_phone_controller
             previousObjectSelected = previousSender;
             previousSender = null;
         }
-        void initalizeVisualElement(AbstractControllerButton button, GestureEventArgs e)
+        void initalizeVisualElement(AbstractControllerButton button, System.Windows.Input.GestureEventArgs e)
         {
             //Set object position
             Point mouseCordinates = e.GetPosition(controllerCanvas);
@@ -230,7 +230,7 @@ namespace Actual_windows_phone_controller
         //}
 
         // Web Browser Buttons
-        private void stringControllerSelected(String title, GestureEventArgs e)
+        private void stringControllerSelected(String title, System.Windows.Input.GestureEventArgs e)
         {
             AbstractControllerButton button = new StringControllerButton();
             button.DisplayTitle = title;
@@ -356,7 +356,7 @@ namespace Actual_windows_phone_controller
             previousSelectorSelectionPosition = e.GetPosition(null);
         }
 
-        private void viewVolumeItemSelected(object sender, GestureEventArgs e)
+        private void viewVolumeItemSelected(object sender, System.Windows.Input.GestureEventArgs e)
         {
             // Inialize new data object
             AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
@@ -689,107 +689,107 @@ namespace Actual_windows_phone_controller
             ((ControllerViewModel)DataContext).Save();
         }
 
-        private void mouseStart(object sender, GestureEventArgs e)
+        private void mouseStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 AbstractControllerButton button = new MouseControllerButton();
                 initalizeVisualElement(button, e);
         }
 
-        private void kbStart(object sender, GestureEventArgs e)
+        private void kbStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 AbstractControllerButton button = new KeyboardControllerButton();
                 initalizeVisualElement(button, e);
         }
 
-        private void browserStart(object sender, GestureEventArgs e)
+        private void browserStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("View Web Browser", e);
         }
 
 
-        private void ytStart(object sender, GestureEventArgs e)
+        private void ytStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("View YouTube", e);
         }
 
 
-        private void googleStart(object sender, GestureEventArgs e)
+        private void googleStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
             stringControllerSelected("View Google", e);
         }
 
-        private void fbStart(object sender, GestureEventArgs e)
+        private void fbStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
             stringControllerSelected("View Facebook", e);
         }
 
-        private void twitStart(object sender, GestureEventArgs e)
+        private void twitStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
             stringControllerSelected("View Twitter", e);
         }
 
-        private void pcStart(object sender, GestureEventArgs e)
+        private void pcStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("PC Shutdown", e);
         }
 
-        private void sleepStart(object sender, GestureEventArgs e)
+        private void sleepStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("PC Sleep", e);
         }
 
-        private void itunesStart(object sender, GestureEventArgs e)
+        private void itunesStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open iTunes", e);
         }
 
-        private void steamStart(object sender, GestureEventArgs e)
+        private void steamStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open Steam", e);
         }
 
-        private void ieStart(object sender, GestureEventArgs e)
+        private void ieStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open Internet Explorer", e);
         }
 
-        private void feStart(object sender, GestureEventArgs e)
+        private void feStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open File Explorer", e);
         }
 
-        private void wordStart(object sender, GestureEventArgs e)
+        private void wordStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open Microsoft Word", e);
         }
 
-        private void ppStart(object sender, GestureEventArgs e)
+        private void ppStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Open Microsoft PowerPoint", e);
         }
 
-        private void docsStart(object sender, GestureEventArgs e)
+        private void docsStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Browse Documents", e);
         }
 
-        private void musicStart(object sender, GestureEventArgs e)
+        private void musicStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Browse Music", e);
         }
 
-        private void picsStart(object sender, GestureEventArgs e)
+        private void picsStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 stringControllerSelected("Browse Pictures", e);
         }
 
-        private void volStart(object sender, GestureEventArgs e)
+        private void volStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 AbstractControllerButton button = AbstractControllerButton.ButtonFactory(ButtonType.Volume);
                 initalizeVisualElement(button, e);
         }
 
-        private void macroStart(object sender, GestureEventArgs e)
+        private void macroStart(object sender, System.Windows.Input.GestureEventArgs e)
         {
                 Popup popup = new Popup();
                 popup.Height = this.Height;

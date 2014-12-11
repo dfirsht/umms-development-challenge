@@ -32,11 +32,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Margin="10,191,14,66" Grid.RowSpan="2" >
-            <TextBox x:Name="IpText" HorizontalAlignment="Left" Height="72" Margin="0,83,0,0" TextWrapping="Wrap" Text="192.168.173.1" VerticalAlignment="Top" Width="456" />
-            <Button Content="connect" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Click="ConnectionClick"/>
-            <TextBlock x:Name="NotifyUser" HorizontalAlignment="Left" Margin="10,474,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="446"/>
-            <Slider x:Name="Slide" HorizontalAlignment="Left" Margin="91,267,0,0" VerticalAlignment="Top" Width="234" ValueChanged="Slider_ValueChanged" Maximum="100"/>
-            <TextBox x:Name="connectBox" HorizontalAlignment="Left" Height="72" Margin="0,377,0,0" TextWrapping="Wrap" Text="Not Connected" VerticalAlignment="Top" Width="456"/>
+            <Button x:Name="connectButton" Content="Connect" HorizontalAlignment="Left" Margin="85,263,0,0" VerticalAlignment="Top" Click="ConnectionClick" Width="259"/>
+            <TextBox x:Name="connectBox" HorizontalAlignment="Left" Height="72" Margin="0,377,0,0" TextWrapping="Wrap" Text="Not Connected" VerticalAlignment="Top" Width="456" ManipulationStarted="doNothing" GotFocus="looseFocus"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,10,0,0" TextWrapping="Wrap" Text="If connection fails, check that your phone's wifi is connected to the desktop wifi, which was created by the desktop aplication." VerticalAlignment="Top" Height="100" Width="456"/>
         </Grid>
     </Grid>
 
