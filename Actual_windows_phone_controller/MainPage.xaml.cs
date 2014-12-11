@@ -52,7 +52,7 @@ namespace Actual_windows_phone_controller
 
             item_selected = -1;
 
-            Network.isEditing = false;
+            
         }
 
         // Load data for the ViewModel Items
@@ -74,6 +74,7 @@ namespace Actual_windows_phone_controller
             {
                 return;
             }
+            Network.isEditing = false;
             // Navigate to the new page
             NavigationService.Navigate(new Uri("/ControllerPage.xaml?selectedItem=" + (MainLongListSelector.SelectedItem as ControllerViewModel).ID, UriKind.Relative));
 
@@ -289,7 +290,7 @@ namespace Actual_windows_phone_controller
         {
             // Navigate to the new page
             NavigationService.Navigate(new Uri("/CreationPage.xaml?selectedItem=" + item_selected, UriKind.Relative));
-
+            Network.isEditing = false;
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
             hideOptions(item_selected);
