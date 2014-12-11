@@ -12,6 +12,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Actual_windows_phone_controller.Resources;
 using Actual_windows_phone_controller.ViewModels;
+using System.Windows.Media.Animation;
 
 namespace Actual_windows_phone_controller
 {
@@ -78,6 +79,7 @@ namespace Actual_windows_phone_controller
 
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
+            hideOptions(MainLongListSelector.SelectedIndex);
         }
         private void ConnectionPageClick(object sender, RoutedEventArgs e)
         {
@@ -126,27 +128,25 @@ namespace Actual_windows_phone_controller
             NavigationService.Navigate(new Uri("/CreationPage.xaml?selectedItem=" + (App.ViewModel.Items.Count - 1).ToString(), UriKind.Relative));
         }
         private int item_selected;
+        private Canvas optionsCanvas;
         private void item_held(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            if(item_selected >= 0)
+            ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
+            if (item_selected >= 0)
             {
                 hideOptions(item_selected);
             }
-            ControllerViewModel itemViewModel = (sender as StackPanel).DataContext as ControllerViewModel;
             if (App.ViewModel.Items.IndexOf(itemViewModel) != item_selected)
             {
                 foreach (UIElement element in (sender as StackPanel).Children)
                 {
                     if (element.GetType().Name == "Canvas")
                     {
-                        element.Visibility = Visibility.Visible;
+                        Storyboard expansion = (Storyboard)(element as Canvas).Resources["expandAnimation"];
+                        expansion.Begin();
+                        optionsCanvas = (element as Canvas);
                     }
-                    //else if (element.GetType().Name == "TextBox")
-                    //{
-                    //    (element as TextBox).Focus();
-                    //}
                 }
-                (sender as StackPanel).Margin = new Thickness(0, 0, 0, 80);
 
                 item_selected = App.ViewModel.Items.IndexOf(itemViewModel);
             }
@@ -214,14 +214,11 @@ namespace Actual_windows_phone_controller
             {
                 if (element.GetType().Name == "Canvas")
                 {
-                    element.Visibility = Visibility.Visible;
-                }
-                else if (element.GetType().Name == "TextBox")
-                {
-                    (element as TextBox).Focus();
+                    Storyboard expansion = (Storyboard)(element as Canvas).Resources["expandAnimation"];
+                    expansion.Begin();
+                    optionsCanvas = (element as Canvas);
                 }
             }
-            newStackPanel.Margin = new Thickness(0, 0, 0, 80);
         }
         private void hideOptions(int indexNumber)
         {
@@ -235,10 +232,13 @@ namespace Actual_windows_phone_controller
             {
                 if (element.GetType().Name == "Canvas")
                 {
-                    element.Visibility = Visibility.Collapsed;
+                    Storyboard minimize = (Storyboard)(element as Canvas).Resources["minimizeAnimation"];
+                    minimize.Begin();
+                    RectangleGeometry rectangleClip = new RectangleGeometry();
+                    rectangleClip.Rect = new Rect(0, 80, 400, 300);
+                    (element as Canvas).Clip = rectangleClip;
                 }
             }
-            currentStackPanel.Margin = new Thickness(0, 0, 0, 20);
         }
 
         private void controllerTitleTextLostFocus(object sender, RoutedEventArgs e)
@@ -292,6 +292,12 @@ namespace Actual_windows_phone_controller
 
             // Reset selected item to null (no selection)
             MainLongListSelector.SelectedItem = null;
+            hideOptions(item_selected);
+        }
+
+        private void showOptionsPanel(object sender, EventArgs e)
+        {
+            optionsCanvas.Clip = null;
         }
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()

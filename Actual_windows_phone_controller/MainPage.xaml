@@ -73,8 +73,22 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel x:Name="MainStackPanel"  Margin="0,0,0,20" Hold="item_held" Tap="item_tapped">
+                            
                             <TextBlock Text="{Binding Title}" FontSize="40" TextWrapping="Wrap" Foreground="White" />
-                            <Canvas x:Name="opitionPanel" Visibility="Collapsed">
+                            <Canvas x:Name="opitionPanel" Height="0" >
+                                <Canvas.Clip>
+                                    <RectangleGeometry x:Name="optionMask" Rect="0, 80, 400, 300">
+                                    </RectangleGeometry>
+                                </Canvas.Clip>
+                                <Canvas.Resources>
+                                    <Storyboard x:Name="expandAnimation" x:Key="expandAnimation" Completed="showOptionsPanel">
+                                        <DoubleAnimation Storyboard.TargetName="opitionPanel" Storyboard.TargetProperty="Height" From="0" To="70" Duration="0:0:.2"/>
+                                    </Storyboard>
+                                    <Storyboard x:Name="minimizeAnimation" x:Key="minimizeAnimation">
+                                        <DoubleAnimation Storyboard.TargetName="opitionPanel" Storyboard.TargetProperty="Height" From="70" To="0" Duration="0:0:.2"/>
+                                    </Storyboard>
+                                </Canvas.Resources>
+
                                 <Button Content="Up" Click="moveElementUp">
                                     
                                 </Button>
